@@ -9,6 +9,8 @@ gem 'pg'
 
 gem 'sidekiq'
 
+gem 'video_info'
+
 gem 'airbrake'
 gem 'librato-rails', github: 'librato/librato-rails', branch: 'feature/rack_first'
 gem 'lograge'

@@ -15,7 +15,7 @@ GIT
 
 GIT
   remote: git://github.com/rails/rails.git
-  revision: 5f30b547c8acbf9086329e9c93a3c77768bfb1ea
+  revision: efd2be35510af7b02e70e4c5939720d7b12bc1c1
   specs:
     actionmailer (4.0.0.beta)
       actionpack (= 4.0.0.beta)
@@ -131,7 +131,7 @@ GEM
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
-    rack (1.5.0)
+    rack (1.5.1)
     rack-cache (1.2)
       rack (>= 0.4)
     rack-test (0.6.2)
@@ -195,6 +195,8 @@ GEM
       ansi
     tzinfo (0.3.35)
     vcr (2.4.0)
+    video_info (1.1.1)
+      multi_json
 
 PLATFORMS
   ruby
@@ -222,3 +224,4 @@ DEPENDENCIES
   thin
   turn
   vcr
+  video_info
