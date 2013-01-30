@@ -1,12 +1,14 @@
 ENV["RAILS_ENV"] ||= 'test'
 
-require File.dirname(__FILE__) + "/../config/environment"
+require_relative "../config/environment"
 require 'rspec/rails'
 
 Dir[Rails.root.join('spec/config/**/*.rb')].each { |f| require f }
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
+ActiveRecord::Migration.check_pending!
+
 RSpec.configure do |config|
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.infer_base_class_for_anonymous_controllers = true
   config.use_transactional_fixtures = true
 end
