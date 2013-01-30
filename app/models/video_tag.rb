@@ -1,10 +1,8 @@
 class VideoTag < ActiveRecord::Base
   has_many :sources, class_name: "VideoSource", dependent: :destroy
 
-  # filter
   scope :last_30_days_active, -> { where("updated_at >= ?", 30.days.ago.midnight) }
   scope :last_90_days_active, -> { where("updated_at >= ?", 90.days.ago.midnight) }
-  # sort
   scope :by_name, ->(way = 'asc') { order(name: way.to_sym) }
   scope :by_date, ->(way = 'desc') { order(created_at: way.to_sym) }
 
