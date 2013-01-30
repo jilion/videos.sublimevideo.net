@@ -1,4 +1,5 @@
 require 'fast_spec_helper'
+
 require 'services/video_source_analyzer'
 
 describe VideoSourceAnalyzer do
