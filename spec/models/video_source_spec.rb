@@ -20,7 +20,6 @@ describe VideoSource do
   end
 
   describe "Validations" do
-    it { should validate_presence_of(:video_tag) }
     it { should validate_presence_of(:url) }
     it { should validate_presence_of(:family) }
     it { should validate_presence_of(:quality) }

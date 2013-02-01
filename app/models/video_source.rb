@@ -1,6 +1,6 @@
 class VideoSource < ActiveRecord::Base
   belongs_to :video_tag
-  validates :video_tag, :url, :quality, :family, presence: true
+  validates :url, :quality, :family, presence: true
 end
 
 # == Schema Information

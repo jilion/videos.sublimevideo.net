@@ -7,7 +7,7 @@ describe VideoTagDataUnaliaser do
   describe ".unalias" do
     context "with standard video data" do
       let(:data) { {
-        'n' => 'My Video',
+        't' => 'My Video',
         'i' => nil,
         'io' => nil,
         'p' => 'http://posters.sublimevideo.net/video123.png',
@@ -20,7 +20,7 @@ describe VideoTagDataUnaliaser do
 
       it "unaliases data" do
         VideoTagDataUnaliaser.unalias(data).should eq({
-          name: 'My Video',
+          title: 'My Video',
           sources_id: nil,
           sources_origin: nil,
           poster_url: 'http://posters.sublimevideo.net/video123.png',
@@ -38,7 +38,7 @@ describe VideoTagDataUnaliaser do
 
     context "with youtube video data" do
       let(:data) { {
-        'n' => 'My Video',
+        't' => 'My Video',
         'i' => 'youtube_id',
         'io' => 'y',
         'p' => 'http://posters.sublimevideo.net/video123.png',
@@ -48,7 +48,7 @@ describe VideoTagDataUnaliaser do
 
       it "unaliases data" do
         VideoTagDataUnaliaser.unalias(data).should eq({
-          name: 'My Video',
+          title: 'My Video',
           sources_id: 'youtube_id',
           sources_origin: 'youtube',
           poster_url: 'http://posters.sublimevideo.net/video123.png',
@@ -60,7 +60,7 @@ describe VideoTagDataUnaliaser do
 
     context "with minimal video data" do
       let(:data) { {
-        'n' => 'My Video',
+        't' => 'My Video',
         'p' => 'http://posters.sublimevideo.net/video123.png',
         'z' => '640x360',
         'd' => '10000'
@@ -68,7 +68,7 @@ describe VideoTagDataUnaliaser do
 
       it "unaliases data" do
         VideoTagDataUnaliaser.unalias(data).should eq({
-          name: 'My Video',
+          title: 'My Video',
           poster_url: 'http://posters.sublimevideo.net/video123.png',
           size:      '640x360',
           duration:   '10000'

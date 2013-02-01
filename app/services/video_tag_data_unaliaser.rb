@@ -2,8 +2,7 @@ module VideoTagDataUnaliaser
 
   DICTIONARY = {
     uo: 'uid_origin',
-    n:  'name',
-    no: 'name_origin',
+    t:  'title',
     p:  'poster_url',
     z:  'size',
     d:  'duration',
@@ -11,7 +10,8 @@ module VideoTagDataUnaliaser
     s:  'sources',
     i:  'sources_id',
     io: 'sources_origin',
-    t:  'settings',
+    a:  'settings',
+    o:  'options',
     origin: {
       a: 'attribute',
       s: 'source',

@@ -94,18 +94,20 @@ CREATE TABLE video_tags (
     id integer NOT NULL,
     uid character varying(255) NOT NULL,
     uid_origin character varying(255) DEFAULT 'attribute'::character varying NOT NULL,
-    name character varying(255),
-    name_origin character varying(255),
+    title character varying(255),
+    title_origin character varying(255),
     sources_id character varying(255),
     sources_origin character varying(255),
     poster_url text,
     size character varying(255),
     duration integer,
     sources text,
+    current_sources text,
     settings hstore,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    site_token character varying(255) NOT NULL
+    site_token character varying(255) NOT NULL,
+    options hstore
 );
 
 
