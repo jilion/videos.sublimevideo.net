@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe VideoTag do
   let(:video_tag) { build(:video_tag) }

@@ -26,6 +26,6 @@ class VideoSourceAnalyzer
   private
 
   def url
-    source.url
+    source && source.url
   end
 end
