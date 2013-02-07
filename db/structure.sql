@@ -58,10 +58,11 @@ CREATE TABLE schema_migrations (
 CREATE TABLE video_sources (
     id integer NOT NULL,
     video_tag_id integer NOT NULL,
-    url character varying(255) NOT NULL,
-    quality character varying(255) NOT NULL,
-    family character varying(255) NOT NULL,
+    url text NOT NULL,
+    quality character varying(255),
+    family character varying(255),
     resolution character varying(255),
+    "position" integer,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
@@ -198,6 +199,10 @@ INSERT INTO schema_migrations (version) VALUES ('20121115083239');
 
 INSERT INTO schema_migrations (version) VALUES ('20121122073822');
 
-INSERT INTO schema_migrations (version) VALUES ('20130129102056');
+INSERT INTO schema_migrations (version) VALUES ('20130206133628');
 
-INSERT INTO schema_migrations (version) VALUES ('20130129130402');
+INSERT INTO schema_migrations (version) VALUES ('20130206143947');
+
+INSERT INTO schema_migrations (version) VALUES ('20130206143949');
+
+INSERT INTO schema_migrations (version) VALUES ('20130206143950');

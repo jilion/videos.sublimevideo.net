@@ -14,9 +14,9 @@ describe VideoTag do
     its(:poster_url)      { should eq 'http://media.sublimevideo.net/vpa/ms_800.jpg' }
     its(:size)            { should eq '640x360' }
     its(:duration)        { should eq 10000 }
-    its(:video_sources)   { should have(2).sources }
     its(:settings)        { should eq({ 'on_end' => 'nothing' }) }
 
+    it { should have(2).sources }
     it { should be_valid }
   end
 
@@ -117,7 +117,32 @@ describe VideoTag do
       video_tag.update(settings: camelcase_settings)
       video_tag.settings.should eq({'logo_position' => 'bottom-right'})
     end
+
+    it "accepts nil settings" do
+      video_tag.update(settings: nil)
+      video_tag.settings.should eq({})
+    end
   end
+
+  describe "#sources=" do
+    let(:sources) { [
+      { url: 'http://example.com/1.mp4' },
+      { url: 'http://example.com/2.mp4' },
+    ] }
+
+    it "creates sources with position" do
+      video_tag.update(sources: sources)
+      video_tag.should have(2).sources
+      video_tag.sources.first.url.should match /1/
+      video_tag.sources.second.url.should match /2/
+    end
+
+    it "accepts nil sources" do
+      video_tag.update(sources: nil)
+      video_tag.should have(0).sources
+    end
+  end
+
 end
 
 # == Schema Information

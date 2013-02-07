@@ -1,13 +1,10 @@
 class VideoTag < ActiveRecord::Base
 
-  # Replace by once the transition is done:
-  # has_many :sources, class_name: "VideoSource", dependent: :destroy
+  # Replace by once the migration is done:
+  # has_many :sources, -> { order(:position) }, class_name: "VideoSource", dependent: :destroy
   serialize :current_sources, Array
   serialize :sources, Hash
-  has_many :video_sources, dependent: :destroy
-  def sources=(attributes)
-    self.video_sources.build(attributes)
-  end
+  has_many :video_sources, -> { order(:position) }, dependent: :destroy
   def sources
     video_sources
   end
@@ -23,31 +20,35 @@ class VideoTag < ActiveRecord::Base
   validates :title_origin, inclusion: %w[attribute youtube vimeo], allow_nil: true
   validates :sources_origin, inclusion: %w[youtube vimeo other], allow_nil: true
 
-  def self.find_or_initialize(attr)
-    where(attr).first_or_initialize
+  def self.find_or_initialize(options)
+    where(options).first_or_initialize
   end
 
   def first_source
     sources.first
   end
 
-  def uid=(attr)
-    write_attribute :uid, attr.try(:to, 254)
+  def uid=(uid)
+    write_attribute :uid, uid.try(:to, 254)
   end
 
-  def title=(attr)
-    write_attribute :title, attr.try(:to, 254)
+  def title=(title)
+    write_attribute :title, title.try(:to, 254)
   end
 
-  def duration=(attr)
-    duration = attr.to_i > 2147483647 ? 2147483647 : attr.to_i
-    write_attribute :duration, duration
+  def duration=(duration)
+    write_attribute :duration, [duration.to_i, 2147483647].min
+  end
+
+  def sources=(sources)
+    (sources || []).each_with_index do |attributes, index|
+      self.video_sources.build(attributes.merge(position: index))
+    end
   end
 
   def settings=(settings)
-    write_attribute :settings, Hash[settings.map { |k,v| [k.underscore,v] }]
+    write_attribute :settings, Hash[(settings || {}).map { |k,v| [k.underscore,v] }]
   end
-
 end
 
 # == Schema Information

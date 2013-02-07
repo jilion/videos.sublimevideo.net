@@ -8,12 +8,13 @@ end
 # Table name: video_sources
 #
 #  created_at   :datetime
-#  family       :string(255)      not null
+#  family       :string(255)
 #  id           :integer          not null, primary key
-#  quality      :string(255)      not null
+#  position     :integer
+#  quality      :string(255)
 #  resolution   :string(255)
 #  updated_at   :datetime
-#  url          :string(255)      not null
+#  url          :text             not null
 #  video_tag_id :integer          not null
 #
 # Indexes

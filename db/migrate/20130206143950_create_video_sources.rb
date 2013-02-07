@@ -2,10 +2,11 @@ class CreateVideoSources < ActiveRecord::Migration
   def change
     create_table :video_sources do |t|
       t.references :video_tag, null: false, index: true
-      t.string :url, null: false
-      t.string :quality, null: false
-      t.string :family, null: false
+      t.text :url, null: false
+      t.string :quality
+      t.string :family
       t.string :resolution
+      t.integer :position
 
       t.timestamps
     end

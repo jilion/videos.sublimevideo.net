@@ -7,13 +7,15 @@ describe VideoTag do
     let(:site_token) { 'site_token' }
     let(:uid) { 'uid' }
 
-    context "video_tag with public YouTube video", :vcr do
+    before { VideoTagUpdaterWorker.jobs.clear }
+
+    context "video_tag with public YouTube video" do
       let(:data) { {
         i: 'DAcjV60RnRw',
         io: 'y'
       }}
 
-      it "creates video_tag properly with title from YouTube" do
+      it "creates video_tag properly with title from YouTube", :vcr do
         VideoTagUpdaterWorker.perform_async(site_token, uid, data)
         VideoTagUpdaterWorker.drain
 
@@ -45,7 +47,7 @@ describe VideoTag do
         video_tag.title_origin.should eq 'attribute'
         video_tag.sources_id.should eq '35386044'
         video_tag.sources_origin.should eq 'vimeo'
-        video_tag.sources.should have(2).sources
+        video_tag.should have(2).sources
       end
     end
   end

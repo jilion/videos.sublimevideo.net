@@ -4,7 +4,6 @@ class UpdateVideoTagsFields < ActiveRecord::Migration
     remove_index :video_tags, [:site_id, :updated_at]
     remove_column :video_tags, :site_id
     change_column :video_tags, :uid_origin, :string, default: 'attribute'
-    add_column :video_tags, :site_token, :string, null: false
     add_column :video_tags, :options, :hstore
     add_index :video_tags, [:site_token, :uid], unique: true
     add_index :video_tags, [:site_token, :updated_at]
