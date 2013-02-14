@@ -4,6 +4,7 @@ require 'sidekiq/testing'
 
 require 'workers/video_tag_updater_worker'
 require 'services/video_tag_data_unaliaser'
+require 'services/video_tag_duplicate_remover'
 require 'services/video_tag_updater'
 
 VideoTag = Class.new unless defined?(VideoTag)
@@ -17,6 +18,7 @@ describe VideoTagUpdaterWorker do
     VideoTagDataUnaliaser.stub(:unalias) { unaliases_data }
     VideoTag.stub(:find_or_initialize) { video_tag }
     VideoTagUpdater.stub_chain(:new, :update)
+    VideoTagDuplicateRemover.stub_chain(:new, :remove_duplicate)
     Librato.stub(:increment)
   }
 
@@ -43,6 +45,14 @@ describe VideoTagUpdaterWorker do
   it "updates video_tag" do
     VideoTagUpdater.should_receive(:new).with(video_tag) { |mock|
       mock.should_receive(:update).with(unaliases_data)
+      mock
+    }
+    VideoTagUpdaterWorker.new.perform(*params)
+  end
+
+  it "removes duplicate video_tag" do
+    VideoTagDuplicateRemover.should_receive(:new).with(video_tag) { |mock|
+      mock.should_receive(:remove_duplicate)
       mock
     }
     VideoTagUpdaterWorker.new.perform(*params)

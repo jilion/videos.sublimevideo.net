@@ -13,6 +13,23 @@ class VideoTag < ActiveRecord::Base
   scope :last_90_days_active, -> { where("updated_at >= ?", 90.days.ago.midnight) }
   scope :by_title, ->(way = 'asc') { order(title: way.to_sym) }
   scope :by_date, ->(way = 'desc') { order(created_at: way.to_sym) }
+  scope :duplicates_first_source_url, ->(video_tag) {
+    joins(:video_sources).where(
+      site_token: video_tag.site_token,
+      uid_origin: 'source',
+      video_sources: {
+        position: 0, url: video_tag.first_source.url
+      }
+    )
+  }
+  scope :duplicates_sources_id, ->(video_tag) {
+    where(
+      site_token: video_tag.site_token,
+      uid_origin: 'source',
+      sources_id: video_tag.sources_id,
+      sources_origin: video_tag.sources_origin
+    )
+  }
 
   validates :site_token, presence: true
   validates :uid, presence: true, uniqueness: { scope: :site_token }
@@ -26,6 +43,14 @@ class VideoTag < ActiveRecord::Base
 
   def first_source
     sources.first
+  end
+
+  def valid_uid?
+    uid =~ /^[a-z0-9_\-]{1,64}$/i
+  end
+
+  def saved_once?
+    created_at == updated_at
   end
 
   def uid=(uid)
@@ -49,6 +74,7 @@ class VideoTag < ActiveRecord::Base
   def settings=(settings)
     write_attribute :settings, Hash[(settings || {}).map { |k,v| [k.underscore,v] }]
   end
+
 end
 
 # == Schema Information

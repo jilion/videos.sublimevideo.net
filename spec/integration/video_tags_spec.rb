@@ -26,6 +26,20 @@ describe VideoTag do
         video_tag.sources_id.should eq 'DAcjV60RnRw'
         video_tag.sources_origin.should eq 'youtube'
       end
+
+      context "with duplicate" do
+        let!(:video_tag_duplicate) { create(:video_tag,
+          site_token: site_token, uid_origin: 'source',
+          sources_id: 'DAcjV60RnRw', sources_origin: 'youtube'
+        ) }
+
+        it "removes duplicate" do
+          VideoTagUpdaterWorker.perform_async(site_token, uid, data)
+          VideoTagUpdaterWorker.drain
+
+          VideoTag.where(id: video_tag_duplicate).first.should be_nil
+        end
+      end
     end
 
     context "video_tag with public Vimeo video" do

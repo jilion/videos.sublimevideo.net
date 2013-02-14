@@ -68,6 +68,38 @@ describe VideoTag do
         VideoTag.by_date(:asc).first.should eq old_video_tag
       end
     end
+
+    describe ".duplicates_first_source_url" do
+      let(:site_token) { 'site_token' }
+      let!(:other_video_tag) { create(:video_tag_with_sources, site_token: site_token, uid_origin: 'source') }
+      subject { VideoTag.duplicates_first_source_url(video_tag) }
+
+      context "with standard video tag" do
+        let!(:video_tag) { create(:video_tag_with_sources, site_token: site_token) }
+        it { should have(0).duplicates }
+      end
+
+      context "with video tag with uid from source" do
+        let!(:video_tag) { create(:video_tag_with_sources, site_token: site_token, uid_origin: 'source') }
+        it { should have(1).duplicates }
+      end
+    end
+
+    describe ".duplicates_sources_id" do
+      let(:site_token) { 'site_token' }
+      let!(:other_video_tag) { create(:video_tag, site_token: site_token, uid_origin: 'source', sources_id: 'id', sources_origin: 'vimeo') }
+      subject { VideoTag.duplicates_sources_id(video_tag) }
+
+      context "with standard video tag" do
+        let!(:video_tag) { create(:video_tag, site_token: site_token) }
+        it { should have(0).duplicates }
+      end
+
+      context "with video tag with uid from source" do
+        let!(:video_tag) { create(:video_tag, site_token: site_token, uid_origin: 'source', sources_id: 'id', sources_origin: 'youtube') }
+        it { should have(1).duplicates }
+      end
+    end
   end
 
   describe "Validations" do
@@ -78,6 +110,35 @@ describe VideoTag do
     it { should ensure_inclusion_of(:title_origin).in_array(%w[attribute youtube vimeo]).allow_nil }
     it { should ensure_inclusion_of(:uid_origin).in_array(%w[attribute source]) }
     it { should ensure_inclusion_of(:sources_origin).in_array(%w[youtube vimeo other]).allow_nil }
+  end
+
+  describe "#valid_uid?" do
+    specify { build(:video_tag, uid: '1').should be_valid_uid }
+    specify { build(:video_tag, uid: 'a').should be_valid_uid }
+    specify { build(:video_tag, uid: 'A').should be_valid_uid }
+    specify { build(:video_tag, uid: '_').should be_valid_uid }
+    specify { build(:video_tag, uid: '-').should be_valid_uid }
+    specify { build(:video_tag, uid: 'a0912-as_dA').should be_valid_uid }
+
+    specify { build(:video_tag, uid: '#').should_not be_valid_uid }
+    specify { build(:video_tag, uid: '.').should_not be_valid_uid }
+    specify { build(:video_tag, uid: '!').should_not be_valid_uid }
+    specify { build(:video_tag, uid: '?').should_not be_valid_uid }
+    specify { build(:video_tag, uid: 'a' * 65 ).should_not be_valid_uid }
+  end
+
+  describe "#saved_once?" do
+    subject { create(:video_tag) }
+
+    context "with new record" do
+      it { should be_saved_once }
+    end
+
+    context "with updated record" do
+      before { subject.touch }
+
+      it { should_not be_saved_once }
+    end
   end
 
   describe "#uid=" do
