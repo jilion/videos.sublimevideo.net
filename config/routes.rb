@@ -3,7 +3,11 @@ VideosSublimeVideo::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  # root to: 'welcome#index'
+  root to: redirect('http://sublimevideo.net')
+
+  namespace :private_api do
+    resources :video_tags
+  end
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
