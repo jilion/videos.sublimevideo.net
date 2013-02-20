@@ -1,3 +1,8 @@
+require 'librato-rails'
+require 'active_support/core_ext'
+
+require 'video_stats_merger_worker'
+
 class VideoTagDuplicateRemover
   attr_reader :video_tag
 

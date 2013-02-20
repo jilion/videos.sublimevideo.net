@@ -1,6 +1,6 @@
 require 'fast_spec_helper'
 
-require 'services/video_tag_data_unaliaser'
+require 'video_tag_data_unaliaser'
 
 describe VideoTagDataUnaliaser do
 

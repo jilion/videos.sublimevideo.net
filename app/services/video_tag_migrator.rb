@@ -1,3 +1,5 @@
+require 'video_tag_updater'
+
 class VideoTagMigrator
   attr_reader :video_tag
 

@@ -1,4 +1,7 @@
-$LOAD_PATH.unshift("#{Dir.pwd}/app") unless $LOAD_PATH.include?("#{Dir.pwd}/app")
+Dir['app/**/'].each do |dir|
+  path = "#{Dir.pwd}/#{dir}"
+  $LOAD_PATH.unshift(path) unless $LOAD_PATH.include?(path)
+end
 
 require 'bundler/setup'
 require_relative 'config/rspec'

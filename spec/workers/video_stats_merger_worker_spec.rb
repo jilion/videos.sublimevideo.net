@@ -1,8 +1,7 @@
 require 'fast_spec_helper'
-require 'sidekiq'
-require 'sidekiq/testing'
+require 'config/sidekiq'
 
-require 'workers/video_stats_merger_worker'
+require 'video_stats_merger_worker'
 
 describe VideoStatsMergerWorker do
 

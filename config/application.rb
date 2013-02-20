@@ -8,7 +8,9 @@ require "action_controller/railtie"
 # require "rails/test_unit/railtie"
 
 # Assets should be precompiled for production (so we don't need the gems loaded then)
-Bundler.require(*Rails.groups(assets: %w(development test)))
+Bundler.setup(*Rails.groups(assets: %w(development test)))
+
+require 'sublime_video_private_api'
 
 module VideosSublimeVideo
   class Application < Rails::Application

@@ -1,9 +1,6 @@
 require 'fast_spec_helper'
-require 'active_support/core_ext'
-require 'sidekiq'
 
-require 'workers/video_stats_merger_worker'
-require 'services/video_tag_duplicate_remover'
+require 'video_tag_duplicate_remover'
 
 VideoTag = Class.new unless defined?(VideoTag)
 

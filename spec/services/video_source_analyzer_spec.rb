@@ -1,6 +1,6 @@
 require 'fast_spec_helper'
 
-require 'services/video_source_analyzer'
+require 'video_source_analyzer'
 
 describe VideoSourceAnalyzer do
   let(:other_video_source) { OpenStruct.new(url: 'http://standard.com/video.mp4') }

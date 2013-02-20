@@ -15,7 +15,7 @@ gem 'video_info'
 gem 'airbrake'
 gem 'librato-rails', github: 'librato/librato-rails', branch: 'feature/rack_first'
 
-gem 'rack-status', require: "rack/status"
+gem 'rack-status'
 
 group :staging, :production do
   gem 'thin'

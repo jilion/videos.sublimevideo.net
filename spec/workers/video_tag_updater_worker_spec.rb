@@ -1,11 +1,7 @@
 require 'fast_spec_helper'
-require 'sidekiq'
-require 'sidekiq/testing'
+require 'config/sidekiq'
 
-require 'workers/video_tag_updater_worker'
-require 'services/video_tag_data_unaliaser'
-require 'services/video_tag_duplicate_remover'
-require 'services/video_tag_updater'
+require 'video_tag_updater_worker'
 
 VideoTag = Class.new unless defined?(VideoTag)
 

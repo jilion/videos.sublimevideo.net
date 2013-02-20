@@ -1,7 +1,6 @@
 require 'fast_spec_helper'
 
-require 'services/video_tag_title_fetcher'
-require 'wrappers/video_info_wrapper'
+require 'video_tag_title_fetcher'
 
 describe VideoTagTitleFetcher do
 

@@ -1,3 +1,5 @@
+require 'video_info_wrapper'
+
 class VideoTagTitleFetcher
   attr_reader :video_title, :video_title_origin, :sources_id, :sources_origin
 

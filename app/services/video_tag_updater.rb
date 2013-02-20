@@ -1,3 +1,8 @@
+require 'active_support/core_ext'
+
+require 'video_source_analyzer'
+require 'video_tag_title_fetcher'
+
 class VideoTagUpdater
   attr_reader :video_tag
 

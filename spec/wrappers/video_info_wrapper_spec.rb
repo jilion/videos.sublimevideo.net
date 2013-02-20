@@ -1,7 +1,6 @@
 require 'fast_spec_helper'
-require 'video_info'
 
-require 'wrappers/video_info_wrapper'
+require 'video_info_wrapper'
 
 describe VideoInfoWrapper do
   let(:video_info) { OpenStruct.new(title: 'video title') }

@@ -1,9 +1,6 @@
 require 'fast_spec_helper'
-require 'active_support/core_ext'
 
-require 'services/video_tag_updater'
-require 'services/video_source_analyzer'
-require 'services/video_tag_title_fetcher'
+require 'video_tag_updater'
 
 describe VideoTagUpdater do
   let(:updater) { VideoTagUpdater.new(video_tag) }
