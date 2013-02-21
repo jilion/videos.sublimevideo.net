@@ -56,7 +56,8 @@ class VideoTag < ActiveRecord::Base
   end
 
   def duration=(duration)
-    write_attribute :duration, [duration.to_i, 2147483647].min
+    duration = duration.to_i.in?(0..2147483647) ? duration.to_i : nil
+    write_attribute :duration, duration
   end
 
   def sources=(sources)
@@ -68,7 +69,6 @@ class VideoTag < ActiveRecord::Base
   def settings=(settings)
     write_attribute :settings, Hash[(settings || {}).map { |k,v| [k.underscore,v] }]
   end
-
 end
 
 # == Schema Information
