@@ -6,6 +6,7 @@ describe VideoTagDataUnaliaser do
 
   describe ".unalias" do
     context "with standard video data" do
+      let(:time) { Time.now.utc }
       let(:data) { {
         't' => 'My Video',
         'i' => nil,
@@ -15,7 +16,9 @@ describe VideoTagDataUnaliaser do
         'd' => '10000',
         's' => [
           { 'u' => 'http://videos.sublimevideo.net/source11.mp4', 'q' => 'base', 'f' => 'mp4', 'r' => '460x340' }
-        ]
+        ],
+        'created_at' => time,
+        'updated_at' => time
       } }
 
       it "unaliases data" do
@@ -31,7 +34,9 @@ describe VideoTagDataUnaliaser do
             quality: 'base',
             family: 'mp4',
             resolution: '460x340'
-          }]
+          }],
+          created_at: time,
+          updated_at: time
         })
       end
     end

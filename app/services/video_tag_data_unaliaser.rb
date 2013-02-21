@@ -44,7 +44,7 @@ module VideoTagDataUnaliaser
       if namespace
         DICTIONARY[namespace][key.to_sym].to_sym
       else
-        DICTIONARY[key.to_sym].to_sym
+        (DICTIONARY[key.to_sym] || key).to_sym
       end
     end
 
