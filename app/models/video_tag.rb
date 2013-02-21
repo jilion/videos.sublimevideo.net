@@ -1,26 +1,20 @@
 class VideoTag < ActiveRecord::Base
+  UID_REGEX = '^[a-z0-9_\-]{1,64}$'
 
-  # Replace by once the migration is done:
-  # has_many :sources, -> { order(:position) }, class_name: "VideoSource", dependent: :destroy
-  serialize :current_sources, Array
-  serialize :sources, Hash
-  has_many :video_sources, -> { order(:position) }, dependent: :destroy
-  def sources
-    video_sources
-  end
+  has_many :sources, -> { order(:position) }, class_name: "VideoSource", dependent: :destroy
 
   scope :last_30_days_active, -> { where("updated_at >= ?", 30.days.ago.midnight) }
   scope :last_90_days_active, -> { where("updated_at >= ?", 90.days.ago.midnight) }
   scope :by_title, ->(way = 'asc') { order(title: way.to_sym) }
   scope :by_date, ->(way = 'desc') { order(created_at: way.to_sym) }
   scope :duplicates_first_source_url, ->(video_tag) {
-    joins(:video_sources).where(
-      site_token: video_tag.site_token,
-      uid_origin: 'source',
-      video_sources: {
-        position: 0, url: video_tag.first_source.url
-      }
-    )
+    joins(:sources)
+    .where(site_token: video_tag.site_token)
+    .where("uid_origin = 'source' OR (uid_origin = 'attribute' AND uid !~* '#{UID_REGEX}')")
+    .merge(VideoSource.where(
+      position: 0,
+      url: video_tag.first_source.try(:url)
+    ))
   }
   scope :duplicates_sources_id, ->(video_tag) {
     where(
@@ -46,7 +40,7 @@ class VideoTag < ActiveRecord::Base
   end
 
   def valid_uid?
-    uid =~ /^[a-z0-9_\-]{1,64}$/i
+    uid =~ /#{UID_REGEX}/i
   end
 
   def saved_once?
@@ -67,7 +61,7 @@ class VideoTag < ActiveRecord::Base
 
   def sources=(sources)
     (sources || []).each_with_index do |attributes, index|
-      self.video_sources.build(attributes.merge(position: index))
+      self.sources.build(attributes.merge(position: index))
     end
   end
 
@@ -81,23 +75,21 @@ end
 #
 # Table name: video_tags
 #
-#  created_at      :datetime
-#  current_sources :text
-#  duration        :integer
-#  id              :integer          not null, primary key
-#  options         :hstore
-#  poster_url      :text
-#  settings        :hstore
-#  site_token      :string(255)      not null
-#  size            :string(255)
-#  sources         :text
-#  sources_id      :string(255)
-#  sources_origin  :string(255)
-#  title           :string(255)
-#  title_origin    :string(255)
-#  uid             :string(255)      not null
-#  uid_origin      :string(255)      default("attribute"), not null
-#  updated_at      :datetime
+#  created_at     :datetime
+#  duration       :integer
+#  id             :integer          not null, primary key
+#  options        :hstore
+#  poster_url     :text
+#  settings       :hstore
+#  site_token     :string(255)      not null
+#  size           :string(255)
+#  sources_id     :string(255)
+#  sources_origin :string(255)
+#  title          :string(255)
+#  title_origin   :string(255)
+#  uid            :string(255)      not null
+#  uid_origin     :string(255)      default("attribute"), not null
+#  updated_at     :datetime
 #
 # Indexes
 #

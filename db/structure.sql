@@ -93,6 +93,7 @@ ALTER SEQUENCE video_sources_id_seq OWNED BY video_sources.id;
 
 CREATE TABLE video_tags (
     id integer NOT NULL,
+    site_token character varying(255) NOT NULL,
     uid character varying(255) NOT NULL,
     uid_origin character varying(255) DEFAULT 'attribute'::character varying NOT NULL,
     title character varying(255),
@@ -102,13 +103,10 @@ CREATE TABLE video_tags (
     poster_url text,
     size character varying(255),
     duration integer,
-    sources text,
-    current_sources text,
     settings hstore,
+    options hstore,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    site_token character varying(255) NOT NULL,
-    options hstore
+    updated_at timestamp without time zone
 );
 
 
@@ -194,14 +192,6 @@ CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (v
 --
 
 SET search_path TO "$user",public;
-
-INSERT INTO schema_migrations (version) VALUES ('20121115083239');
-
-INSERT INTO schema_migrations (version) VALUES ('20121122073822');
-
-INSERT INTO schema_migrations (version) VALUES ('20130206133628');
-
-INSERT INTO schema_migrations (version) VALUES ('20130206143947');
 
 INSERT INTO schema_migrations (version) VALUES ('20130206143949');
 

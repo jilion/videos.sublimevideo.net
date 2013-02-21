@@ -10,7 +10,6 @@ describe VideoTag do
     its(:uid)             { should be_present }
     its(:uid_origin)      { should eq 'attribute' }
     its(:title)           { should be_present }
-    its(:title_origin)    { should eq 'attribute' }
     its(:poster_url)      { should eq 'http://media.sublimevideo.net/vpa/ms_800.jpg' }
     its(:size)            { should eq '640x360' }
     its(:duration)        { should eq 10000 }
@@ -21,8 +20,7 @@ describe VideoTag do
   end
 
   describe "Associations" do
-    it { should have_many(:video_sources).dependent(:destroy) }
-    # it { should have_many(:sources).dependent(:destroy) }
+    it { should have_many(:sources).dependent(:destroy) }
   end
 
   describe "Scopes" do
@@ -69,7 +67,7 @@ describe VideoTag do
       end
     end
 
-    describe ".duplicates_first_source_url" do
+    describe ".duplicates_first_source_url", :focus do
       let(:site_token) { 'site_token' }
       let!(:other_video_tag) { create(:video_tag_with_sources, site_token: site_token, uid_origin: 'source') }
       subject { VideoTag.duplicates_first_source_url(video_tag) }
@@ -81,6 +79,11 @@ describe VideoTag do
 
       context "with video tag with uid from source" do
         let!(:video_tag) { create(:video_tag_with_sources, site_token: site_token, uid_origin: 'source') }
+        it { should have(1).duplicates }
+      end
+
+      context "with video tag with invalid uid from attribute" do
+        let!(:video_tag) { create(:video_tag_with_sources, site_token: site_token, uid: 'i.n valid!', uid_origin: 'attribute') }
         it { should have(1).duplicates }
       end
     end
@@ -107,7 +110,6 @@ describe VideoTag do
     it { should validate_presence_of(:uid) }
     it { should validate_presence_of(:uid_origin) }
     # it { should validate_uniqueness_of(:uid).scoped_to(:site_token) } # doesn't work with null: false on uid
-    it { should ensure_inclusion_of(:title_origin).in_array(%w[attribute youtube vimeo]).allow_nil }
     it { should ensure_inclusion_of(:uid_origin).in_array(%w[attribute source]) }
     it { should ensure_inclusion_of(:sources_origin).in_array(%w[youtube vimeo other]).allow_nil }
   end
@@ -210,23 +212,21 @@ end
 #
 # Table name: video_tags
 #
-#  created_at      :datetime
-#  current_sources :text
-#  duration        :integer
-#  id              :integer          not null, primary key
-#  options         :hstore
-#  poster_url      :text
-#  settings        :hstore
-#  site_token      :string(255)      not null
-#  size            :string(255)
-#  sources         :text
-#  sources_id      :string(255)
-#  sources_origin  :string(255)
-#  title           :string(255)
-#  title_origin    :string(255)
-#  uid             :string(255)      not null
-#  uid_origin      :string(255)      default("attribute"), not null
-#  updated_at      :datetime
+#  created_at     :datetime
+#  duration       :integer
+#  id             :integer          not null, primary key
+#  options        :hstore
+#  poster_url     :text
+#  settings       :hstore
+#  site_token     :string(255)      not null
+#  size           :string(255)
+#  sources_id     :string(255)
+#  sources_origin :string(255)
+#  title          :string(255)
+#  title_origin   :string(255)
+#  uid            :string(255)      not null
+#  uid_origin     :string(255)      default("attribute"), not null
+#  updated_at     :datetime
 #
 # Indexes
 #
