@@ -6,7 +6,6 @@ module VideoTagDataUnaliaser
     p:  'poster_url',
     z:  'size',
     d:  'duration',
-    cs: 'current_sources',
     s:  'sources',
     i:  'sources_id',
     io: 'sources_origin',
