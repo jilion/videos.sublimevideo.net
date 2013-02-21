@@ -67,7 +67,7 @@ describe VideoTag do
       end
     end
 
-    describe ".duplicates_first_source_url", :focus do
+    describe ".duplicates_first_source_url" do
       let(:site_token) { 'site_token' }
       let!(:other_video_tag) { create(:video_tag_with_sources, site_token: site_token, uid_origin: 'source') }
       subject { VideoTag.duplicates_first_source_url(video_tag) }

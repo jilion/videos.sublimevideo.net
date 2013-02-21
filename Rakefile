@@ -4,4 +4,7 @@
 require File.expand_path('../config/application', __FILE__)
 
 VideosSublimeVideo::Application.load_tasks
-load "rspec/rails/tasks/rspec.rake"
+
+if Rails.env.in?(%w[development test])
+  load "rspec/rails/tasks/rspec.rake"
+end
