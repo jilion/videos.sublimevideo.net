@@ -24,6 +24,7 @@ class VideoTag < ActiveRecord::Base
       sources_origin: video_tag.sources_origin
     )
   }
+  scope :with_uids, ->(uids) { where(uid: uids) }
 
   validates :site_token, presence: true
   validates :uid, presence: true, uniqueness: { scope: :site_token }

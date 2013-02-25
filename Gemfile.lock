@@ -15,7 +15,7 @@ GIT
 
 GIT
   remote: git://github.com/rails/rails.git
-  revision: 45321a69b3c01ce8a4cfef6cdf13381d73e10cd3
+  revision: 3eef1c7c5d0c4538efb9e061b6fe68011f0352b1
   specs:
     actionmailer (4.0.0.beta)
       actionpack (= 4.0.0.beta)
@@ -102,6 +102,7 @@ GEM
     guard-rspec (2.4.1)
       guard (>= 1.1)
       rspec (~> 2.11)
+    has_scope (0.5.1)
     her (0.4)
       activesupport (>= 3.0.0)
       faraday (~> 0.8)
@@ -189,7 +190,7 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
-    sublime_video_private_api (1.0.4)
+    sublime_video_private_api (1.1.0)
       her
       kaminari
       rails (>= 3.2.12)
@@ -226,6 +227,7 @@ DEPENDENCIES
   factory_girl_rails
   guard-pow
   guard-rspec
+  has_scope
   librato-rails!
   lograge
   newrelic_rpm
