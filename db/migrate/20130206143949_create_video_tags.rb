@@ -1,6 +1,7 @@
 class CreateVideoTags < ActiveRecord::Migration
   def change
-    execute "create extension hstore"
+    execute "CREATE EXTENSION IF NOT EXISTS hstore"
+
     create_table :video_tags do |t|
       t.string :site_token, null: false
       t.string  :uid, null: false
