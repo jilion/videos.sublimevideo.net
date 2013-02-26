@@ -15,6 +15,7 @@ class VideoTagUpdaterWorker
     VideoTagUpdater.new(video_tag).update(unaliased_data)
     # VideoTagDuplicateRemover.new(video_tag).remove_duplicate
     # PusherWrapper.trigger("private-#{video_tag.site.token}", 'video_tag')
+    # PusherWrapper.trigger("private-#{video_tag.site.token}", 'video_tag', video_tag.backbone_data)
     Librato.increment 'video_tag.update'
   end
 end
