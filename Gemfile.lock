@@ -180,7 +180,7 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
-    sublime_video_private_api (1.1.0)
+    sublime_video_private_api (1.1.1)
       her
       kaminari
       rails (>= 3.2.12)
