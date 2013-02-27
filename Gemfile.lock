@@ -54,11 +54,9 @@ GEM
     coderay (1.0.9)
     connection_pool (1.0.0)
     crack (0.3.2)
-    daemons (1.1.9)
     dalli (2.6.2)
     diff-lcs (1.2.1)
     erubis (2.7.0)
-    eventmachine (1.0.0)
     facter (1.6.17)
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
@@ -109,7 +107,7 @@ GEM
     mocha (0.10.5)
       metaclass (~> 0.0.1)
     multi_json (1.6.1)
-    multipart-post (1.1.5)
+    multipart-post (1.2.0)
     newrelic_rpm (3.5.7.59)
     pg (0.14.1)
     polyglot (0.3.3)
@@ -117,6 +115,8 @@ GEM
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
+    puma (1.6.3)
+      rack (~> 1.2)
     rack (1.5.2)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -186,10 +186,6 @@ GEM
       rails (>= 3.2.12)
       responders
     terminal-table (1.4.5)
-    thin (1.5.0)
-      daemons (>= 1.0.9)
-      eventmachine (>= 0.12.6)
-      rack (>= 1.0.0)
     thor (0.17.0)
     thread_safe (0.1.0)
       atomic
@@ -221,6 +217,7 @@ DEPENDENCIES
   lograge
   newrelic_rpm
   pg
+  puma
   rack-cache
   rack-status
   rails (= 4.0.0.beta1)
@@ -230,7 +227,6 @@ DEPENDENCIES
   shoulda-matchers
   sidekiq
   sublime_video_private_api (~> 1.0)
-  thin
   vcr
   video_info
   webmock

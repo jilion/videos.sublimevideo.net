@@ -18,7 +18,7 @@ gem 'rack-status'
 gem 'has_scope'
 
 group :staging, :production do
-  gem 'thin'
+  gem 'puma'
   gem 'lograge'
   gem 'dalli'
   gem 'rack-cache'
