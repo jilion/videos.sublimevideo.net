@@ -115,8 +115,8 @@ GEM
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
-    puma (1.6.3)
-      rack (~> 1.2)
+    puma (2.0.0.b6)
+      rack (>= 1.1, < 2.0)
     rack (1.5.2)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -217,7 +217,7 @@ DEPENDENCIES
   lograge
   newrelic_rpm
   pg
-  puma
+  puma (= 2.0.0.b6)
   rack-cache
   rack-status
   rails (= 4.0.0.beta1)
