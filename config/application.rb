@@ -11,7 +11,6 @@ require "action_controller/railtie"
 Bundler.setup(*Rails.groups(assets: %w(development test)))
 
 require 'sublime_video_private_api'
-require 'newrelic_rpm'
 
 module VideosSublimeVideo
   class Application < Rails::Application
