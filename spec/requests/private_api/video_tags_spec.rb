@@ -16,7 +16,7 @@ describe "VideoTags requests" do
 
     it "supports select scope" do
       get "private_api/sites/#{site_token}/video_tags.json", { select: %w[uid title] }, @env
-      video_tag = MultiJson.load(response.body).first['video_tag']
+      video_tag = MultiJson.load(response.body).first
       video_tag.should have_key("uid")
       video_tag.should have_key("title")
       video_tag.should_not have_key("uid_origin")
@@ -34,7 +34,7 @@ describe "VideoTags requests" do
 
     it "finds video_tag per uid" do
       get "private_api/sites/#{site_token}/video_tags/#{video_tag.uid}.json", {}, @env
-      MultiJson.load(response.body).should have_key("video_tag")
+      MultiJson.load(response.body).should_not have_key("video_tag")
     end
   end
 
