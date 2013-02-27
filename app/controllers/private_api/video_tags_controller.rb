@@ -13,7 +13,7 @@ class PrivateApi::VideoTagsController < SublimeVideoPrivateApiController
   end
 
   def show
-    @video_tag = VideoTag.where(site_token: params[:site_token], uid: params[:id]).first
+    @video_tag = VideoTag.where(site_token: params[:site_token], uid: params[:id]).first!
 
     respond_with(@video_tag)
   end
