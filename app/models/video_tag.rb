@@ -1,7 +1,7 @@
 class VideoTag < ActiveRecord::Base
   UID_REGEX = '^[a-z0-9_\-]{1,64}$'
 
-  has_many :sources, -> { order(:position) }, class_name: "VideoSource", dependent: :destroy
+  has_many :sources, -> { order(:position) }, class_name: "VideoSource", dependent: :delete_all
 
   scope :last_30_days_active, -> { where("updated_at >= ?", 30.days.ago.midnight) }
   scope :last_90_days_active, -> { where("updated_at >= ?", 90.days.ago.midnight) }
@@ -63,6 +63,7 @@ class VideoTag < ActiveRecord::Base
   end
 
   def sources=(sources)
+    self.sources.delete_all
     (sources || []).each_with_index do |attributes, index|
       self.sources.build(attributes.merge(position: index))
     end

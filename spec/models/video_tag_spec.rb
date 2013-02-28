@@ -20,7 +20,7 @@ describe VideoTag do
   end
 
   describe "Associations" do
-    it { should have_many(:sources).dependent(:destroy) }
+    it { should have_many(:sources).dependent(:delete_all) }
   end
 
   describe "Scopes" do
