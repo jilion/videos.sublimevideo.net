@@ -2,7 +2,7 @@ require 'has_scope'
 
 class PrivateApi::VideoTagsController < SublimeVideoPrivateApiController
   has_scope :per
-  has_scope :last_30_days_active, type: :boolean
+  has_scope :last_30_days_active, :with_invalid_uid, type: :boolean
   has_scope :select, :with_uids, type: :array
 
   def index
@@ -22,5 +22,12 @@ class PrivateApi::VideoTagsController < SublimeVideoPrivateApiController
     @count = apply_scopes(VideoTag.where(site_token: params[:site_token])).count
 
     respond_with(count: @count)
+  end
+
+  # GET /private_api/video_tags/site_tokens
+  def site_tokens
+    @site_tokens = apply_scopes(VideoTag).uniq.pluck(:site_token)
+
+    respond_with(site_tokens: @site_tokens)
   end
 end

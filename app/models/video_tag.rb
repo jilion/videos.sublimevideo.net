@@ -25,6 +25,7 @@ class VideoTag < ActiveRecord::Base
     )
   }
   scope :with_uids, ->(uids) { where(uid: uids) }
+  scope :with_invalid_uid, -> { where("uid !~* '#{UID_REGEX}'") }
 
   validates :site_token, presence: true
   validates :uid, presence: true, uniqueness: { scope: :site_token }

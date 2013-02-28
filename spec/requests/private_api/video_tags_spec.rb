@@ -49,4 +49,17 @@ describe "VideoTags requests" do
     end
   end
 
+  describe "site_tokens" do
+    before {
+      3.times { create(:video_tag, site_token: site_token) }
+    }
+
+    it "supports with_invalid_uid scope" do
+      VideoTag.first.update(uid: ' a ')
+      get "private_api/video_tags/site_tokens.json", { with_invalid_uid: true }, @env
+      MultiJson.load(response.body).should eq({ "site_tokens" => [VideoTag.first.site_token] })
+    end
+  end
+
+
 end
