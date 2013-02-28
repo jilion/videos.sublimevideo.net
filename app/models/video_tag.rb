@@ -8,13 +8,13 @@ class VideoTag < ActiveRecord::Base
   scope :by_title, ->(way = 'asc') { order(title: way.to_sym) }
   scope :by_date, ->(way = 'desc') { order(created_at: way.to_sym) }
   scope :duplicates_first_source_url, ->(video_tag) {
-    joins(:sources)
+    includes(:sources)
     .where(site_token: video_tag.site_token)
     .where("uid_origin = 'source' OR (uid_origin = 'attribute' AND uid !~* '#{UID_REGEX}')")
     .merge(VideoSource.where(
       position: 0,
       url: video_tag.first_source.try(:url)
-    ))
+    ).references(:sources))
   }
   scope :duplicates_sources_id, ->(video_tag) {
     where(

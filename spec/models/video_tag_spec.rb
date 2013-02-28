@@ -70,21 +70,23 @@ describe VideoTag do
     describe ".duplicates_first_source_url" do
       let(:site_token) { 'site_token' }
       let!(:other_video_tag) { create(:video_tag_with_sources, site_token: site_token, uid_origin: 'source') }
-      subject { VideoTag.duplicates_first_source_url(video_tag) }
+      subject { VideoTag.duplicates_first_source_url(video_tag).first }
 
       context "with standard video tag" do
         let!(:video_tag) { create(:video_tag_with_sources, site_token: site_token) }
-        it { should have(0).duplicates }
+        it { should be_nil }
       end
 
       context "with video tag with uid from source" do
         let!(:video_tag) { create(:video_tag_with_sources, site_token: site_token, uid_origin: 'source') }
-        it { should have(1).duplicates }
+        it { should_not be_readonly }
+        it { should be_present }
       end
 
       context "with video tag with invalid uid from attribute" do
         let!(:video_tag) { create(:video_tag_with_sources, site_token: site_token, uid: 'i.n valid!', uid_origin: 'attribute') }
-        it { should have(1).duplicates }
+        it { should_not be_readonly }
+        it { should be_present }
       end
     end
 
