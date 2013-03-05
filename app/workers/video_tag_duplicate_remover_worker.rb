@@ -14,8 +14,9 @@ class VideoTagDuplicateRemoverWorker
   end
 
   def perform(site_token, uid)
-    video_tag = VideoTag.where(site_token: site_token, uid: uid).first
-    VideoTagDuplicateRemover.new(video_tag).remove_duplicate
-    Librato.increment 'video_tag.remove_duplicate'
+    if video_tag = VideoTag.where(site_token: site_token, uid: uid).first
+      VideoTagDuplicateRemover.new(video_tag).remove_duplicate
+      Librato.increment 'video_tag.remove_duplicate'
+    end
   end
 end
