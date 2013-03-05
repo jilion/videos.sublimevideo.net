@@ -8,30 +8,13 @@ describe VideoTagDuplicateRemover do
   let(:remover) { VideoTagDuplicateRemover.new(video_tag) }
   let(:video_tag) { OpenStruct.new(
     site_token: 'site_token',
-    uid: 'uid',
-    saved_once?: true,
-    valid_uid?: true
+    uid: 'uid'
   ) }
-  let(:video_tag_duplicate) { OpenStruct.new(
-    uid: 'duplicated_uid',
-    saved_once?: true,
-    valid_uid?: true
-  ) }
+  let(:video_tag_duplicate) { OpenStruct.new(uid: 'duplicated_uid') }
 
   before {
-    Librato.stub(:increment)
     VideoStatsMergerWorker.stub(:perform_async)
   }
-
-  it "searches for duplicates only for video_tag saved once" do
-    video_tag.should_receive(:saved_once?)
-    remover.remove_duplicate
-  end
-
-  it "searches for duplicates only for video_tag with valid uid" do
-    video_tag.should_receive(:valid_uid?)
-    remover.remove_duplicate
-  end
 
   it "founds duplicates from video_tag with the same sources_id" do
     video_tag.stub(:sources_id?) { true }
@@ -58,11 +41,6 @@ describe VideoTagDuplicateRemover do
 
     it "removes duplicate" do
       video_tag_duplicate.should_receive(:destroy)
-      remover.remove_duplicate
-    end
-
-    it "increments Librato metrics" do
-      Librato.should_receive(:increment).with('video_tag.duplicate_removed')
       remover.remove_duplicate
     end
   end

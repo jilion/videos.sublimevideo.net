@@ -1,4 +1,3 @@
-require 'librato-rails'
 require 'active_support/core_ext'
 
 require 'video_stats_merger_worker'
@@ -11,12 +10,9 @@ class VideoTagDuplicateRemover
   end
 
   def remove_duplicate
-    if video_tag.saved_once? && video_tag.valid_uid?
-      if video_tag_duplicate = find_duplicate
-        VideoStatsMergerWorker.perform_async(video_tag.site_token, video_tag.uid, video_tag_duplicate.uid)
-        video_tag_duplicate.destroy
-        Librato.increment 'video_tag.duplicate_removed'
-      end
+    if video_tag_duplicate = find_duplicate
+      VideoStatsMergerWorker.perform_async(video_tag.site_token, video_tag.uid, video_tag_duplicate.uid)
+      video_tag_duplicate.destroy
     end
   end
 

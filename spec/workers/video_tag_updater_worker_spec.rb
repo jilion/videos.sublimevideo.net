@@ -14,7 +14,7 @@ describe VideoTagUpdaterWorker do
     VideoTagDataUnaliaser.stub(:unalias) { unaliases_data }
     VideoTag.stub(:find_or_initialize) { video_tag }
     VideoTagUpdater.stub_chain(:new, :update)
-    VideoTagDuplicateRemover.stub_chain(:new, :remove_duplicate)
+    VideoTagDuplicateRemoverWorker.stub(:perform_async_if_needed)
     Librato.stub(:increment)
   }
 
@@ -46,13 +46,10 @@ describe VideoTagUpdaterWorker do
     VideoTagUpdaterWorker.new.perform(*params)
   end
 
-  # it "removes duplicate video_tag" do
-  #   VideoTagDuplicateRemover.should_receive(:new).with(video_tag) { |mock|
-  #     mock.should_receive(:remove_duplicate)
-  #     mock
-  #   }
-  #   VideoTagUpdaterWorker.new.perform(*params)
-  # end
+  it "removes duplicate video_tag" do
+    VideoTagDuplicateRemoverWorker.should_receive(:perform_async_if_needed).with(video_tag)
+    VideoTagUpdaterWorker.new.perform(*params)
+  end
 
   it "increments Librato 'video_tag.update' metric" do
     Librato.should_receive(:increment).once.with('video_tag.update')

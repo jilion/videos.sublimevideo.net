@@ -6,4 +6,5 @@
 :require: '.'
 :timeout: 60
 :queues:
-  - [videos, 1]
+  - [videos, 100]
+  - [videos_low, 1]
