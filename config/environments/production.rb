@@ -1,3 +1,6 @@
+require 'lograge'
+require 'rack-cache'
+
 VideosSublimeVideo::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
