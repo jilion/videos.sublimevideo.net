@@ -6,9 +6,9 @@ end
 require 'bundler/setup'
 require_relative 'config/rspec'
 
-# unless defined?(Rails)
-#   module Rails
-#     def self.root; Pathname.new(File.expand_path('')); end
-#     def self.env; 'test'; end
-#   end
-# end
+unless defined?(Rails)
+  module Rails
+    def self.root; Pathname.new(File.expand_path('')); end
+    def self.env; 'test'; end
+  end
+end
