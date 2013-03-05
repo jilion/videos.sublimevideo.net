@@ -46,7 +46,7 @@ class VideoTag < ActiveRecord::Base
   end
 
   def saved_once?
-    created_at == updated_at
+    persisted? && created_at == updated_at
   end
 
   def uid=(uid)

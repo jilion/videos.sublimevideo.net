@@ -132,16 +132,24 @@ describe VideoTag do
   end
 
   describe "#saved_once?" do
-    subject { create(:video_tag) }
-
-    context "with new record" do
-      it { should be_saved_once }
-    end
-
-    context "with updated record" do
-      before { subject.touch }
+    context "with unsaved record" do
+      subject { build(:video_tag) }
 
       it { should_not be_saved_once }
+    end
+
+    context "with saved record" do
+      subject { create(:video_tag) }
+
+      context "never updated" do
+        it { should be_saved_once }
+      end
+
+      context "updated once" do
+        before { subject.touch }
+
+        it { should_not be_saved_once }
+      end
     end
   end
 
