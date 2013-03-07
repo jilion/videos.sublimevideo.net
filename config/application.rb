@@ -37,3 +37,7 @@ module VideosSublimeVideo
     config.assets.enabled = false
   end
 end
+
+# Ensure tmp folder
+temp_dir = Rails.root.join('tmp')
+Dir.mkdir(temp_dir) unless Dir.exists?(temp_dir)
