@@ -72,6 +72,12 @@ class VideoTag < ActiveRecord::Base
   def settings=(settings)
     write_attribute :settings, Hash[(settings || {}).map { |k,v| [k.underscore,v] }]
   end
+
+  def options=(options)
+    write_attribute :options, Hash[(options || {}).map { |k,v|
+      [k, ActiveRecord::ConnectionAdapters::Column.value_to_boolean(v)]
+    }]
+  end
 end
 
 # == Schema Information

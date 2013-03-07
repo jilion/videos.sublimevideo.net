@@ -54,6 +54,27 @@ describe VideoTag do
         video_tag.should have(2).sources
       end
     end
+
+    context "video_tag with autoembed enabled", :fog_mock do
+      let(:data) { {
+        't' => 'video title',
+        's' => [
+          { 'u' => "http://example.com/video.mp4", 'q' => 'base', 'f' => 'mp4' },
+          { 'u' => "http://example.com/video.hd.mp4", 'q' => 'hd', 'f' => 'mp4' }
+        ],
+        'o' => { 'autoembed' => 'true' }
+      }}
+      let(:s3_bucket) { S3Wrapper.buckets['sublimevideo'] }
+      let(:path) { 'e/site_token/uid.html' }
+
+      it "uploads autoembed file" do
+        VideoTagUpdaterWorker.perform_async(site_token, uid, data)
+        VideoTagUpdaterWorker.drain
+        AutoEmbedFileUploaderWorker.drain
+
+        S3Wrapper.fog_connection.get_object(s3_bucket, path).body.should include "<!DOCTYPE html>"
+      end
+    end
   end
 
 end

@@ -222,6 +222,23 @@ describe VideoTag do
     end
   end
 
+  describe "#options=" do
+    let(:options) { {
+      "autoembed" => 'true',
+      "foo" => 0
+    } }
+
+    it "casts boolean values" do
+      video_tag.update(options: options)
+      video_tag.options["autoembed"].should eq true
+      video_tag.options["foo"].should eq false
+    end
+
+    it "accepts nil options" do
+      video_tag.update(options: nil)
+      video_tag.should have(0).options
+    end
+  end
 end
 
 # == Schema Information

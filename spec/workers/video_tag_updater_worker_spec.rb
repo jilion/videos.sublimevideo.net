@@ -15,6 +15,7 @@ describe VideoTagUpdaterWorker do
     VideoTag.stub(:find_or_initialize) { video_tag }
     VideoTagUpdater.stub_chain(:new, :update)
     VideoTagDuplicateRemoverWorker.stub(:perform_async_if_needed)
+    AutoEmbedFileUploaderWorker.stub(:perform_async_if_needed)
     Librato.stub(:increment)
   }
 
@@ -46,8 +47,13 @@ describe VideoTagUpdaterWorker do
     VideoTagUpdaterWorker.new.perform(*params)
   end
 
-  it "removes duplicate video_tag" do
+  it "removes duplicate video_tag if needed" do
     VideoTagDuplicateRemoverWorker.should_receive(:perform_async_if_needed).with(video_tag)
+    VideoTagUpdaterWorker.new.perform(*params)
+  end
+
+  it "uploads video_tag autoembed if needed" do
+    AutoEmbedFileUploaderWorker.should_receive(:perform_async_if_needed).with(video_tag)
     VideoTagUpdaterWorker.new.perform(*params)
   end
 

@@ -6,10 +6,12 @@ ruby '1.9.3'
 gem 'rails', '4.0.0.beta1'
 
 gem 'sublime_video_private_api', '~> 1.0' # hosted on gemfury
+gem 'configurator', github: 'jilion/configurator'
 
 gem 'pg'
 gem 'sidekiq'
 gem 'video_info'
+gem 'fog'
 
 gem 'airbrake'
 gem 'librato-rails', github: 'librato/librato-rails', branch: 'feature/rack_first'

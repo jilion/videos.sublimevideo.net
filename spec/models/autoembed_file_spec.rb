@@ -37,7 +37,7 @@ describe AutoEmbedFile do
     end
 
     it "includes data-settings attribute" do
-      subject.read.should include 'data-settings="player-kit: 1; sharing-buttons: twitter facebook"'
+      subject.read.should include 'data-player-kit="1" data-sharing-buttons="twitter facebook"'
     end
 
     it "includes source tags" do
@@ -45,9 +45,7 @@ describe AutoEmbedFile do
     end
 
     context "with no sources" do
-      before {
-        video_tag.stub(:sources) { [] }
-      }
+      before { video_tag.stub(:sources) { [] } }
 
       it "doesn't includes source tags" do
         subject.read.should_not include 'source'

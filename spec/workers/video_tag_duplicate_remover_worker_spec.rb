@@ -54,25 +54,23 @@ describe VideoTagDuplicateRemoverWorker do
     ) }
 
     it "performs async only if video_tag are saved once" do
-      video_tag.should_receive(:saved_once?) { true }
       VideoTagDuplicateRemoverWorker.should_receive(:perform_async)
       VideoTagDuplicateRemoverWorker.perform_async_if_needed(video_tag)
     end
 
-    it "doesn't performs async only if video_tag aren't saved once" do
-      video_tag.should_receive(:saved_once?) { false }
+    it "doesn't performs async if video_tag aren't saved once" do
+      video_tag.stub(:saved_once?) { false }
       VideoTagDuplicateRemoverWorker.should_not_receive(:perform_async)
       VideoTagDuplicateRemoverWorker.perform_async_if_needed(video_tag)
     end
 
     it "performs async only if video_tag has a valid uid" do
-      video_tag.should_receive(:valid_uid?) { true }
       VideoTagDuplicateRemoverWorker.should_receive(:perform_async)
       VideoTagDuplicateRemoverWorker.perform_async_if_needed(video_tag)
     end
 
-    it "doesn't performs async only if video_tag hasn't a valid uid" do
-      video_tag.should_receive(:valid_uid?) { false }
+    it "doesn't performs async if video_tag hasn't a valid uid" do
+      video_tag.stub(:valid_uid?) { false }
       VideoTagDuplicateRemoverWorker.should_not_receive(:perform_async)
       VideoTagDuplicateRemoverWorker.perform_async_if_needed(video_tag)
     end

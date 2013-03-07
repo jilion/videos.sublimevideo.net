@@ -5,7 +5,7 @@
   <script type="text/javascript" src="//cdn.sublimevideo.net/js/<%= site_token %>.js"></script>
 </head>
 <body>
-  <video style="display:none" class="sublime" preload="none" <%= "poster=\"#{poster_url}\"" if video_tag.poster_url %> <%= "data-settings=\"#{data_settings}\"" %> >
+  <video style="display:none" class="sublime" preload="none" <%= poster_url %> <%= data_settings %> >
     <%= sources %>
   </video>
 </body>
