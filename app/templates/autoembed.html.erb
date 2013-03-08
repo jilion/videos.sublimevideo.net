@@ -2,10 +2,12 @@
 <html>
 <head>
   <title><%= title %></title>
-  <script type="text/javascript" src="//cdn.sublimevideo.net/js/<%= player_filename %>.js"></script>
+  <script type="text/javascript" src="//cdn.sublimevideo.net/js/<%= player_filename %>"></script>
 </head>
 <body>
   <video style="display:none" class="sublime" preload="none" <%= poster_url %> <%= data_settings %> >
-    <%= sources %>
+    <% sources.each do |source| %>
+      <%= source %>
+    <% end %>
   </video>
 </body>

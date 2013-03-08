@@ -21,35 +21,37 @@ describe AutoEmbedFile do
   ) }
 
   describe "autoembed html file" do
-    subject { AutoEmbedFile.new(video_tag) }
+    let(:autoembed_file) { AutoEmbedFile.new(video_tag) }
+    let(:body) { autoembed_file.read }
 
-    it { should be_kind_of Tempfile }
+    it { autoembed_file.should be_kind_of Tempfile }
 
     it "includes title tag" do
-      subject.read.should include '<title>My Video</title>'
+      body.should include '<title>My Video</title>'
     end
 
     it "includes loader with good token" do
-      subject.read.should include '//cdn.sublimevideo.net/js/site_token-beta.js'
+      body.should include 'src="//cdn.sublimevideo.net/js/site_token-beta.js"'
     end
 
     it "includes poster attribute" do
-      subject.read.should include 'poster="//poster_url.com"'
+      body.should include 'poster="//poster_url.com"'
     end
 
     it "includes data-settings attribute" do
-      subject.read.should include 'data-player-kit="1" data-sharing-buttons="twitter facebook"'
+      body.should include 'data-player-kit="1" data-sharing-buttons="twitter facebook"'
     end
 
     it "includes source tags" do
-      subject.read.should include '<source src="http://media.sublimevideo.net/360p.mp4" />\n<source src="http://media.sublimevideo.net/720p.mp4" data-quality="hd" />'
+      body.should include '<source src="http://media.sublimevideo.net/360p.mp4" />'
+      body.should include '<source src="http://media.sublimevideo.net/720p.mp4" data-quality="hd" />'
     end
 
     context "with no sources" do
       before { video_tag.stub(:sources) { [] } }
 
       it "doesn't includes source tags" do
-        subject.read.should_not include 'source'
+        body.should_not include 'source'
       end
     end
   end

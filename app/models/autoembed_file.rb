@@ -46,6 +46,6 @@ class AutoEmbedFile < Tempfile
         array << 'data-quality="hd"' if source.quality == 'hd'
         array << '/>'
       }.join(' ')
-    }.join('\n')
+    }
   end
 end
