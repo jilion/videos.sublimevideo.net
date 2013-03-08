@@ -106,7 +106,8 @@ CREATE TABLE video_tags (
     settings hstore,
     options hstore,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    player_stage character varying(255) DEFAULT 'stable'::character varying
 );
 
 
@@ -196,3 +197,5 @@ SET search_path TO "$user",public;
 INSERT INTO schema_migrations (version) VALUES ('20130206143949');
 
 INSERT INTO schema_migrations (version) VALUES ('20130206143950');
+
+INSERT INTO schema_migrations (version) VALUES ('20130308091208');

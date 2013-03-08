@@ -12,7 +12,8 @@ describe VideoTag do
     context "video_tag with public YouTube video" do
       let(:data) { {
         i: 'DAcjV60RnRw',
-        io: 'y'
+        io: 'y',
+        st: 'b'
       }}
 
       it "creates video_tag properly with title from YouTube", :vcr do
@@ -25,6 +26,7 @@ describe VideoTag do
         video_tag.title_origin.should eq 'youtube'
         video_tag.sources_id.should eq 'DAcjV60RnRw'
         video_tag.sources_origin.should eq 'youtube'
+        video_tag.player_stage.should eq 'beta'
       end
     end
 

@@ -11,6 +11,7 @@ module VideoTagDataUnaliaser
     io: 'sources_origin',
     a:  'settings',
     o:  'options',
+    st: 'player_stage',
     origin: {
       a: 'attribute',
       s: 'source',
@@ -21,6 +22,11 @@ module VideoTagDataUnaliaser
       q: 'quality',
       f: 'family',
       r: 'resolution'
+    },
+    stage: {
+      a: 'alpha',
+      b: 'beta',
+      s: 'stable'
     }
   }
 
@@ -30,6 +36,8 @@ module VideoTagDataUnaliaser
         case key = unalias_string(key)
         when /origin/
           [key, value.nil? ? nil : unalias_string(value, :origin).to_s]
+        when /stage/
+          [key, value.nil? ? nil : unalias_string(value, :stage).to_s]
         when :sources
           [key, unalias_sources(value)]
         else

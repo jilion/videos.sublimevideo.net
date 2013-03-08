@@ -14,6 +14,7 @@ describe VideoTag do
     its(:size)            { should eq '640x360' }
     its(:duration)        { should eq 10000 }
     its(:settings)        { should eq({ 'on_end' => 'nothing' }) }
+    its(:player_stage)    { should eq 'stable' }
 
     it { should have(2).sources }
     it { should be_valid }
@@ -114,6 +115,7 @@ describe VideoTag do
     # it { should validate_uniqueness_of(:uid).scoped_to(:site_token) } # doesn't work with null: false on uid
     it { should ensure_inclusion_of(:uid_origin).in_array(%w[attribute source]) }
     it { should ensure_inclusion_of(:sources_origin).in_array(%w[youtube vimeo other]).allow_nil }
+    it { should ensure_inclusion_of(:player_stage).in_array(%w[stable beta alpha]) }
   end
 
   describe "#valid_uid?" do
@@ -249,6 +251,7 @@ end
 #  duration       :integer
 #  id             :integer          not null, primary key
 #  options        :hstore
+#  player_stage   :string(255)      default("stable")
 #  poster_url     :text
 #  settings       :hstore
 #  site_token     :string(255)      not null

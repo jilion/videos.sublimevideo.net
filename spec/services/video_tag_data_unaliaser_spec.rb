@@ -17,6 +17,7 @@ describe VideoTagDataUnaliaser do
         's' => [
           { 'u' => 'http://videos.sublimevideo.net/source11.mp4', 'q' => 'base', 'f' => 'mp4', 'r' => '460x340' }
         ],
+        'st' => 'b',
         'created_at' => time,
         'updated_at' => time
       } }
@@ -35,6 +36,7 @@ describe VideoTagDataUnaliaser do
             family: 'mp4',
             resolution: '460x340'
           }],
+          player_stage: 'beta',
           created_at: time,
           updated_at: time
         })

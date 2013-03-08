@@ -32,6 +32,7 @@ class VideoTag < ActiveRecord::Base
   validates :uid_origin, presence: true, inclusion: %w[attribute source]
   validates :title_origin, inclusion: %w[attribute youtube vimeo], allow_nil: true
   validates :sources_origin, inclusion: %w[youtube vimeo other], allow_nil: true
+  validates :player_stage, inclusion: %w[stable beta alpha]
 
   def self.find_or_initialize(options)
     where(options).first_or_initialize
@@ -88,6 +89,7 @@ end
 #  duration       :integer
 #  id             :integer          not null, primary key
 #  options        :hstore
+#  player_stage   :string(255)      default("stable")
 #  poster_url     :text
 #  settings       :hstore
 #  site_token     :string(255)      not null
