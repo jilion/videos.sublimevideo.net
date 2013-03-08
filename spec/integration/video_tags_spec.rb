@@ -74,7 +74,9 @@ describe VideoTag do
         VideoTagUpdaterWorker.drain
         AutoEmbedFileUploaderWorker.drain
 
-        S3Wrapper.fog_connection.get_object(s3_bucket, path).body.should include "<!DOCTYPE html>"
+        body = S3Wrapper.fog_connection.get_object(s3_bucket, path).body
+        body.should include "<!DOCTYPE html>"
+        body.should include "/js/site_token.js"
       end
     end
   end

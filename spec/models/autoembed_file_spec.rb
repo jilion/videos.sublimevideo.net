@@ -16,7 +16,8 @@ describe AutoEmbedFile do
     title: 'My Video',
     poster_url: '//poster_url.com',
     settings: { "player_kit" => 1, "sharing_buttons"=> "twitter facebook" },
-    sources: [video_source, video_source_hd]
+    sources: [video_source, video_source_hd],
+    player_stage: 'beta'
   ) }
 
   describe "autoembed html file" do
@@ -29,7 +30,7 @@ describe AutoEmbedFile do
     end
 
     it "includes loader with good token" do
-      subject.read.should include '//cdn.sublimevideo.net/js/site_token.js'
+      subject.read.should include '//cdn.sublimevideo.net/js/site_token-beta.js'
     end
 
     it "includes poster attribute" do

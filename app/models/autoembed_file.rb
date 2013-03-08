@@ -4,7 +4,7 @@ require 'tempfile'
 class AutoEmbedFile < Tempfile
   attr_accessor :video_tag, :tempfile
 
-  delegate :site_token, :title, to: :video_tag
+  delegate :title, to: :video_tag
 
   def initialize(video_tag)
     @video_tag = video_tag
@@ -22,6 +22,14 @@ class AutoEmbedFile < Tempfile
 
   def template_path
     Rails.root.join('app', 'templates', "autoembed.html.erb")
+  end
+
+  def player_filename
+    if video_tag.player_stage == 'stable'
+      "#{video_tag.site_token}.js"
+    else
+      "#{video_tag.site_token}-#{video_tag.player_stage}.js"
+    end
   end
 
   def poster_url
