@@ -18,10 +18,10 @@ gem 'librato-rails', github: 'librato/librato-rails', branch: 'feature/rack_firs
 
 gem 'rack-status'
 gem 'has_scope'
-gem 'newrelic_rpm'
+gem 'newrelic_rpm', '3.6.0.74.beta'
 
 group :staging, :production do
-  gem 'puma', '2.0.0.b6'
+  gem 'thin'
   gem 'lograge'
   gem 'dalli'
   gem 'rack-cache'
