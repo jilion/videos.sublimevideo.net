@@ -29,16 +29,6 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
-end
-
-group :test do
-  gem 'shoulda-matchers'
-  gem 'webmock'
-  gem 'vcr'
-  gem 'factory_girl_rails'
-end
-
-group :tools do
   gem 'annotate'
 
   # Guard
@@ -47,4 +37,11 @@ group :tools do
 
   gem 'guard-pow'
   gem 'guard-rspec'
+end
+
+group :test do
+  gem 'shoulda-matchers'
+  gem 'webmock'
+  gem 'vcr'
+  gem 'factory_girl_rails'
 end
