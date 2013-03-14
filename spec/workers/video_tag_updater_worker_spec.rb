@@ -29,6 +29,12 @@ describe VideoTagUpdaterWorker do
     VideoTagUpdaterWorker.sidekiq_options['queue'].should eq 'videos'
   end
 
+  it "skips update if site_token is mysv token" do
+    params[0] = SiteToken[:my]
+    VideoTagDataUnaliaser.should_not_receive(:unalias)
+    VideoTagUpdaterWorker.new.perform(*params)
+  end
+
   it "unaliases aliased data" do
     VideoTagDataUnaliaser.should_receive(:unalias).with(data)
     VideoTagUpdaterWorker.new.perform(*params)

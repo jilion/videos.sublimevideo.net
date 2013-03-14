@@ -5,6 +5,9 @@ ruby '1.9.3'
 
 gem 'rails', '4.0.0.beta1'
 
+gem 'sublime_video_layout', '~> 2.6' # hosted on gemfury
+gem 'coffee-rails', '4.0.0.beta1' # needed for sublime_video_layout
+
 gem 'sublime_video_private_api', '~> 1.0' # hosted on gemfury
 gem 'configurator', github: 'jilion/configurator'
 
