@@ -15,7 +15,7 @@ class AutoEmbedFile < Tempfile
   private
 
   def write_from_template
-    template = ERB.new(File.new(template_path).read)
+    template = ERB.new(File.new(template_path).read, nil, '-')
     self.write template.result(binding)
     self.rewind
   end
