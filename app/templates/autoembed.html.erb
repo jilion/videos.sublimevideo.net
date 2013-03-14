@@ -6,8 +6,8 @@
 </head>
 <body>
   <video style="display:none" class="sublime" preload="none" <%= poster_url %> <%= data_settings %>>
-    <% sources.each do |source| -%>
-      <%= source %>
-    <% end -%>
+  <%- sources.each do |source| -%>
+    <%= source %>
+  <%- end -%>
   </video>
 </body>

@@ -42,10 +42,10 @@ class AutoEmbedFile < Tempfile
 
   def sources
     video_tag.sources.map { |source|
-      ["<source src=\"#{source.url}\""].tap { |array|
-        array << 'data-quality="hd"' if source.quality == 'hd'
-        array << '/>'
-      }.join(' ')
+      array = ["<source src=\"#{source.url}\""]
+      array << 'data-quality="hd"' if source.quality == 'hd'
+      array << '/>'
+      array.join(' ')
     }
   end
 end
