@@ -64,9 +64,11 @@ class VideoTag < ActiveRecord::Base
   end
 
   def sources=(sources)
-    self.sources.delete_all
-    (sources || []).each_with_index do |attributes, index|
-      self.sources.build(attributes.merge(position: index))
+    unless sources && sources.size == 1 && self.sources.pluck(:url).include?(sources.first[:url])
+      self.sources.delete_all
+      (sources || []).each_with_index do |attributes, index|
+        self.sources.build(attributes.merge(position: index))
+      end
     end
   end
 
