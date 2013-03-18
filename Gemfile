@@ -43,8 +43,8 @@ group :development, :test do
 end
 
 group :test do
-  gem 'shoulda-matchers'
-  gem 'webmock'
+  gem 'shoulda-matchers', '~> 1.4.0'
+  gem 'webmock', '>= 1.8.0', '< 1.10'
   gem 'vcr'
   gem 'factory_girl_rails'
 end
