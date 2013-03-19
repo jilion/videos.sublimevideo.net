@@ -32,6 +32,9 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
+end
+
+group :development do
   gem 'annotate'
 
   # Guard
