@@ -1,9 +1,0 @@
-machine:
-  # Version of ruby to use
-  ruby:
-    version:
-      1.9.3-p392
-
-dependencies:
-  bundler:
-    without: [development, staging, production]
