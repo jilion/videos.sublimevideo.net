@@ -25,5 +25,4 @@ class VideoTagDuplicateRemover
       VideoTag.duplicates_first_source_url(video_tag).first
     end
   end
-
 end
