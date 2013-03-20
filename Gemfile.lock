@@ -272,6 +272,7 @@ DEPENDENCIES
   rack-status
   rails (= 4.0.0.beta1)
   rb-fsevent
+  rspec
   rspec-rails
   ruby_gntp
   shoulda-matchers

@@ -46,6 +46,7 @@ group :development do
 end
 
 group :test do
+  gem 'rspec'
   gem 'shoulda-matchers'
   gem 'webmock', '>= 1.8.0', '< 1.10'
   gem 'vcr'
