@@ -21,7 +21,7 @@ gem 'librato-rails', github: 'librato/librato-rails', branch: 'feature/rack_firs
 
 gem 'rack-status'
 gem 'has_scope'
-gem 'newrelic_rpm', '3.6.0.74.beta'
+gem 'newrelic_rpm'
 
 group :staging, :production do
   gem 'thin'
