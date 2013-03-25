@@ -1,5 +1,12 @@
 require 'sidekiq'
 
+Sidekiq.configure_server do |config|
+  if database_url = ENV['DATABASE_URL']
+    ENV['DATABASE_URL'] = "#{database_url}?pool=27"
+    ActiveRecord::Base.establish_connection
+  end
+end
+
 Sidekiq.configure_client do |config|
-  config.redis = { size: 5 } # for web dyno
+  config.redis = { size: 2 } # for web dyno
 end
