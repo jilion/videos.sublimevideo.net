@@ -15,6 +15,7 @@ gem 'pg'
 gem 'sidekiq'
 gem 'video_info'
 gem 'fog'
+gem 'oj'
 
 gem 'airbrake'
 gem 'librato-rails', github: 'librato/librato-rails', branch: 'feature/rack_first'

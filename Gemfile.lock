@@ -143,6 +143,7 @@ GEM
     net-ssh (2.6.6)
     newrelic_rpm (3.6.0.78)
     nokogiri (1.5.9)
+    oj (2.0.10)
     pg (0.15.0)
     polyglot (0.3.3)
     pry (0.9.12)
@@ -260,6 +261,7 @@ DEPENDENCIES
   librato-rails!
   lograge
   newrelic_rpm
+  oj
   pg
   rack-cache
   rack-status
