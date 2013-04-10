@@ -17,9 +17,8 @@ gem 'video_info'
 gem 'fog'
 gem 'oj'
 
-gem 'airbrake'
+gem 'honeybadger'
 gem 'librato-rails', github: 'librato/librato-rails', branch: 'feature/rack_first'
-
 gem 'rack-status'
 gem 'has_scope'
 gem 'newrelic_rpm'

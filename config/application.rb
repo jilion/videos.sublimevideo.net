@@ -13,6 +13,7 @@ Bundler.setup(*Rails.groups(assets: %w(development test)))
 require 'sublime_video_private_api'
 require 'librato-rails'
 require 'newrelic_rpm'
+require 'honeybadger/railtie'
 
 module VideosSublimeVideo
   class Application < Rails::Application

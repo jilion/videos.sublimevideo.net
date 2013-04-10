@@ -44,10 +44,6 @@ GEM
       tzinfo (~> 0.3.33)
     addressable (2.3.3)
     aggregate (0.2.2)
-    airbrake (3.1.10)
-      activesupport
-      builder
-      json
     annotate (2.5.0)
       rake
     arel (4.0.0.beta2)
@@ -111,6 +107,8 @@ GEM
       faraday (~> 0.8)
       multi_json (~> 1.5)
     hike (1.2.1)
+    honeybadger (1.6.1)
+      json
     i18n (0.6.4)
     jquery-rails (2.2.1)
       railties (>= 3.0, < 5.0)
@@ -248,7 +246,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  airbrake
   annotate
   coffee-rails (= 4.0.0.beta1)
   configurator!
@@ -258,6 +255,7 @@ DEPENDENCIES
   guard-pow
   guard-rspec
   has_scope
+  honeybadger
   librato-rails!
   lograge
   newrelic_rpm
