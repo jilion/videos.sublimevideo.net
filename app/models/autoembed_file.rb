@@ -8,7 +8,7 @@ class AutoEmbedFile < Tempfile
 
   def initialize(video_tag)
     @video_tag = video_tag
-    super("autoembed.html", Rails.root.join('tmp'))
+    super('autoembed.html', Rails.root.join('tmp'))
     write_from_template
   end
 
@@ -21,7 +21,7 @@ class AutoEmbedFile < Tempfile
   end
 
   def template_path
-    Rails.root.join('app', 'templates', "autoembed.html.erb")
+    Rails.root.join('app', 'templates', 'autoembed.html.erb')
   end
 
   def player_filename
@@ -37,15 +37,15 @@ class AutoEmbedFile < Tempfile
   end
 
   def data_settings
-    video_tag.settings && video_tag.settings.map { |k,v| "data-#{k.dasherize}=\"#{v}\"" }.join(' ')
+    video_tag.settings && video_tag.settings.map { |k, v| "data-#{k.dasherize}=\"#{v}\"" }.join(' ')
   end
 
   def sources
-    video_tag.sources.map { |source|
+    video_tag.sources.map do |source|
       array = ["<source src=\"#{source.url}\""]
       array << 'data-quality="hd"' if source.quality == 'hd'
       array << '/>'
       array.join(' ')
-    }
+    end
   end
 end
