@@ -1,10 +1,10 @@
 class VideoTag < ActiveRecord::Base
   UID_REGEX = '^[a-z0-9_\-]{1,64}$'
 
-  has_many :sources, -> { order(:position) }, class_name: "VideoSource", dependent: :delete_all
+  has_many :sources, -> { order(:position) }, class_name: 'VideoSource', dependent: :delete_all
 
-  scope :last_30_days_active, -> { where("updated_at >= ?", 30.days.ago.midnight) }
-  scope :last_90_days_active, -> { where("updated_at >= ?", 90.days.ago.midnight) }
+  scope :last_30_days_active, -> { where('updated_at >= ?', 30.days.ago.midnight) }
+  scope :last_90_days_active, -> { where('updated_at >= ?', 90.days.ago.midnight) }
   scope :by_title, ->(way = 'asc') { order(title: way.to_sym) }
   scope :by_date, ->(way = 'desc') { order(created_at: way.to_sym) }
   scope :duplicates_first_source_url, ->(video_tag) {
@@ -73,11 +73,11 @@ class VideoTag < ActiveRecord::Base
   end
 
   def settings=(settings)
-    write_attribute :settings, Hash[(settings || {}).map { |k,v| [k.underscore,v] }]
+    write_attribute :settings, Hash[(settings || {}).map { |k, v| [k.underscore, v] }]
   end
 
   def options=(options)
-    write_attribute :options, Hash[(options || {}).map { |k,v|
+    write_attribute :options, Hash[(options || {}).map { |k, v|
       [k, ActiveRecord::ConnectionAdapters::Column.value_to_boolean(v)]
     }]
   end

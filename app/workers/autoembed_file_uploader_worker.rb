@@ -8,7 +8,7 @@ class AutoEmbedFileUploaderWorker
   sidekiq_options queue: 'videos'
 
   def self.perform_async_if_needed(video_tag)
-    if video_tag.options && video_tag.options["autoembed"] == true
+    if video_tag.options && video_tag.options['autoembed'] == true
       perform_async(video_tag.site_token, video_tag.uid)
     end
   end
