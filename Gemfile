@@ -39,8 +39,6 @@ group :development do
 
   # Guard
   gem 'ruby_gntp'
-  gem 'rb-fsevent'
-
   gem 'guard-pow'
   gem 'guard-rspec'
 end
