@@ -3,6 +3,17 @@
 <head>
   <title><%= title %></title>
   <script type="text/javascript" src="//cdn.sublimevideo.net/js/<%= player_filename %>"></script>
+  <%- if options['ga_account'] -%>
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', '<%= options['ga_account'] %>']);
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <%- end -%>
 </head>
 <body>
   <video style="display:none" class="sublime" preload="none" <%= poster_url %> <%= data_settings %>>
