@@ -57,14 +57,14 @@ describe VideoTag do
       end
     end
 
-    context "video_tag with autoembed enabled", :fog_mock do
+    context "video_tag with autoembed & ga_account enabled", :fog_mock do
       let(:data) { {
         't' => 'video title',
         's' => [
           { 'u' => "http://example.com/video.mp4", 'q' => 'base', 'f' => 'mp4' },
           { 'u' => "http://example.com/video.hd.mp4", 'q' => 'hd', 'f' => 'mp4' }
         ],
-        'o' => { 'autoembed' => 'true' }
+        'o' => { 'autoembed' => 'true', 'gaAccount' => 'UA-12345-6' }
       }}
       let(:s3_bucket) { S3Wrapper.buckets['sublimevideo'] }
       let(:path) { 'e/site_token/uid.html' }
@@ -77,6 +77,7 @@ describe VideoTag do
         body = S3Wrapper.fog_connection.get_object(s3_bucket, path).body
         body.should include "<!DOCTYPE html>"
         body.should include "/js/site_token.js"
+        body.should include "_gaq.push(['_setAccount', 'UA-12345-6']);"
       end
     end
   end

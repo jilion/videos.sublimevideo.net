@@ -18,6 +18,7 @@ describe VideoTagDataUnaliaser do
           { 'u' => 'http://videos.sublimevideo.net/source11.mp4', 'q' => 'base', 'f' => 'mp4', 'r' => '460x340' }
         ],
         'st' => 'b',
+        'o' => { "gaAccount" => 'UA-XXXXX-X' },
         'created_at' => time,
         'updated_at' => time
       } }
@@ -37,6 +38,7 @@ describe VideoTagDataUnaliaser do
             resolution: '460x340'
           }],
           player_stage: 'beta',
+          options: { 'gaAccount' => 'UA-XXXXX-X' },
           created_at: time,
           updated_at: time
         })

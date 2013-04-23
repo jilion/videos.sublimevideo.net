@@ -4,7 +4,7 @@ require 'tempfile'
 class AutoEmbedFile < Tempfile
   attr_accessor :video_tag, :tempfile
 
-  delegate :title, to: :video_tag
+  delegate :title, :options, to: :video_tag
 
   def initialize(video_tag)
     @video_tag = video_tag
