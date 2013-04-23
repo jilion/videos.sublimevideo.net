@@ -193,7 +193,7 @@ describe VideoTag do
   end
 
   describe "#settings=" do
-    it "underscorizes settings" do
+    it "underscorizes keys" do
       camelcase_settings = { 'logoPosition' => 'bottom-right' }
       video_tag.update(settings: camelcase_settings)
       video_tag.settings.should eq({'logo_position' => 'bottom-right'})
@@ -235,14 +235,25 @@ describe VideoTag do
 
   describe "#options=" do
     let(:options) { {
-      "autoembed" => 'true',
-      "foo" => 0
+      'autoembed' => 'true',
+      'foo' => 1,
+      'gaAccount' => 'UA-XXXXX-X'
     } }
 
-    it "casts boolean values" do
+    it "casts true values" do
       video_tag.update(options: options)
-      video_tag.options["autoembed"].should eq true
-      video_tag.options["foo"].should eq false
+      video_tag.options["autoembed"].should be_true
+      video_tag.options["foo"].should be_true
+    end
+
+    it "underscorizes keys" do
+      video_tag.update(options: options)
+      video_tag.options.keys.should include "ga_account"
+    end
+
+    it "doesn't change non-true values" do
+      video_tag.update(options: options)
+      video_tag.options['ga_account'].should eq 'UA-XXXXX-X'
     end
 
     it "accepts nil options" do

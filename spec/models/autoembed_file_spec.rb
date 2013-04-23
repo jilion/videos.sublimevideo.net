@@ -16,6 +16,7 @@ describe AutoEmbedFile do
     title: 'My Video',
     poster_url: '//poster_url.com',
     settings: { "player_kit" => 1, "sharing_buttons"=> "twitter facebook" },
+    options: { },
     sources: [video_source, video_source_hd],
     player_stage: 'beta'
   ) }
@@ -52,6 +53,14 @@ describe AutoEmbedFile do
 
       it "doesn't includes source tags" do
         body.should_not include 'source'
+      end
+    end
+
+    context "with Google Analytics account" do
+      before { video_tag.stub(:options) { { 'ga_account' => 'UA-12345-6' } } }
+
+      it "includes google analytics script tag" do
+        body.should include "_gaq.push(['_setAccount', 'UA-12345-6']);"
       end
     end
   end
