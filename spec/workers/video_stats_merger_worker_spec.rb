@@ -12,6 +12,6 @@ describe VideoStatsMergerWorker do
   end
 
   it "delays job in low (mysv) queue" do
-    VideoStatsMergerWorker.sidekiq_options['queue'].should eq 'low'
+    VideoStatsMergerWorker.sidekiq_options_hash['queue'].should eq 'low'
   end
 end
