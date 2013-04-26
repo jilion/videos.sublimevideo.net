@@ -21,7 +21,7 @@ describe AutoEmbedFileUploaderWorker do
   end
 
   it "delays job in videos queue" do
-    AutoEmbedFileUploaderWorker.sidekiq_options['queue'].should eq 'videos'
+    AutoEmbedFileUploaderWorker.sidekiq_options_hash['queue'].should eq 'videos'
   end
 
   it "finds video_tag" do
