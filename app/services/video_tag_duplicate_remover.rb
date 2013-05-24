@@ -26,3 +26,4 @@ class VideoTagDuplicateRemover
     end
   end
 end
+
