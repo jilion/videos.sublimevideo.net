@@ -10,7 +10,7 @@ class VideoSourceAnalyzer
   def origin
     @origin ||=
       case url
-      when %r{#{VIMEO_URL_PART}} then 'vimeo'
+      when %r{https?://#{VIMEO_URL_PART}} then 'vimeo'
       else; 'other'
       end
   end
@@ -18,7 +18,7 @@ class VideoSourceAnalyzer
   def id
     @id ||=
       case origin
-      when 'vimeo' then url.match(%r{//#{VIMEO_URL_PART}/(\d+).*})[1]
+      when 'vimeo' then url.match(%r{https?://#{VIMEO_URL_PART}/(\d+).*})[1]
       else; nil
       end
   end

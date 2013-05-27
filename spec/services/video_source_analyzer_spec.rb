@@ -26,6 +26,13 @@ describe VideoSourceAnalyzer do
     its(:id) { should eq '46367971' }
   end
 
+  context "with Vimeo like video sources" do
+    let(:video_source) { OpenStruct.new(url: 'http://www.heartroasters.com/blog/player.vimeo.com/external/66199723.hd.mp4') }
+
+    its(:origin) { should eq 'other' }
+    its(:id) { should be_nil }
+  end
+
   context "with nil source" do
     let(:video_source) { nil }
 
