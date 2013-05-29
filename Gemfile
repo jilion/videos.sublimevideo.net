@@ -9,7 +9,6 @@ gem 'sublime_video_layout', '~> 2.6' # hosted on gemfury
 gem 'coffee-rails', '4.0.0.beta1' # needed for sublime_video_layout
 
 gem 'sublime_video_private_api', '~> 1.0' # hosted on gemfury
-gem 'configurator', github: 'jilion/configurator'
 
 gem 'pg'
 gem 'sidekiq'
@@ -32,6 +31,7 @@ group :staging, :production do
 end
 
 group :development, :test do
+  gem 'dotenv-rails'
   gem 'rspec-rails'
 end
 

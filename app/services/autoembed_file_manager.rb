@@ -10,7 +10,7 @@ class AutoEmbedFileManager
 
   def upload
     data = autoembed_file.read
-    S3Wrapper.put_object(s3_bucket, path, data, s3_headers)
+    S3Wrapper.put_object(path, data, s3_headers)
   end
 
   private
@@ -21,10 +21,6 @@ class AutoEmbedFileManager
 
   def path
     "e/#{video_tag.site_token}/#{video_tag.uid}.html"
-  end
-
-  def s3_bucket
-    S3Wrapper.buckets['sublimevideo']
   end
 
   def s3_headers

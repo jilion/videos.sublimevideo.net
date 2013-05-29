@@ -66,7 +66,6 @@ describe VideoTag do
         ],
         'o' => { 'autoembed' => 'true', 'gaAccount' => 'UA-12345-6' }
       }}
-      let(:s3_bucket) { S3Wrapper.buckets['sublimevideo'] }
       let(:path) { 'e/site_token/uid.html' }
 
       it "uploads autoembed file" do
@@ -74,7 +73,7 @@ describe VideoTag do
         VideoTagUpdaterWorker.drain
         AutoEmbedFileUploaderWorker.drain
 
-        body = S3Wrapper.fog_connection.get_object(s3_bucket, path).body
+        body = S3Wrapper.get_object(path).body
         body.should include "<!DOCTYPE html>"
         body.should include "/js/site_token.js"
         body.should include "_gaq.push(['_setAccount', 'UA-12345-6']);"

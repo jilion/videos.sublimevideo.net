@@ -8,8 +8,9 @@ require "action_controller/railtie"
 # require "rails/test_unit/railtie"
 
 # Assets should be precompiled for production (so we don't need the gems loaded then)
-Bundler.setup(*Rails.groups(assets: %w(development test)))
+Bundler.setup(:default, Rails.env)
 
+require 'dotenv-rails' if Rails.env.in?(%w[test development])
 require 'sublime_video_private_api'
 require 'librato-rails'
 require 'newrelic_rpm'
