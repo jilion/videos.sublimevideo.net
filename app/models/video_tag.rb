@@ -14,16 +14,12 @@ class VideoTag < ActiveRecord::Base
     .merge(VideoSource.where(
       position: 0,
       url: video_tag.first_source.try(:url)
-    ).references(:sources))
-  }
-  scope :duplicates_sources_id, ->(video_tag) {
-    where(
-      site_token: video_tag.site_token,
-      uid_origin: 'source',
-      sources_id: video_tag.sources_id,
-      sources_origin: video_tag.sources_origin
-    )
-  }
+    ).references(:sources)) }
+  scope :duplicates_sources_id, ->(video_tag) { where(
+    site_token: video_tag.site_token,
+    uid_origin: 'source',
+    sources_id: video_tag.sources_id,
+    sources_origin: video_tag.sources_origin) }
   scope :with_uids, ->(uids) { where(uid: uids) }
   scope :with_invalid_uid, -> { where("uid !~* '#{UID_REGEX}'") }
 
