@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-VideosSublimeVideo::Application.config.secret_key_base = 'fd6f7a9f7a6cd5a5df912185a23316c2601c384195b7fd72d0279265a19fc88553b1b6a988d6e68dbf0d7960e01a45bb14b7fdbb8f04e2eb759b89038b92efe6'
+VideosSublimeVideo::Application.config.secret_key_base = ENV['SECRET_KEY_BASE']
