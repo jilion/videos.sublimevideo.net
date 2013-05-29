@@ -80,16 +80,4 @@ describe VideoTag do
       end
     end
   end
-
-  describe "plays", :focus do
-    let!(:video_tag1) { create(:video_tag, plays: 365.times.map { |i| i }) }
-    let!(:video_tag2) { create(:video_tag, plays: 365.times.map { |i| i * 2 }) }
-
-    it "description" do
-      a = VideoTag.select('(SELECT SUM(t) FROM UNNEST(plays[0:30]) t) as plays_sum').order('plays_sum')
-      p a.to_sql
-      p a.first['plays_sum']
-    end
-  end
-
 end
