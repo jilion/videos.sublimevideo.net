@@ -218,15 +218,6 @@ describe VideoTag do
       video_tag.sources.second.url.should match /2/
     end
 
-    it "keeps existing sources" do
-      video_tag.update(sources: sources)
-      video_tag.should have(2).sources
-      video_tag.update(sources: [sources.first])
-      video_tag.should have(2).sources
-      video_tag.sources.first.url.should match /1/
-      video_tag.sources.second.url.should match /2/
-    end
-
     it "accepts nil sources" do
       video_tag.update(sources: nil)
       video_tag.should have(0).sources
