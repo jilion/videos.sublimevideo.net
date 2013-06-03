@@ -24,7 +24,7 @@ describe VideoTagStartsUpdater do
       let(:video_tag) { build(:video_tag, starts_updated_at: nil, loaded_at: 23.hours.ago) }
 
       it "updates starts for last 365 days" do
-        VideoStat.should_receive(:last_day_starts).with(video_tag.uid, 365) { starts_365 }
+        VideoStat.should_receive(:last_day_starts).with(video_tag, 365) { starts_365 }
         updater.update
         updater.video_tag.starts.first.should eq 1
         updater.video_tag.starts.last.should eq 365
@@ -35,7 +35,7 @@ describe VideoTagStartsUpdater do
       let(:video_tag) { build(:video_tag, starts_updated_at: 1.days.ago, loaded_at: 23.hours.ago, starts: starts_365) }
 
       it "updates starts for last 1 day" do
-        VideoStat.should_receive(:last_day_starts).with(video_tag.uid, 0) { [] }
+        VideoStat.should_receive(:last_day_starts).with(video_tag, 0) { [] }
         updater.update
         updater.video_tag.starts.first.should eq 1
         updater.video_tag.starts.last.should eq 365
@@ -46,7 +46,7 @@ describe VideoTagStartsUpdater do
       let(:video_tag) { build(:video_tag, starts_updated_at: 2.days.ago, loaded_at: 23.hours.ago, starts: starts_365) }
 
       it "updates starts for last 1 day" do
-        VideoStat.should_receive(:last_day_starts).with(video_tag.uid, 1) { [366] }
+        VideoStat.should_receive(:last_day_starts).with(video_tag, 1) { [366] }
         updater.update
         updater.video_tag.starts.first.should eq 2
         updater.video_tag.starts.last.should eq 366

@@ -23,7 +23,7 @@ class VideoTagStartsUpdater
     if _video_tag_without_activiy?
       _days_to_update.times.map { 0 }
     else
-      VideoStat.last_day_starts(video_tag.uid, _days_to_update)
+      VideoStat.last_day_starts(video_tag, _days_to_update)
     end
   end
 
