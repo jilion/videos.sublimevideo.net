@@ -1,4 +1,4 @@
-class VideoTagStatsUpdater
+class VideoTagStartsUpdater
   attr_reader :video_tag
 
   def initialize(video_tag)
@@ -7,6 +7,7 @@ class VideoTagStatsUpdater
 
   def update
     _update_video_tag_starts
+    _update_video_tag_last_days_starts_sums
     video_tag.starts_updated_at = Time.now
     video_tag.save
   end
@@ -32,6 +33,16 @@ class VideoTagStatsUpdater
   end
 
   def _video_tag_without_activiy?
-    video_tag.updated_at == video_tag.starts_updated_at
+    video_tag.starts_updated_at? && video_tag.loaded_at < video_tag.starts_updated_at
+  end
+
+  def _update_video_tag_last_days_starts_sums
+    [30, 90, 365].each do |days|
+      video_tag.send("last_#{days}_days_starts=", _last_days_starts_sum(days))
+    end
+  end
+
+  def _last_days_starts_sum(days)
+    video_tag.starts.dup.pop(days).sum
   end
 end

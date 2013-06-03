@@ -109,6 +109,10 @@ CREATE TABLE video_tags (
     updated_at timestamp without time zone,
     player_stage character varying(255) DEFAULT 'stable'::character varying,
     starts integer[] DEFAULT '{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}'::integer[],
+    last_30_days_starts integer DEFAULT 0,
+    last_90_days_starts integer DEFAULT 0,
+    last_365_days_starts integer DEFAULT 0,
+    loaded_at timestamp without time zone,
     starts_updated_at timestamp without time zone
 );
 
@@ -170,6 +174,41 @@ CREATE INDEX index_video_sources_on_video_tag_id ON video_sources USING btree (v
 
 
 --
+-- Name: index_video_tags_on_loaded_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_video_tags_on_loaded_at ON video_tags USING btree (loaded_at);
+
+
+--
+-- Name: index_video_tags_on_site_token_and_last_30_days_starts; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_video_tags_on_site_token_and_last_30_days_starts ON video_tags USING btree (site_token, last_30_days_starts);
+
+
+--
+-- Name: index_video_tags_on_site_token_and_last_365_days_starts; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_video_tags_on_site_token_and_last_365_days_starts ON video_tags USING btree (site_token, last_365_days_starts);
+
+
+--
+-- Name: index_video_tags_on_site_token_and_last_90_days_starts; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_video_tags_on_site_token_and_last_90_days_starts ON video_tags USING btree (site_token, last_90_days_starts);
+
+
+--
+-- Name: index_video_tags_on_site_token_and_loaded_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_video_tags_on_site_token_and_loaded_at ON video_tags USING btree (site_token, loaded_at);
+
+
+--
 -- Name: index_video_tags_on_site_token_and_uid; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -177,24 +216,10 @@ CREATE UNIQUE INDEX index_video_tags_on_site_token_and_uid ON video_tags USING b
 
 
 --
--- Name: index_video_tags_on_site_token_and_updated_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_video_tags_on_site_token_and_updated_at ON video_tags USING btree (site_token, updated_at);
-
-
---
 -- Name: index_video_tags_on_starts_updated_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_video_tags_on_starts_updated_at ON video_tags USING btree (starts_updated_at);
-
-
---
--- Name: index_video_tags_on_updated_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_video_tags_on_updated_at ON video_tags USING btree (updated_at);
 
 
 --
