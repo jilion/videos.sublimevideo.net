@@ -6,7 +6,7 @@ describe VideoTagStartsUpdater do
 
   describe "#update" do
     let(:video_tag) { create(:video_tag, loaded_at: 23.hours.ago) }
-    before { VideoStat.stub(:last_day_starts) { starts_365 } }
+    before { VideoStat.stub(:last_days_starts) { starts_365 } }
 
     it "updates starts_updated_at" do
       video_tag.should_receive(:starts_updated_at=).with(kind_of(Time))
@@ -24,7 +24,7 @@ describe VideoTagStartsUpdater do
       let(:video_tag) { build(:video_tag, starts_updated_at: nil, loaded_at: 23.hours.ago) }
 
       it "updates starts for last 365 days" do
-        VideoStat.should_receive(:last_day_starts).with(video_tag, 365) { starts_365 }
+        VideoStat.should_receive(:last_days_starts).with(video_tag, 365) { starts_365 }
         updater.update
         updater.video_tag.starts.first.should eq 1
         updater.video_tag.starts.last.should eq 365
@@ -35,7 +35,7 @@ describe VideoTagStartsUpdater do
       let(:video_tag) { build(:video_tag, starts_updated_at: 1.days.ago, loaded_at: 23.hours.ago, starts: starts_365) }
 
       it "updates starts for last 1 day" do
-        VideoStat.should_receive(:last_day_starts).with(video_tag, 0) { [] }
+        VideoStat.should_receive(:last_days_starts).with(video_tag, 0) { [] }
         updater.update
         updater.video_tag.starts.first.should eq 1
         updater.video_tag.starts.last.should eq 365
@@ -46,7 +46,7 @@ describe VideoTagStartsUpdater do
       let(:video_tag) { build(:video_tag, starts_updated_at: 2.days.ago, loaded_at: 23.hours.ago, starts: starts_365) }
 
       it "updates starts for last 1 day" do
-        VideoStat.should_receive(:last_day_starts).with(video_tag, 1) { [366] }
+        VideoStat.should_receive(:last_days_starts).with(video_tag, 1) { [366] }
         updater.update
         updater.video_tag.starts.first.should eq 2
         updater.video_tag.starts.last.should eq 366
@@ -57,7 +57,7 @@ describe VideoTagStartsUpdater do
       let(:video_tag) { build(:video_tag, starts_updated_at: 3.days.ago, loaded_at: 4.days.ago, starts: starts_365) }
 
       it "updates starts for last 2 day" do
-        VideoStat.should_not_receive(:last_day_starts)
+        VideoStat.should_not_receive(:last_days_starts)
         updater.update
         updater.video_tag.starts.first.should eq 3
         updater.video_tag.starts.last.should eq 0
