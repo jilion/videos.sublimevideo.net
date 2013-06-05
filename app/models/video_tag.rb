@@ -74,7 +74,7 @@ class VideoTag < ActiveRecord::Base
 
   def options=(options)
     write_attribute :options, Hash[(options || {}).map { |k, v|
-      [k.underscore, v.in?(1, '1', 'true', true) || v]
+      [k.underscore, v.in?([1, '1', 'true', true]) || v]
     }]
   end
 end
