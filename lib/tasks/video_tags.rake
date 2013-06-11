@@ -8,7 +8,7 @@ namespace :video_tags do
       .order(loaded_at: :desc)
       .limit(limit)
     video_tags.select(:id).find_each do |video_tag|
-      VideoTagStartUpdaterWorker.perform_async(video_tag.id)
+      VideoTagStartsUpdaterWorker.perform_async(video_tag.id)
     end
   end
 end
