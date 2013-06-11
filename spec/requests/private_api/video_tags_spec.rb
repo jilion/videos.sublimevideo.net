@@ -40,7 +40,7 @@ describe "VideoTags requests" do
 
   describe "count" do
     before {
-      3.times { |i| create(:video_tag, site_token: site_token, updated_at: (16 * i).days.ago) }
+      3.times { |i| create(:video_tag, site_token: site_token, loaded_at: (16 * i).days.ago) }
     }
 
     it "supports last_30_days_active scope" do

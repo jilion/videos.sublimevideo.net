@@ -26,16 +26,16 @@ describe VideoTag do
 
   describe "Scopes" do
     describe ".last_30_days_active" do
-      let!(:old_video_tag) { create(:video_tag, updated_at: 31.day.ago) }
-      let!(:video_tag) { create(:video_tag) }
+      let!(:old_video_tag) { create(:video_tag, loaded_at: 31.day.ago) }
+      let!(:video_tag) { create(:video_tag, loaded_at: 30.day.ago) }
 
       it "returns only recently updated video_tags" do
         VideoTag.last_30_days_active.should eq [video_tag]
       end
     end
     describe ".last_90_days_active" do
-      let!(:old_video_tag) { create(:video_tag, updated_at: 91.day.ago) }
-      let!(:video_tag) { create(:video_tag) }
+      let!(:old_video_tag) { create(:video_tag, loaded_at: 91.day.ago) }
+      let!(:video_tag) { create(:video_tag, loaded_at: 90.day.ago) }
 
       it "returns only recently updated video_tags" do
         VideoTag.last_90_days_active.should eq [video_tag]
