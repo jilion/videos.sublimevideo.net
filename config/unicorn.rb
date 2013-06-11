@@ -8,6 +8,8 @@ before_fork do |server, worker|
     Process.kill 'QUIT', Process.pid
   end
 
+  defined?(ActiveRecord::Base) and ActiveRecord::Base.connection.disconnect!
+
   Sidekiq.configure_client do |config|
     config.redis = { size: 2 } # for web dyno
   end
@@ -18,10 +20,7 @@ after_fork do |server, worker|
     puts 'Unicorn worker intercepting TERM and doing nothing. Wait for master to sent QUIT'
   end
 
-  if defined?(ActiveRecord::Base)
-    ActiveRecord::Base.establish_connection
-    Rails.logger.info('Connected to ActiveRecord')
-  end
+  defined?(ActiveRecord::Base) and ActiveRecord::Base.establish_connection
 
   Sidekiq.configure_client do |config|
     config.redis = { size: 2 } # for web dyno
