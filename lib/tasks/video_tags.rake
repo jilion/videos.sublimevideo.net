@@ -13,10 +13,4 @@ namespace :video_tags do
       VideoTagStartsUpdaterWorker.perform_async(video_tag.id)
     end
   end
-
-  task set_all_loaded_at: :environment do
-    VideoTag.where(loaded_at: nil).select(:id, :updated_at).find_each do |video_tag|
-      video_tag.update_column(:loaded_at, video_tag.updated_at)
-    end
-  end
 end
