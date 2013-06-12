@@ -3,11 +3,9 @@ source 'https://8dezqz7z7HWea9vtaFwg@gem.fury.io/me/' # thibaud@jilion.com accou
 
 ruby '2.0.0'
 
-gem 'rails', github: 'rails/rails', branch: '4-0-stable', ref: '927df2d'
+gem 'rails', '4.0.0.rc2'
 
 gem 'sublime_video_layout', '~> 2.6' # hosted on gemfury
-gem 'coffee-rails', '4.0.0.beta1' # needed for sublime_video_layout
-
 gem 'sublime_video_private_api', '~> 1.0' # hosted on gemfury
 
 gem 'pg'
