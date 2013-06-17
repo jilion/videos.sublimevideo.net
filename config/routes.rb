@@ -7,6 +7,5 @@ VideosSublimeVideo::Application.routes.draw do
         get 'count', on: :collection
       end
     end
-    get '/video_tags/site_tokens' => 'video_tags#site_tokens'
   end
 end

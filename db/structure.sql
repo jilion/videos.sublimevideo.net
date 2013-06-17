@@ -36,6 +36,34 @@ CREATE EXTENSION IF NOT EXISTS hstore WITH SCHEMA public;
 COMMENT ON EXTENSION hstore IS 'data type for storing sets of (key, value) pairs';
 
 
+--
+-- Name: pg_trgm; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pg_trgm; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION pg_trgm IS 'text similarity measurement and index searching based on trigrams';
+
+
+--
+-- Name: unaccent; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS unaccent WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION unaccent; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION unaccent IS 'text search dictionary that removes accents';
+
+
 SET search_path = public, pg_catalog;
 
 SET default_tablespace = '';
@@ -230,6 +258,13 @@ CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (v
 
 
 --
+-- Name: video_tags_to_tsvector_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX video_tags_to_tsvector_idx ON video_tags USING gin (to_tsvector('english'::regconfig, (title)::text));
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -242,3 +277,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130206143950');
 INSERT INTO schema_migrations (version) VALUES ('20130308091208');
 
 INSERT INTO schema_migrations (version) VALUES ('20130415085658');
+
+INSERT INTO schema_migrations (version) VALUES ('20130617092307');

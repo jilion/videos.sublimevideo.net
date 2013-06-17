@@ -16,6 +16,9 @@ require 'librato-rails'
 require 'newrelic_rpm'
 require 'honeybadger/railtie'
 
+require 'textacular'
+ActiveRecord::Base.extend(Textacular)
+
 module VideosSublimeVideo
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.

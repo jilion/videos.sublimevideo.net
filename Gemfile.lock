@@ -7,6 +7,13 @@ GIT
       librato-metrics (~> 1.0.2)
       rails (>= 3.0)
 
+GIT
+  remote: git://github.com/textacular/textacular.git
+  revision: a0fe8a8c8cd5d0a5f5c23c3b724dfa32e1bf3b88
+  specs:
+    textacular (3.0.0)
+      activerecord (>= 3.0, < 4.1)
+
 GEM
   remote: https://rubygems.org/
   remote: https://8dezqz7z7HWea9vtaFwg@gem.fury.io/me/
@@ -57,9 +64,9 @@ GEM
       safe_yaml (~> 0.9.0)
     dalli (2.6.4)
     diff-lcs (1.2.4)
-    dotenv (0.7.0)
-    dotenv-rails (0.7.0)
-      dotenv (= 0.7.0)
+    dotenv (0.8.0)
+    dotenv-rails (0.8.0)
+      dotenv (= 0.8.0)
     erubis (2.7.0)
     excon (0.23.0)
     execjs (1.4.0)
@@ -124,7 +131,7 @@ GEM
       multi_json
     librato-sidekiq (0.1.2)
       sidekiq
-    listen (1.2.0)
+    listen (1.2.2)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
       rb-kqueue (>= 0.2)
@@ -138,14 +145,14 @@ GEM
     method_source (0.8.1)
     mime-types (1.23)
     minitest (4.7.4)
-    multi_json (1.7.6)
+    multi_json (1.7.7)
     multipart-post (1.2.0)
     net-scp (1.1.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.6.7)
     newrelic_rpm (3.6.3.111)
     nokogiri (1.5.10)
-    oj (2.0.14)
+    oj (2.1.0)
     pg (0.15.1)
     polyglot (0.3.3)
     pry (0.9.12.2)
@@ -203,7 +210,7 @@ GEM
     safe_yaml (0.9.3)
     shoulda-matchers (2.2.0)
       activesupport (>= 3.0.0)
-    sidekiq (2.12.3)
+    sidekiq (2.12.4)
       celluloid (>= 0.14.1)
       connection_pool (>= 1.0.0)
       json
@@ -224,7 +231,7 @@ GEM
       haml
       jquery-rails
       rails (>= 3.2.12)
-    sublime_video_private_api (1.4.1)
+    sublime_video_private_api (1.5.1)
       activesupport (>= 3.2)
       faraday-http-cache (~> 0.2.0)
       her (~> 0.6.1)
@@ -232,10 +239,12 @@ GEM
       multi_json
       rescue_me
       responders
+      timecop
     thor (0.18.1)
     thread_safe (0.1.0)
       atomic
     tilt (1.4.1)
+    timecop (0.6.1)
     timers (1.1.0)
     treetop (1.4.14)
       polyglot
@@ -281,7 +290,8 @@ DEPENDENCIES
   shoulda-matchers
   sidekiq
   sublime_video_layout (~> 2.6)
-  sublime_video_private_api (~> 1.0)
+  sublime_video_private_api (~> 1.5)
+  textacular!
   unicorn
   vcr
   video_info

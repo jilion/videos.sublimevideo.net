@@ -126,6 +126,22 @@ describe VideoTag do
         it { should have(1).duplicates }
       end
     end
+
+    describe ".search" do
+      let(:site_token) { 'site_token' }
+      let!(:video_tag) { create(:video_tag, site_token: site_token, title: title) }
+      subject { VideoTag.search('sugar') }
+
+      context "with same title of query" do
+        let(:title) { 'sugar' }
+        it { should have(1).result }
+      end
+
+      context "with almost title of query" do
+        let(:title) { 'sugor' }
+        it { should have(1).result }
+      end
+    end
   end
 
   describe "Validations" do
@@ -278,28 +294,37 @@ end
 #
 # Table name: video_tags
 #
-#  created_at        :datetime
-#  duration          :integer
-#  id                :integer          not null, primary key
-#  options           :hstore
-#  player_stage      :string(255)      default("stable")
-#  poster_url        :text
-#  settings          :hstore
-#  site_token        :string(255)      not null
-#  size              :string(255)
-#  sources_id        :string(255)
-#  sources_origin    :string(255)
-#  starts            :integer          default([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-#  starts_updated_at :datetime
-#  title             :string(255)
-#  title_origin      :string(255)
-#  uid               :string(255)      not null
-#  uid_origin        :string(255)      default("attribute"), not null
-#  updated_at        :datetime
+#  created_at           :datetime
+#  duration             :integer
+#  id                   :integer          not null, primary key
+#  last_30_days_starts  :integer
+#  last_365_days_starts :integer
+#  last_90_days_starts  :integer
+#  loaded_at            :datetime
+#  options              :hstore
+#  player_stage         :string(255)      default("stable")
+#  poster_url           :text
+#  settings             :hstore
+#  site_token           :string(255)      not null
+#  size                 :string(255)
+#  sources_id           :string(255)
+#  sources_origin       :string(255)
+#  starts               :integer          default([])
+#  starts_updated_at    :datetime
+#  title                :string(255)
+#  title_origin         :string(255)
+#  uid                  :string(255)      not null
+#  uid_origin           :string(255)      default("attribute"), not null
+#  updated_at           :datetime
 #
 # Indexes
 #
-#  index_video_tags_on_site_token_and_uid         (site_token,uid) UNIQUE
-#  index_video_tags_on_site_token_and_updated_at  (site_token,updated_at)
+#  index_video_tags_on_loaded_at                            (loaded_at)
+#  index_video_tags_on_site_token_and_last_30_days_starts   (site_token,last_30_days_starts)
+#  index_video_tags_on_site_token_and_last_365_days_starts  (site_token,last_365_days_starts)
+#  index_video_tags_on_site_token_and_last_90_days_starts   (site_token,last_90_days_starts)
+#  index_video_tags_on_site_token_and_loaded_at             (site_token,loaded_at)
+#  index_video_tags_on_site_token_and_uid                   (site_token,uid) UNIQUE
+#  index_video_tags_on_starts_updated_at                    (starts_updated_at)
 #
 

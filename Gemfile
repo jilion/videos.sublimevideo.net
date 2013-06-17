@@ -6,9 +6,10 @@ ruby '2.0.0'
 gem 'rails', '4.0.0.rc2'
 
 gem 'sublime_video_layout', '~> 2.6' # hosted on gemfury
-gem 'sublime_video_private_api', '~> 1.0' # hosted on gemfury
+gem 'sublime_video_private_api', '~> 1.5' # hosted on gemfury
 
 gem 'pg'
+gem 'textacular', github: 'textacular/textacular' # pg full text search
 gem 'sidekiq'
 gem 'video_info'
 gem 'fog'
