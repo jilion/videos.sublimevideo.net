@@ -49,6 +49,14 @@ describe VideoTag do
         VideoTag.last_365_days_active.should eq [video_tag]
       end
     end
+    describe ".inactive" do
+      let!(:old_video_tag) { create(:video_tag, last_365_days_starts: 0) }
+      let!(:video_tag) { create(:video_tag, last_365_days_starts: 1) }
+
+      it "returns only recently updated video_tags" do
+        VideoTag.inactive.should eq [old_video_tag]
+      end
+    end
 
     describe ".by_title" do
       let!(:video_tag_a) { create(:video_tag, title: 'a') }

@@ -6,6 +6,7 @@ class VideoTag < ActiveRecord::Base
   scope :last_30_days_active, -> { where('last_30_days_starts > 0') }
   scope :last_90_days_active, -> { where('last_90_days_starts > 0') }
   scope :last_365_days_active, -> { where('last_365_days_starts > 0') }
+  scope :inactive, -> { where(last_365_days_starts: 0) }
   scope :by_title, ->(way = 'asc') { order(title: way.to_sym) }
   scope :by_date, ->(way = 'desc') { order(created_at: way.to_sym) }
   scope :by_last_30_days_starts, ->(way = 'desc') { order(last_30_days_starts: way.to_sym) }
