@@ -54,14 +54,15 @@ describe "VideoTags requests" do
   describe "count" do
     let(:url) { "private_api/sites/#{site_token}/video_tags/count.json" }
     before {
-      3.times { |i| create(:video_tag, site_token: site_token, loaded_at: (16 * i).days.ago) }
+      create(:video_tag, site_token: site_token, last_30_days_starts: 0)
+      create(:video_tag, site_token: site_token, last_30_days_starts: 1)
     }
 
     it_behaves_like 'valid caching headers', cache_validation: false
 
     it "supports last_30_days_active scope" do
       get url, { last_30_days_active: true }, @env
-      MultiJson.load(response.body).should eq({"count" => 2})
+      MultiJson.load(response.body).should eq({"count" => 1})
     end
   end
 end
