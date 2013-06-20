@@ -10,7 +10,7 @@ class PrivateApi::VideoTagsController < SublimeVideoPrivateApiController
 
   # GET /private_api/sites/:site_token/video_tags
   def index
-    @video_tags = VideoTag.where(site_token: params[:site_token]).page(params[:page])
+    @video_tags = VideoTag.where(site_token: params[:site_token]).by_title.page(params[:page])
     @video_tags = apply_scopes(@video_tags)
 
     expires_in 2.minutes, public: true

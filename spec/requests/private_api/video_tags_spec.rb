@@ -6,8 +6,9 @@ describe "VideoTags requests" do
 
   describe "index" do
     let(:url) { "private_api/sites/#{site_token}/video_tags.json" }
-    let!(:video_tag1) { create(:video_tag, site_token: site_token) }
-    let!(:video_tag2) { create(:video_tag, site_token: site_token, title: 'foo') }
+    let(:time) { 1.minute.ago }
+    let!(:video_tag1) { create(:video_tag, site_token: site_token, created_at: time, title: 'foo') }
+    let!(:video_tag2) { create(:video_tag, site_token: site_token, created_at: time, title: 'a') }
     let!(:video_tag3) { create(:video_tag, site_token: site_token) }
 
     it_behaves_like 'valid caching headers', cache_validation: false
@@ -20,6 +21,12 @@ describe "VideoTags requests" do
     it "supports search scope" do
       get url, { search: 'foo' }, @env
       MultiJson.load(response.body).should have(1).video_tag
+    end
+
+    it "always sorts by_title in last position" do
+      get url, { by_date: 'desc' }, @env
+      MultiJson.load(response.body).map { |v| v['id'] }.should eq(
+        [video_tag3.id, video_tag2.id, video_tag1.id])
     end
 
     it "supports select scope" do
