@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/librato/librato-rails.git
+  remote: https://github.com/librato/librato-rails.git
   revision: 82a95ae54f2ed990135a7b655293107384da2796
   branch: feature/rack_first
   specs:
@@ -8,15 +8,15 @@ GIT
       rails (>= 3.0)
 
 GIT
-  remote: git://github.com/textacular/textacular.git
-  revision: a0fe8a8c8cd5d0a5f5c23c3b724dfa32e1bf3b88
+  remote: https://github.com/textacular/textacular.git
+  revision: 050766ae526aadd284efe947bfd42a7b2dd034c0
   specs:
-    textacular (3.0.0)
+    textacular (3.1.0)
       activerecord (>= 3.0, < 4.1)
 
 GEM
   remote: https://rubygems.org/
-  remote: https://8dezqz7z7HWea9vtaFwg@gem.fury.io/me/
+  remote: https://8dezqz7z7HWea9vtaFwg:@gem.fury.io/me/
   specs:
     actionmailer (4.0.0)
       actionpack (= 4.0.0)
@@ -142,6 +142,7 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    memcachier (0.0.2)
     method_source (0.8.1)
     mime-types (1.23)
     minitest (4.7.5)
@@ -278,6 +279,7 @@ DEPENDENCIES
   librato-rails!
   librato-sidekiq
   lograge
+  memcachier
   newrelic_rpm
   oj
   pg
