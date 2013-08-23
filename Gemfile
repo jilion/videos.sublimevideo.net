@@ -16,7 +16,7 @@ gem 'fog'
 gem 'oj'
 
 gem 'honeybadger'
-gem 'librato-rails', github: 'librato/librato-rails', branch: 'feature/rack_first'
+gem 'librato-rails', github: 'librato/librato-rails'
 gem 'librato-sidekiq'
 gem 'rack-status'
 gem 'has_scope'

@@ -1,14 +1,13 @@
 GIT
-  remote: https://github.com/librato/librato-rails.git
-  revision: 82a95ae54f2ed990135a7b655293107384da2796
-  branch: feature/rack_first
+  remote: git://github.com/librato/librato-rails.git
+  revision: 0105ff4c7f3eb4eb5f901c222db47cfccdb26fd0
   specs:
-    librato-rails (0.8.1)
-      librato-metrics (~> 1.0.2)
+    librato-rails (0.9.0)
+      librato-rack (~> 0.4.1)
       rails (>= 3.0)
 
 GIT
-  remote: https://github.com/textacular/textacular.git
+  remote: git://github.com/textacular/textacular.git
   revision: 050766ae526aadd284efe947bfd42a7b2dd034c0
   specs:
     textacular (3.1.0)
@@ -125,10 +124,12 @@ GEM
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     kgio (2.8.0)
-    librato-metrics (1.0.4)
+    librato-metrics (1.1.0)
       aggregate (~> 0.2.2)
       faraday (~> 0.7)
       multi_json
+    librato-rack (0.4.1)
+      librato-metrics (~> 1.1.0)
     librato-sidekiq (0.1.2)
       sidekiq
     listen (1.2.2)
