@@ -9,14 +9,14 @@ gem 'sublime_video_layout', '~> 2.6' # hosted on gemfury
 gem 'sublime_video_private_api', '~> 1.5' # hosted on gemfury
 
 gem 'pg'
-gem 'textacular', github: 'textacular/textacular' # pg full text search
+gem 'textacular'
 gem 'sidekiq'
 gem 'video_info'
 gem 'fog'
 gem 'oj'
 
 gem 'honeybadger'
-gem 'librato-rails', github: 'librato/librato-rails'
+gem 'librato-rails'
 gem 'librato-sidekiq'
 gem 'rack-status'
 gem 'has_scope'
