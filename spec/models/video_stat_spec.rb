@@ -6,7 +6,7 @@ require 'video_stat'
 describe VideoStat do
   let(:site_token) { 'site_token' }
   let(:video_uid) { 'video_uid' }
-  let(:video_tag) { mock('VideoTag', site_token: site_token, uid: video_uid) }
+  let(:video_tag) { double('VideoTag', site_token: site_token, uid: video_uid) }
 
   describe ".last_days_starts" do
     before {

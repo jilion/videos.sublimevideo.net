@@ -28,7 +28,7 @@ describe VideoTagTitleFetcher do
   context "with video title not present and known sources" do
     subject { described_class.new(title: nil, title_origin: nil, sources_id: 'source_id', sources_origin: 'hosting_service') }
 
-    before { VideoInfoWrapper.should_receive(:new).with(video_id: 'source_id', provider: 'hosting_service') { stub(title: 'Title', provider: 'hosting_service') } }
+    before { VideoInfoWrapper.should_receive(:new).with(video_id: 'source_id', provider: 'hosting_service') { double(title: 'Title', provider: 'hosting_service') } }
 
     its(:title) { should eq 'Title' }
     its(:origin) { should eq 'hosting_service' }
@@ -53,7 +53,7 @@ describe VideoTagTitleFetcher do
   context "with no title and video sources without title" do
     subject { described_class.new(title: nil, title_origin: nil, sources_id: 'source_id', sources_origin: 'hosting_service') }
 
-    before { VideoInfoWrapper.should_receive(:new).with(video_id: 'source_id', provider: 'hosting_service') { stub(title: nil, provider: 'hosting_service') } }
+    before { VideoInfoWrapper.should_receive(:new).with(video_id: 'source_id', provider: 'hosting_service') { double(title: nil, provider: 'hosting_service') } }
 
     its(:origin) { should eq 'hosting_service' }
     its(:title) { should be_nil }

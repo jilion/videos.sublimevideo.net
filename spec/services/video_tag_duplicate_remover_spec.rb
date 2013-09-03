@@ -18,20 +18,20 @@ describe VideoTagDuplicateRemover do
 
   it "founds duplicates from video_tag with the same sources_id" do
     video_tag.stub(:sources_id?) { true }
-    VideoTag.should_receive(:duplicates_sources_id).with(video_tag) { stub(first: video_tag_duplicate) }
+    VideoTag.should_receive(:duplicates_sources_id).with(video_tag) { double(first: video_tag_duplicate) }
     remover.remove_duplicate
   end
 
   it "founds duplicates from video_tag with the same first source url" do
     video_tag.stub(:first_source) { true }
-    VideoTag.should_receive(:duplicates_first_source_url).with(video_tag) { stub(first: video_tag_duplicate) }
+    VideoTag.should_receive(:duplicates_first_source_url).with(video_tag) { double(first: video_tag_duplicate) }
     remover.remove_duplicate
   end
 
   context "with duplicate from first source" do
     before {
       video_tag.stub(:first_source) { true }
-      VideoTag.stub(:duplicates_first_source_url) { stub(first: video_tag_duplicate) }
+      VideoTag.stub(:duplicates_first_source_url) { double(first: video_tag_duplicate) }
     }
 
     it "delays Stats update/merge on mysv" do

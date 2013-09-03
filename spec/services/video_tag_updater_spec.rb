@@ -5,10 +5,10 @@ require 'video_tag_updater'
 describe VideoTagUpdater do
   let(:updater) { VideoTagUpdater.new(video_tag) }
   let(:video_tag) { OpenStruct.new(attributes: {}) }
-  let(:video_source) { mock('VideoSource') }
+  let(:video_source) { double('VideoSource') }
   before {
-    VideoSourceAnalyzer.stub(:new) { mock(id: 'id', origin: 'source_origin') }
-    VideoTagTitleFetcher.stub(:new) { mock(title: 'title', origin: 'title_origin') }
+    VideoSourceAnalyzer.stub(:new) { double(id: 'id', origin: 'source_origin') }
+    VideoTagTitleFetcher.stub(:new) { double(title: 'title', origin: 'title_origin') }
   }
 
   describe "#update" do
@@ -22,7 +22,7 @@ describe VideoTagUpdater do
 
       it "sets sources_id and sources_origin from VideoSourceAnalyzer if not already set" do
         video_tag.should_receive(:first_source) { video_source }
-        VideoSourceAnalyzer.should_receive(:new).with(video_source) { mock(id: 'id', origin: 'source_origin') }
+        VideoSourceAnalyzer.should_receive(:new).with(video_source) { double(id: 'id', origin: 'source_origin') }
         video_tag.should_receive(:sources_id=).with('id')
         video_tag.should_receive(:sources_origin=).with('source_origin')
         updater.update(attributes)
@@ -40,7 +40,7 @@ describe VideoTagUpdater do
           title: 'title',
           title_origin: 'title_origin',
           sources_id: 'sources_id',
-          sources_origin: 'sources_origin') {  mock(title: 'title', origin: 'title_origin') }
+          sources_origin: 'sources_origin') {  double(title: 'title', origin: 'title_origin') }
         video_tag.should_receive(:title=).with('title')
         video_tag.should_receive(:title_origin=).with('title_origin')
         updater.update(attributes)

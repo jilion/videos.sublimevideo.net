@@ -9,7 +9,7 @@ describe VideoTagUpdaterWorker do
   let(:data) { { t: 'video title' } }
   let(:unaliases_data) { { title: 'video title' } }
   let(:params) { ['site_token', 'uid', data] }
-  let(:video_tag) { mock(VideoTag) }
+  let(:video_tag) { double(VideoTag) }
   before {
     VideoTagDataUnaliaser.stub(:unalias) { unaliases_data }
     VideoTag.stub(:find_or_initialize) { video_tag }

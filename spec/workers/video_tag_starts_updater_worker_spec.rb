@@ -14,8 +14,8 @@ describe VideoTagStartsUpdaterWorker do
   end
 
   describe ".perform" do
-    let(:updater) { mock(VideoTagStartsUpdater) }
-    let(:video_tag) { mock(VideoTag, id: 1) }
+    let(:updater) { double(VideoTagStartsUpdater) }
+    let(:video_tag) { double(VideoTag, id: 1) }
 
     it "updates video_tag starts" do
       VideoTag.should_receive(:find).with(video_tag.id) { video_tag }

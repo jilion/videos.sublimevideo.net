@@ -6,7 +6,7 @@ require 'autoembed_file_manager'
 describe AutoEmbedFileManager , :fog_mock do
   let(:s3_bucket) { ENV['S3_BUCKET'] }
   let(:path) { 'e/site_token/uid.html' }
-  let(:video_tag) { mock('VideoTag',
+  let(:video_tag) { double('VideoTag',
     site_token: 'site_token',
     uid: 'uid',
   ) }

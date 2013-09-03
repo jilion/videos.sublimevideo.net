@@ -3,15 +3,15 @@ require 'fast_spec_helper'
 require 'autoembed_file'
 
 describe AutoEmbedFile do
-  let(:video_source) { mock('VideoSource1',
+  let(:video_source) { double('VideoSource1',
     url: "http://media.sublimevideo.net/360p.mp4",
     quality: 'base'
   ) }
-  let(:video_source_hd) { mock('VideoSource1',
+  let(:video_source_hd) { double('VideoSource1',
     url: "http://media.sublimevideo.net/720p.mp4",
     quality: 'hd'
   ) }
-  let(:video_tag) { mock('VideoTag',
+  let(:video_tag) { double('VideoTag',
     site_token: 'site_token',
     title: 'My Video',
     poster_url: '//poster_url.com',

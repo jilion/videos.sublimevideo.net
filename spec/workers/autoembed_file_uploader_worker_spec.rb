@@ -7,7 +7,7 @@ VideoTag = Class.new unless defined?(VideoTag)
 
 describe AutoEmbedFileUploaderWorker do
   let(:params) { ['site_token', 'uid'] }
-  let(:video_tag) { mock(VideoTag) }
+  let(:video_tag) { double(VideoTag) }
   before {
     VideoTag.stub_chain(:where, :first) { video_tag }
     AutoEmbedFileManager.stub_chain(:new, :upload)
@@ -46,7 +46,7 @@ describe AutoEmbedFileUploaderWorker do
   end
 
   describe ".perform_async_if_needed" do
-    let(:video_tag) { mock(VideoTag,
+    let(:video_tag) { double(VideoTag,
       site_token: 'site_token',
       uid: 'uid',
       options: { "autoembed" => true }
