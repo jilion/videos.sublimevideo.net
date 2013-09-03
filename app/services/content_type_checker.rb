@@ -42,14 +42,14 @@ class ContentTypeChecker
 
       case response
       when Net::HTTPSuccess, Net::HTTPRedirection
-        response.merge('found' => true)
+        { 'found' => true, 'content-type' => response['content-type'] }
       when Net::HTTPClientError
         FILE_NOT_FOUND_RESPONSE
       else
         UNKNOWN_CONTENT_TYPE_RESPONSE
       end
 
-    rescue URI::InvalidURIError, Net::ReadTimeout
+    rescue URI::InvalidURIError, SocketError, Net::ReadTimeout
       UNKNOWN_CONTENT_TYPE_RESPONSE
     end
   end
