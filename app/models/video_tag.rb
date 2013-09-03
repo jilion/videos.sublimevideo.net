@@ -43,6 +43,10 @@ class VideoTag < ActiveRecord::Base
     where(options).first_or_initialize
   end
 
+  def as_json(options = nil)
+    super((options || {}).merge(include: :sources))
+  end
+
   def first_source
     sources.first
   end

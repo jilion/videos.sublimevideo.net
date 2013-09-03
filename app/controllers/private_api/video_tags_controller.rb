@@ -14,7 +14,7 @@ class PrivateApi::VideoTagsController < SublimeVideoPrivateApiController
     @video_tags = apply_scopes(@video_tags)
 
     expires_in 2.minutes, public: true
-    respond_with(@video_tags.to_json(include: :sources))
+    respond_with(@video_tags)
   end
 
   # GET /private_api/sites/:site_token/video_tags/:id
@@ -22,7 +22,7 @@ class PrivateApi::VideoTagsController < SublimeVideoPrivateApiController
     @video_tag = VideoTag.where(site_token: params[:site_token], uid: params[:id]).first!
 
     expires_in 2.minutes, public: true
-    respond_with(@video_tag.to_json(include: :sources)) if stale?(@video_tag, public: true)
+    respond_with(@video_tag) if stale?(@video_tag, public: true)
   end
 
   # GET /private_api/sites/:site_token/video_tags/count
