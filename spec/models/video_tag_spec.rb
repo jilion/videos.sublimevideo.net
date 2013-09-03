@@ -155,7 +155,7 @@ describe VideoTag do
 
       context "with almost title of query" do
         let(:title) { 'sugor' }
-        it { should have(1).result }
+        it { should have(0).result }
       end
     end
   end

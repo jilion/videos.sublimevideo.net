@@ -30,7 +30,7 @@ class VideoTag < ActiveRecord::Base
   scope :with_uids, ->(uids) { where(uid: uids) }
   scope :with_invalid_uid, -> { where("uid !~* '#{UID_REGEX}'") }
   scope :with_valid_uid, -> { where(uid_origin: 'attribute').where("uid ~* '#{UID_REGEX}'") }
-  scope :search, ->(query) { fuzzy_search(title: query) }
+  scope :search, ->(query) { basic_search(title: query) }
 
   validates :site_token, presence: true
   validates :uid, presence: true, uniqueness: { scope: :site_token }
