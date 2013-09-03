@@ -37,6 +37,12 @@ describe "VideoTags requests" do
       video_tag.should_not have_key("uid_origin")
     end
 
+    it "includes sources" do
+      get url, {}, @env
+      video_tag = MultiJson.load(response.body).first
+      video_tag.should have_key("sources")
+    end
+
     it "supports with_uids scope" do
       uids = VideoTag.pluck(:uid)[0, 2]
       get url, { with_uids: uids }, @env
@@ -55,6 +61,11 @@ describe "VideoTags requests" do
     it "finds video_tag per uid" do
       get url, {}, @env
       MultiJson.load(response.body).should_not have_key("video_tag")
+    end
+
+    it "includes sources" do
+      get url, {}, @env
+      MultiJson.load(response.body).should have_key("sources")
     end
   end
 
