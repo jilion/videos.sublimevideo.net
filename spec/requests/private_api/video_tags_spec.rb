@@ -51,21 +51,26 @@ describe "VideoTags requests" do
   end
 
   describe "show" do
-    let(:video_tag) { create(:video_tag, site_token: site_token) }
+    let(:video_tag) { create(:video_tag, site_token: site_token, sources: [build(:video_source).attributes]) }
     let(:url) { "private_api/sites/#{site_token}/video_tags/#{video_tag.uid}.json" }
 
     it_behaves_like 'valid caching headers' do
       let(:record) { video_tag }
     end
 
-    it "finds video_tag per uid" do
+    it 'finds video_tag per uid' do
       get url, {}, @env
-      MultiJson.load(response.body).should_not have_key("video_tag")
+      MultiJson.load(response.body).should_not have_key('video_tag')
     end
 
-    it "includes sources" do
+    it 'includes sources' do
       get url, {}, @env
-      MultiJson.load(response.body).should have_key("sources")
+      MultiJson.load(response.body).should have_key('sources')
+    end
+
+    it 'sources includes issues' do
+      get url, {}, @env
+      MultiJson.load(response.body)['sources'][0].should have_key('issues')
     end
   end
 

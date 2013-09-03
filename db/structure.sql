@@ -92,7 +92,8 @@ CREATE TABLE video_sources (
     resolution character varying(255),
     "position" integer,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    issues character varying(255)[] DEFAULT '{}'::character varying[]
 );
 
 
@@ -279,3 +280,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130308091208');
 INSERT INTO schema_migrations (version) VALUES ('20130415085658');
 
 INSERT INTO schema_migrations (version) VALUES ('20130617092307');
+
+INSERT INTO schema_migrations (version) VALUES ('20130903143855');
