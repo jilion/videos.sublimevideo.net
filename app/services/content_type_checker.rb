@@ -48,6 +48,9 @@ class ContentTypeChecker
       else
         UNKNOWN_CONTENT_TYPE_RESPONSE
       end
+
+    rescue Net::ReadTimeout
+      UNKNOWN_CONTENT_TYPE_RESPONSE
     end
   end
 
