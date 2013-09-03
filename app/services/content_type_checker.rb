@@ -1,15 +1,15 @@
 require 'net/http'
 
 class ContentTypeChecker
-  UNKNOWN_CONTENT_TYPE_RESPONSE = { 'content-type' => 'unknown' }
-  FILE_NOT_FOUND_RESPONSE = nil
+  UNKNOWN_CONTENT_TYPE_RESPONSE = { 'found' => true, 'content-type' => 'unknown' }
+  FILE_NOT_FOUND_RESPONSE = { 'found' => false }
 
   def initialize(asset_url)
     @asset_url = asset_url
   end
 
   def found?
-    head.present?
+    head['found']
   end
 
   def valid_content_type?
@@ -17,7 +17,7 @@ class ContentTypeChecker
   end
 
   def actual_content_type
-    if head.present?
+    if head['found']
       head['content-type']
     else
       'not-found'
@@ -42,7 +42,7 @@ class ContentTypeChecker
 
       case response
       when Net::HTTPSuccess, Net::HTTPRedirection
-        response
+        response.merge('found' => true)
       when Net::HTTPClientError
         FILE_NOT_FOUND_RESPONSE
       else
