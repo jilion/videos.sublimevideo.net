@@ -49,7 +49,7 @@ class ContentTypeChecker
         UNKNOWN_CONTENT_TYPE_RESPONSE
       end
 
-    rescue Net::ReadTimeout
+    rescue URI::InvalidURIError, Net::ReadTimeout
       UNKNOWN_CONTENT_TYPE_RESPONSE
     end
   end
