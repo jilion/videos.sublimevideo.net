@@ -10,7 +10,7 @@ describe VideoSourceContentTypeCheckerWorker do
   let(:content_type_checker) { double }
   let(:worker) { described_class.new }
   before do
-    VideoSource.should_receive(:find).with(42) { video_source }
+    VideoSource.should_receive(:where).with(id: 42) { double(first: video_source) }
     Librato.stub(:increment)
   end
 

@@ -7,7 +7,7 @@ class VideoSourceContentTypeCheckerWorker
   sidekiq_options queue: 'videos_low'
 
   def perform(video_source_id)
-    return unless video_source = VideoSource.find(video_source_id)
+    return unless video_source = VideoSource.where(id: video_source_id).first
 
     video_source.issues = _video_source_issues(video_source.url)
 

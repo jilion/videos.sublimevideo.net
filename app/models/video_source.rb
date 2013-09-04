@@ -8,7 +8,7 @@ class VideoSource < ActiveRecord::Base
   private
 
   def _delay_content_type_check
-    VideoSourceContentTypeCheckerWorker.perform_in(15.seconds, id)
+    VideoSourceContentTypeCheckerWorker.perform_in(30.seconds, id)
   end
 
 end
