@@ -25,7 +25,7 @@ describe VideoSource do
 
   describe 'after_create :_delay_content_type_check' do
     it 'delays content type check' do
-      VideoSourceContentTypeCheckerWorker.should_receive(:perform_async)
+      VideoSourceContentTypeCheckerWorker.should_receive(:perform_in).with(15.seconds, anything())
 
       video_source.save
     end
