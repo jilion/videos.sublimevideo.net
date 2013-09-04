@@ -9,16 +9,16 @@ describe SourceHostDetector do
   context "when source_origin is youtube" do
     before { video_tag.stub(:sources_origin) { 'youtube' } }
 
-    it "returns YouTube" do
-      expect(detector.hosted_by).to eq 'YouTube'
+    it "returns youtube.com" do
+      expect(detector.hosted_by).to eq 'youtube.com'
     end
   end
 
   context "when source_origin is vimeo" do
     before { video_tag.stub(:sources_origin) { 'vimeo' } }
 
-    it "returns Vimeo" do
-      expect(detector.hosted_by).to eq 'Vimeo'
+    it "returns vimeo.com" do
+      expect(detector.hosted_by).to eq 'vimeo.com'
     end
   end
 

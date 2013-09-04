@@ -9,8 +9,8 @@ class SourceHostDetector
 
   def hosted_by
     case video_tag.try(:sources_origin)
-    when 'youtube' then 'YouTube'
-    when 'vimeo' then 'Vimeo'
+    when 'youtube' then 'youtube.com'
+    when 'vimeo' then 'vimeo.com'
     else _first_source_host
     end
   end
