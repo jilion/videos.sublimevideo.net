@@ -13,6 +13,7 @@ gem 'textacular'
 gem 'sidekiq'
 gem 'video_info'
 gem 'addressable'
+gem 'http_content_type'
 gem 'fog'
 gem 'oj'
 

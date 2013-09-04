@@ -1,6 +1,3 @@
-# A sample Guardfile
-# More info at https://github.com/guard/guard#readme
-
 guard :rspec, bundler: false, all_after_pass: false, all_on_start: false, keep_failed: false do
   watch('app/controllers/application_controller.rb')                         { "spec/controllers" }
   watch('app/templates/autoembed.html.erb') { 'spec/models/autoembed_file_spec.rb' }

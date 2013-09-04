@@ -10,12 +10,12 @@ describe VideoSourceContentTypeCheckerWorker do
   let(:content_type_checker) { double }
   let(:worker) { described_class.new }
   before do
-    VideoSource.should_receive(:find).with(42) { video_source }
+    VideoSource.should_receive(:where).with(id: 42) { double(first: video_source) }
     Librato.stub(:increment)
   end
 
   describe '#perform' do
-    before { ContentTypeChecker.should_receive(:new).with(video_source.url) { content_type_checker } }
+    before { HttpContentType::Checker.should_receive(:new).with(video_source.url) { content_type_checker } }
 
     context 'source has no issues' do
       it 'leaves the issues array empty' do
