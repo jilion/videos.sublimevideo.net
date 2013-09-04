@@ -207,6 +207,16 @@ describe VideoTag do
     end
   end
 
+  describe "#hosted_by" do
+    let(:detector) { double(SourceHostDetector) }
+
+    it "delegates to SourceHosterDetector" do
+      expect(SourceHostDetector).to receive(:new).with(video_tag) { detector }
+      expect(detector).to receive(:hosted_by) { 'foo' }
+      expect(video_tag.hosted_by).to eq 'foo'
+    end
+  end
+
   describe "#uid=" do
     it "truncates long uid" do
       long_uid = ''

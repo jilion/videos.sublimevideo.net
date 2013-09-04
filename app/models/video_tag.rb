@@ -44,7 +44,7 @@ class VideoTag < ActiveRecord::Base
   end
 
   def as_json(options = nil)
-    super((options || {}).merge(include: :sources))
+    super((options || {}).merge(include: :sources, methods: :hosted_by))
   end
 
   def first_source
@@ -57,6 +57,10 @@ class VideoTag < ActiveRecord::Base
 
   def saved_once?
     persisted? && created_at == updated_at
+  end
+
+  def hosted_by
+    SourceHostDetector.new(self).hosted_by
   end
 
   def uid=(uid)
