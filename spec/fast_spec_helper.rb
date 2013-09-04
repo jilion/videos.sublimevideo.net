@@ -1,10 +1,10 @@
+$LOAD_PATH.unshift("#{Dir.pwd}/app")
 Dir['app/**/'].each do |dir|
   path = "#{Dir.pwd}/#{dir}"
-  $LOAD_PATH.unshift(path) unless $LOAD_PATH.include?(path)
+  $LOAD_PATH.unshift(path)
 end
 
-require 'bundler/setup'
-require_relative 'config/rspec'
+ENV['RAILS_ENV'] ||= 'test'
 
 unless defined?(Rails)
   require 'rails/railtie'
@@ -13,3 +13,14 @@ unless defined?(Rails)
     def self.env; 'test'; end
   end
 end
+
+unless defined?(Librato)
+  module Librato
+    def self.method_missing(*args)
+      true
+    end
+  end
+end
+
+require 'bundler/setup'
+require_relative 'config/rspec'

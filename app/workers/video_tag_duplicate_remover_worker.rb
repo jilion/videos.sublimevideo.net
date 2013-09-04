@@ -1,5 +1,4 @@
 require 'sidekiq'
-require 'librato-rails'
 
 require 'video_tag_duplicate_remover'
 

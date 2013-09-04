@@ -8,7 +8,7 @@ describe ContentTypeChecker do
   describe '#found?' do
 
     context 'asset is not found' do
-      before { checker.stub(:head).and_return({ 'found' => false }) }
+      before { checker.stub(:_head).and_return({ 'found' => false }) }
 
       it 'return false' do
         checker.should_not be_found
@@ -16,7 +16,7 @@ describe ContentTypeChecker do
     end
 
     context 'asset is found' do
-      before { checker.stub(:head).and_return({ 'found' => true, 'content-type' => 'video/mp4' }) }
+      before { checker.stub(:_head).and_return({ 'found' => true, 'content-type' => 'video/mp4' }) }
 
       it 'return true' do
         checker.should be_found
@@ -26,7 +26,7 @@ describe ContentTypeChecker do
 
   describe '#valid_content_type?' do
     context 'asset has valid content type' do
-      before { checker.stub(:head).and_return({ 'found' => true, 'content-type' => 'video/mp4' }) }
+      before { checker.stub(:_head).and_return({ 'found' => true, 'content-type' => 'video/mp4' }) }
 
       it 'returns true' do
         checker.should be_valid_content_type
@@ -34,7 +34,7 @@ describe ContentTypeChecker do
     end
 
     context 'asset has invalid content type' do
-      before { checker.stub(:head).and_return({ 'found' => true, 'content-type' => 'video/mov' }) }
+      before { checker.stub(:_head).and_return({ 'found' => true, 'content-type' => 'video/mov' }) }
 
       it 'returns false' do
         checker.should_not be_valid_content_type

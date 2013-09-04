@@ -6,15 +6,15 @@ describe VideoTag do
   context "Factory" do
     subject { create(:video_tag_with_sources) }
 
-    its(:site_token)      { should be_present }
-    its(:uid)             { should be_present }
-    its(:uid_origin)      { should eq 'attribute' }
-    its(:title)           { should be_present }
-    its(:poster_url)      { should eq 'http://media.sublimevideo.net/vpa/ms_800.jpg' }
-    its(:size)            { should eq '640x360' }
-    its(:duration)        { should eq 10000 }
-    its(:settings)        { should eq({ 'on_end' => 'nothing' }) }
-    its(:player_stage)    { should eq 'stable' }
+    its(:site_token)   { should be_present }
+    its(:uid)          { should be_present }
+    its(:uid_origin)   { should eq 'attribute' }
+    its(:title)        { should be_present }
+    its(:poster_url)   { should eq 'http://media.sublimevideo.net/vpa/ms_800.jpg' }
+    its(:size)         { should eq '640x360' }
+    its(:duration)     { should eq 10000 }
+    its(:settings)     { should eq({ 'on_end' => 'nothing' }) }
+    its(:player_stage) { should eq 'stable' }
 
     it { should have(2).sources }
     it { should be_valid }

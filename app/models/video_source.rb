@@ -3,20 +3,12 @@ class VideoSource < ActiveRecord::Base
 
   validates :url, presence: true
 
-  before_create :check_for_issues
+  after_create :_delay_content_type_check
 
-  def check_for_issues
-    checker = ContentTypeChecker.new(url)
+  private
 
-    self.issues = if checker.found?
-      if checker.valid_content_type?
-        []
-      else
-        ['content-type-error']
-      end
-    else
-      ['not-found']
-    end
+  def _delay_content_type_check
+    VideoSourceContentTypeCheckerWorker.perform_async(id)
   end
 
 end

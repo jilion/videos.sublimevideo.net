@@ -1,5 +1,4 @@
 require 'sidekiq'
-require 'librato-rails'
 
 require 'autoembed_file_manager'
 

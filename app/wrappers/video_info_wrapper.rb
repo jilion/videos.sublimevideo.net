@@ -1,5 +1,4 @@
 require 'video_info'
-require 'librato-rails'
 
 class VideoInfoWrapper
   attr_reader :video_id, :provider

@@ -2,14 +2,14 @@ require 'net/http'
 
 class ContentTypeChecker
   UNKNOWN_CONTENT_TYPE_RESPONSE = { 'found' => true, 'content-type' => 'unknown' }
-  FILE_NOT_FOUND_RESPONSE = { 'found' => false }
+  FILE_NOT_FOUND_RESPONSE = { 'found' => false, 'content-type' => 'unknown' }
 
   def initialize(asset_url)
     @asset_url = asset_url
   end
 
   def found?
-    head['found']
+    _head['found']
   end
 
   def valid_content_type?
@@ -17,27 +17,36 @@ class ContentTypeChecker
   end
 
   def actual_content_type
-    if head['found']
-      head['content-type']
-    else
-      'not-found'
-    end
+    _head['content-type']
+  end
+
+  def expected_content_type
+    @expected_content_type ||= case File.extname(@asset_url).sub(/^\./, '')
+                               when 'mp4', 'm4v', 'mov'
+                                 'video/mp4'
+                               when 'webm'
+                                 'video/webm'
+                               when 'ogv', 'ogg'
+                                 'video/ogg'
+                               else
+                                 'unknown'
+                               end
   end
 
   private
 
-  def clean_uri
-    @clean_uri ||= URI.parse(URI.escape(@asset_url))
+  def _clean_uri
+    @_clean_uri ||= URI.parse(URI.escape(@asset_url))
   end
 
-  def head_options
-    @head_options ||= { use_ssl: clean_uri.scheme == 'https', read_timeout: 3 }
+  def _head_options
+    @_head_options ||= { use_ssl: _clean_uri.scheme == 'https', read_timeout: 3 }
   end
 
-  def head
+  def _head
     @response ||= begin
-      response = Net::HTTP.start(clean_uri.host, clean_uri.port, head_options) do |http|
-        http.head(clean_uri.path)
+      response = Net::HTTP.start(_clean_uri.host, _clean_uri.port, _head_options) do |http|
+        http.head(_clean_uri.path)
       end
 
       case response
@@ -52,19 +61,6 @@ class ContentTypeChecker
     rescue
       UNKNOWN_CONTENT_TYPE_RESPONSE
     end
-  end
-
-  def expected_content_type
-    @expected_content_type ||= case File.extname(@asset_url).sub(/^\./, '')
-                               when 'mp4', 'm4v', 'mov'
-                                 'video/mp4'
-                               when 'webm'
-                                 'video/webm'
-                               when 'ogv', 'ogg'
-                                 'video/ogg'
-                               else
-                                 'unknown'
-                               end
   end
 
 end

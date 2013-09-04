@@ -1,5 +1,4 @@
 require 'sidekiq'
-require 'librato-rails'
 
 require 'site_token'
 require 'video_tag_data_unaliaser'
