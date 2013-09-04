@@ -15,7 +15,7 @@ describe VideoSourceContentTypeCheckerWorker do
   end
 
   describe '#perform' do
-    before { ContentTypeChecker.should_receive(:new).with(video_source.url) { content_type_checker } }
+    before { HttpContentType::Checker.should_receive(:new).with(video_source.url) { content_type_checker } }
 
     context 'source has no issues' do
       it 'leaves the issues array empty' do

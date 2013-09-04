@@ -1,6 +1,5 @@
 require 'sidekiq'
-
-require 'content_type_checker'
+require 'http_content_type'
 
 class VideoSourceContentTypeCheckerWorker
   include Sidekiq::Worker
@@ -18,7 +17,7 @@ class VideoSourceContentTypeCheckerWorker
   private
 
   def _video_source_issues(url)
-    checker = ContentTypeChecker.new(url)
+    checker = HttpContentType::Checker.new(url)
 
     return ['not-found'] unless checker.found?
     return ['content-type-error'] unless checker.valid_content_type?

@@ -12,6 +12,7 @@ gem 'pg'
 gem 'textacular'
 gem 'sidekiq'
 gem 'video_info'
+gem 'http_content_type'
 gem 'fog'
 gem 'oj'
 
