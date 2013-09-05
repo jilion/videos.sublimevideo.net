@@ -19,6 +19,7 @@ describe VideoSourceContentTypeCheckerWorker do
 
     context 'source has no issues' do
       it 'leaves the issues array empty' do
+        content_type_checker.should_receive(:error?) { false }
         content_type_checker.should_receive(:found?) { true }
         content_type_checker.should_receive(:valid_content_type?) { true }
         video_source.should_receive(:issues=).with([])
@@ -28,8 +29,19 @@ describe VideoSourceContentTypeCheckerWorker do
       end
     end
 
-    context 'source cannot be found' do
+    context 'source has an error' do
       it 'leaves the issues array empty' do
+        content_type_checker.should_receive(:error?) { true }
+        video_source.should_receive(:issues=).with([])
+        video_source.should_receive(:save)
+
+        worker.perform(video_source.id)
+      end
+    end
+
+    context 'source cannot be found' do
+      it 'adds "not-found" to the array' do
+        content_type_checker.should_receive(:error?) { false }
         content_type_checker.should_receive(:found?) { false }
         video_source.should_receive(:issues=).with(['not-found'])
         video_source.should_receive(:save)
@@ -39,7 +51,8 @@ describe VideoSourceContentTypeCheckerWorker do
     end
 
     context 'source has a wrong mime type' do
-      it 'leaves the issues array empty' do
+      it 'adds "content-type-error" to the array' do
+        content_type_checker.should_receive(:error?) { false }
         content_type_checker.should_receive(:found?) { true }
         content_type_checker.should_receive(:valid_content_type?) { false }
         video_source.should_receive(:issues=).with(['content-type-error'])

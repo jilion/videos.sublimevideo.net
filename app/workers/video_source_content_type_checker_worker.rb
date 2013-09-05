@@ -19,6 +19,7 @@ class VideoSourceContentTypeCheckerWorker
   def _video_source_issues(url)
     checker = HttpContentType::Checker.new(url)
 
+    return [] if checker.error?
     return ['not-found'] unless checker.found?
     return ['content-type-error'] unless checker.valid_content_type?
 
