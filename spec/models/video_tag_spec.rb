@@ -170,6 +170,13 @@ describe VideoTag do
     it { should ensure_inclusion_of(:player_stage).in_array(%w[stable beta alpha]) }
   end
 
+  describe 'after_create :_delay_increment_site_counter' do
+    it 'delays site counter incrementation' do
+      expect(SiteCounterIncrementerWorker).to receive(:perform_async).with(video_tag.site_token, :last_30_days_video_tags)
+      video_tag.save
+    end
+  end
+
   describe "#valid_uid?" do
     specify { build(:video_tag, uid: '1').should be_valid_uid }
     specify { build(:video_tag, uid: 'a').should be_valid_uid }

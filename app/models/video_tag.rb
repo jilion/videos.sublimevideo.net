@@ -39,6 +39,8 @@ class VideoTag < ActiveRecord::Base
   validates :sources_origin, inclusion: %w[youtube vimeo other], allow_nil: true
   validates :player_stage, inclusion: %w[stable beta alpha]
 
+  after_create :_delay_increment_site_counter
+
   def self.find_or_initialize(options)
     where(options).first_or_initialize
   end
@@ -92,6 +94,13 @@ class VideoTag < ActiveRecord::Base
       [k.underscore, v.in?([1, '1', 'true', true]) || v]
     }]
   end
+
+  private
+
+  def _delay_increment_site_counter
+    SiteCounterIncrementerWorker.perform_async(site_token, :last_30_days_video_tags)
+  end
+
 end
 
 # == Schema Information
