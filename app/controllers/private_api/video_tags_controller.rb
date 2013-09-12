@@ -13,15 +13,15 @@ class PrivateApi::VideoTagsController < SublimeVideoPrivateApiController
     @video_tags = VideoTag.where(site_token: params[:site_token]).by_title.page(params[:page])
     @video_tags = apply_scopes(@video_tags)
 
-    expires_in 2.minutes, public: true
-    respond_with(@video_tags)
+    if stale?(last_modified: @video_tags.maximum(:updated_at), etag: params, public: true)
+      respond_with(@video_tags)
+    end
   end
 
   # GET /private_api/sites/:site_token/video_tags/:id
   def show
     @video_tag = VideoTag.where(site_token: params[:site_token], uid: params[:id]).first!
 
-    expires_in 2.minutes, public: true
     respond_with(@video_tag) if stale?(@video_tag, public: true)
   end
 

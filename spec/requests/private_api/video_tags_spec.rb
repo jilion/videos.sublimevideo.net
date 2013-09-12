@@ -11,7 +11,7 @@ describe "VideoTags requests" do
     let!(:video_tag2) { create(:video_tag, site_token: site_token, created_at: time, title: 'a') }
     let!(:video_tag3) { create(:video_tag, site_token: site_token) }
 
-    it_behaves_like 'valid caching headers', cache_validation: false
+    it_behaves_like 'valid caching headers', cache_validation: false, cache_control: 'public'
 
     it "supports per scope" do
       get url, { per: 2 }, @env
@@ -54,7 +54,7 @@ describe "VideoTags requests" do
     let(:video_tag) { create(:video_tag, site_token: site_token, sources: [build(:video_source).attributes]) }
     let(:url) { "private_api/sites/#{site_token}/video_tags/#{video_tag.uid}.json" }
 
-    it_behaves_like 'valid caching headers' do
+    it_behaves_like 'valid caching headers', cache_control: 'public' do
       let(:record) { video_tag }
     end
 
