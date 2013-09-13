@@ -27,8 +27,8 @@ gem 'newrelic_rpm'
 group :staging, :production do
   gem 'unicorn'
   gem 'lograge'
-  gem 'memcachier'
   gem 'dalli'
+  gem 'memcachier'
   gem 'rack-cache'
 end
 
