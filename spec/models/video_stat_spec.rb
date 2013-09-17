@@ -4,7 +4,7 @@ require 'support/private_api_helpers'
 require 'video_stat'
 
 describe VideoStat do
-  let(:site_token) { 'site_token' }
+  let(:site_token) { 'abcd1234' }
   let(:video_uid)  { 'video_uid' }
   let(:video_tag)  { double('VideoTag', site_token: site_token, uid: video_uid) }
 

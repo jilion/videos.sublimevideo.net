@@ -4,7 +4,7 @@ describe VideoTag do
 
   describe "update via worker" do
     let(:video_tag) { VideoTag.first }
-    let(:site_token) { 'site_token' }
+    let(:site_token) { 'abcd1234' }
     let(:uid) { 'uid' }
 
     before { VideoTagUpdaterWorker.jobs.clear }
@@ -66,7 +66,7 @@ describe VideoTag do
         ],
         'o' => { 'autoembed' => 'true', 'gaAccount' => 'UA-12345-6' }
       }}
-      let(:path) { 'e/site_token/uid.html' }
+      let(:path) { "e/#{site_token}/uid.html" }
 
       it "uploads autoembed file" do
         VideoTagUpdaterWorker.perform_async(site_token, uid, data)
@@ -75,7 +75,7 @@ describe VideoTag do
 
         body = S3Wrapper.get_object(path).body
         body.should include "<!DOCTYPE html>"
-        body.should include "/js/site_token.js"
+        body.should include "/js/#{site_token}.js"
         body.should include "_gaq.push(['_setAccount', 'UA-12345-6']);"
       end
     end

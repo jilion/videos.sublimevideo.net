@@ -105,7 +105,7 @@ describe VideoTag do
     end
 
     describe ".duplicates_first_source_url" do
-      let(:site_token) { 'site_token' }
+      let(:site_token) { 'abcd1234' }
       let!(:other_video_tag) { create(:video_tag_with_sources, site_token: site_token, uid_origin: 'source') }
       subject { VideoTag.duplicates_first_source_url(video_tag).first }
 
@@ -128,7 +128,7 @@ describe VideoTag do
     end
 
     describe ".duplicates_sources_id" do
-      let(:site_token) { 'site_token' }
+      let(:site_token) { 'abcd1234' }
       let!(:other_video_tag) { create(:video_tag, site_token: site_token, uid_origin: 'source', sources_id: 'id', sources_origin: 'vimeo') }
       subject { VideoTag.duplicates_sources_id(video_tag) }
 
@@ -144,7 +144,7 @@ describe VideoTag do
     end
 
     describe ".search" do
-      let(:site_token) { 'site_token' }
+      let(:site_token) { 'abcd1234' }
       let!(:video_tag) { create(:video_tag, site_token: site_token, title: title) }
       subject { VideoTag.search('sugar') }
 
@@ -162,6 +162,8 @@ describe VideoTag do
 
   describe "Validations" do
     it { should validate_presence_of(:site_token) }
+    it { should allow_value("1234abcd").for(:site_token) }
+    it { should_not allow_value("123").for(:site_token) }
     it { should validate_presence_of(:uid) }
     it { should validate_presence_of(:uid_origin) }
     # it { should validate_uniqueness_of(:uid).scoped_to(:site_token) } # doesn't work with null: false on uid

@@ -32,7 +32,7 @@ class VideoTag < ActiveRecord::Base
   scope :with_valid_uid, -> { where(uid_origin: 'attribute').where("uid ~* '#{UID_REGEX}'") }
   scope :search, ->(query) { basic_search(title: query) }
 
-  validates :site_token, presence: true
+  validates :site_token, presence: true, format: /[a-z0-9]{8}/
   validates :uid, presence: true, uniqueness: { scope: :site_token }
   validates :uid_origin, presence: true, inclusion: %w[attribute source]
   validates :title_origin, inclusion: %w[attribute youtube vimeo], allow_nil: true

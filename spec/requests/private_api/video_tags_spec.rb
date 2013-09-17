@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "VideoTags requests" do
-  let(:site_token) { 'site_token' }
+  let(:site_token) { 'abcd1234' }
   before { set_api_credentials }
 
   describe "index" do
