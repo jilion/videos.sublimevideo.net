@@ -28,6 +28,15 @@ describe VideoSource do
       expect(VideoSourceContentTypeCheckerWorker).to receive(:perform_in).with(30.seconds, anything())
       video_source.save
     end
+
+    context "with video_tag with unvalid uid" do
+      before { video_source.video_tag.uid = 'i n v a l i d' }
+
+      it "doesn't delay content type check" do
+        expect(VideoSourceContentTypeCheckerWorker).to_not receive(:perform_in)
+        video_source.save
+      end
+    end
   end
 end
 

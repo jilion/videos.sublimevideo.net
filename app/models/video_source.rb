@@ -8,7 +8,9 @@ class VideoSource < ActiveRecord::Base
   private
 
   def _delay_content_type_check
-    VideoSourceContentTypeCheckerWorker.perform_in(30.seconds, id)
+    if video_tag.valid_uid?
+      VideoSourceContentTypeCheckerWorker.perform_in(30.seconds, id)
+    end
   end
 
 end
