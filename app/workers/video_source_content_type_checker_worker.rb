@@ -3,7 +3,7 @@ require 'http_content_type'
 
 class VideoSourceContentTypeCheckerWorker
   include Sidekiq::Worker
-  sidekiq_options queue: 'videos_low'
+  sidekiq_options queue: 'videos-low'
 
   def perform(video_source_id)
     return unless video_source = VideoSource.where(id: video_source_id).first

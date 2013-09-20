@@ -4,7 +4,7 @@ require 'video_tag_duplicate_remover'
 
 class VideoTagDuplicateRemoverWorker
   include Sidekiq::Worker
-  sidekiq_options queue: 'videos_low'
+  sidekiq_options queue: 'videos-low'
 
   def self.perform_async_if_needed(video_tag)
     if video_tag.saved_once? && video_tag.valid_uid?

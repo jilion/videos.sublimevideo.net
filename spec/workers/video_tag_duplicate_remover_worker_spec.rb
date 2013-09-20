@@ -21,7 +21,7 @@ describe VideoTagDuplicateRemoverWorker do
   end
 
   it "delays job in videos queue" do
-    VideoTagDuplicateRemoverWorker.sidekiq_options_hash['queue'].should eq 'videos_low'
+    VideoTagDuplicateRemoverWorker.sidekiq_options_hash['queue'].should eq 'videos-low'
   end
 
   it "finds video_tag" do
