@@ -12,6 +12,6 @@ describe SiteCounterIncrementerWorker do
   end
 
   it "delays job in default (mysv) queue" do
-    expect(SiteCounterIncrementerWorker.sidekiq_options_hash['queue']).to eq 'default'
+    expect(SiteCounterIncrementerWorker.sidekiq_options_hash['queue']).to eq 'my-low'
   end
 end
