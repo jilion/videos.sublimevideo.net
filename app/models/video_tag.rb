@@ -14,19 +14,7 @@ class VideoTag < ActiveRecord::Base
   scope :by_last_365_days_starts, ->(way = 'desc') { order(last_365_days_starts: way.to_sym) }
   scope :by_starts, ->(last_days = 30, way = 'desc') {
     select("*, (SELECT SUM(t) FROM UNNEST(starts[#{366 - last_days}:365]) t) as starts_sum").order("starts_sum #{way}") }
-  scope :duplicates_first_source_url, ->(video_tag) {
-    includes(:sources)
-    .where(site_token: video_tag.site_token)
-    .where("uid_origin = 'source' OR (uid_origin = 'attribute' AND uid !~* '#{UID_REGEX}')")
-    .merge(VideoSource.where(
-      position: 0,
-      url: video_tag.first_source.try(:url)
-    ).references(:sources)) }
-  scope :duplicates_sources_id, ->(video_tag) { where(
-    site_token: video_tag.site_token,
-    uid_origin: 'source',
-    sources_id: video_tag.sources_id,
-    sources_origin: video_tag.sources_origin) }
+
   scope :with_uids, ->(uids) { where(uid: uids) }
   scope :with_invalid_uid, -> { where("uid !~* '#{UID_REGEX}'") }
   scope :with_valid_uid, -> { where(uid_origin: 'attribute').where("uid ~* '#{UID_REGEX}'") }
