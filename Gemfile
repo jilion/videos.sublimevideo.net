@@ -38,18 +38,19 @@ group :development, :test do
 end
 
 group :development do
-  gem 'annotate'
+  gem 'annotate', require: false
 
   # Guard
-  gem 'ruby_gntp'
-  gem 'guard-pow'
-  gem 'guard-rspec'
+  gem 'ruby_gntp', require: false
+  gem 'guard-pow', require: false
+  gem 'guard-rspec', require: false
+  gem 'guard', '>= 2.0.0.pre.2', require: false
 end
 
 group :test do
   gem 'rspec'
   gem 'shoulda-matchers'
-  gem 'webmock', '>= 1.8.0', '< 1.10'
+  gem 'webmock'
   gem 'vcr'
   gem 'factory_girl_rails'
 end
