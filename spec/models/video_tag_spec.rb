@@ -210,20 +210,6 @@ describe VideoTag do
     end
   end
 
-  describe "#duration=" do
-    it "limits max duration integer" do
-      buggy_duration = 6232573214720000
-      video_tag.update(duration: buggy_duration)
-      video_tag.duration.should be_nil
-    end
-
-    it "limits min duration integer" do
-      buggy_duration = 6232573214720000
-      video_tag.update(duration: buggy_duration)
-      video_tag.duration.should be_nil
-    end
-  end
-
   describe "#settings=" do
     it "underscorizes keys" do
       camelcase_settings = { 'logoPosition' => 'bottom-right' }

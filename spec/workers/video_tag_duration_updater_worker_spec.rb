@@ -31,7 +31,13 @@ describe VideoTagDurationUpdaterWorker do
   end
 
   it "updates video_tag duration" do
-    expect(video_tags).to receive(:update_all).with(duration: '123456')
+    expect(video_tags).to receive(:update_all).with(duration: 123456)
+    worker.perform(*params)
+  end
+
+  it "limits max duration integer" do
+    params[2] = '5461782000'
+    expect(video_tags).to receive(:update_all).with(duration: nil)
     worker.perform(*params)
   end
 end

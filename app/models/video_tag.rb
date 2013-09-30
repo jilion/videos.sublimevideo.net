@@ -61,11 +61,6 @@ class VideoTag < ActiveRecord::Base
     write_attribute :title, title.try(:to, 254)
   end
 
-  def duration=(duration)
-    duration = duration.to_i.in?(0..2147483647) ? duration.to_i : nil
-    write_attribute :duration, duration
-  end
-
   def sources=(sources)
     self.sources.delete_all
     (sources || []).each_with_index do |attributes, index|
