@@ -6,7 +6,7 @@ namespace :video_tags do
       .with_valid_uid
     limit = video_tags.count / 150 # 150 is a little more that the number of 10 min during 24h
     video_tags = video_tags
-      .where('starts_updated_at <= ?', 1.days.ago)
+      .where('starts_updated_at <= ? OR starts_updated_at IS NULL', 1.days.ago)
       .order(loaded_at: :desc)
       .limit(limit)
     video_tags.select(:id).find_each do |video_tag|
