@@ -16,8 +16,6 @@ class VideoTagUpdater
     set_title_and_title_origin
     video_tag.loaded_at = Time.now
     video_tag.save
-  # Could happen because of Sidekiq async jobs
-  rescue PG::UniqueViolation
   end
 
   private
