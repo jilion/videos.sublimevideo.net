@@ -16,7 +16,7 @@ class VideoInfoWrapper
 
   def video_info
     Librato.increment('video_info.call', source: provider) unless @video_info
-    @video_info ||= VideoInfo.get(url)
+    @video_info ||= VideoInfo.new(url)
   end
 
   def url
