@@ -25,34 +25,34 @@ describe AutoEmbedFile do
     let(:autoembed_file) { AutoEmbedFile.new(video_tag) }
     let(:body) { autoembed_file.read }
 
-    it { autoembed_file.should be_kind_of Tempfile }
+    it { expect(autoembed_file).to be_kind_of Tempfile }
 
     it "includes title tag" do
-      body.should include '<title>My Video</title>'
+      expect(body).to include '<title>My Video</title>'
     end
 
     it "includes loader with good token" do
-      body.should include 'src="//cdn.sublimevideo.net/js/site_token-beta.js"'
+      expect(body).to include 'src="//cdn.sublimevideo.net/js/site_token-beta.js"'
     end
 
     it "includes poster attribute" do
-      body.should include 'poster="//poster_url.com"'
+      expect(body).to include 'poster="//poster_url.com"'
     end
 
     it "includes data-settings attribute" do
-      body.should include 'data-player-kit="1" data-sharing-buttons="twitter facebook"'
+      expect(body).to include 'data-player-kit="1" data-sharing-buttons="twitter facebook"'
     end
 
     it "includes source tags" do
-      body.should include '<source src="http://media.sublimevideo.net/360p.mp4" />'
-      body.should include '<source src="http://media.sublimevideo.net/720p.mp4" data-quality="hd" />'
+      expect(body).to include '<source src="http://media.sublimevideo.net/360p.mp4" />'
+      expect(body).to include '<source src="http://media.sublimevideo.net/720p.mp4" data-quality="hd" />'
     end
 
     context "with no sources" do
       before { video_tag.stub(:sources) { [] } }
 
       it "doesn't includes source tags" do
-        body.should_not include 'source'
+        expect(body).not_to include 'source'
       end
     end
 
@@ -60,7 +60,7 @@ describe AutoEmbedFile do
       before { video_tag.stub(:options) { { 'ga_account' => 'UA-12345-6' } } }
 
       it "includes google analytics script tag" do
-        body.should include "_gaq.push(['_setAccount', 'UA-12345-6']);"
+        expect(body).to include "_gaq.push(['_setAccount', 'UA-12345-6']);"
       end
     end
   end

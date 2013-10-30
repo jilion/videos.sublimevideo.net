@@ -13,4 +13,7 @@ ActiveRecord::Migration.check_pending!
 RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = true
   config.use_transactional_fixtures = true
+  config.expect_with :rspec do |c|
+    c.syntax = :expect
+  end
 end

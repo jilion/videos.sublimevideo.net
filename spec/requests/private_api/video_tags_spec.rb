@@ -15,38 +15,38 @@ describe "VideoTags requests" do
 
     it "supports per scope" do
       get url, { per: 2 }, @env
-      MultiJson.load(response.body).should have(2).video_tag
+      expect(MultiJson.load(response.body)).to have(2).video_tag
     end
 
     it "supports search scope" do
       get url, { search: 'foo' }, @env
-      MultiJson.load(response.body).should have(1).video_tag
+      expect(MultiJson.load(response.body)).to have(1).video_tag
     end
 
     it "always sorts by_title in last position" do
       get url, { by_date: 'desc' }, @env
-      MultiJson.load(response.body).map { |v| v['id'] }.should eq(
+      expect(MultiJson.load(response.body).map { |v| v['id'] }).to eq(
         [video_tag3.id, video_tag2.id, video_tag1.id])
     end
 
     it "supports select scope" do
       get url, { select: %w[uid title] }, @env
       video_tag = MultiJson.load(response.body).first
-      video_tag.should have_key("uid")
-      video_tag.should have_key("title")
-      video_tag.should_not have_key("uid_origin")
+      expect(video_tag).to have_key("uid")
+      expect(video_tag).to have_key("title")
+      expect(video_tag).not_to have_key("uid_origin")
     end
 
     it "includes sources" do
       get url, {}, @env
       video_tag = MultiJson.load(response.body).first
-      video_tag.should have_key("sources")
+      expect(video_tag).to have_key("sources")
     end
 
     it "supports with_uids scope" do
       uids = VideoTag.pluck(:uid)[0, 2]
       get url, { with_uids: uids }, @env
-      MultiJson.load(response.body).should have(2).video_tag
+      expect(MultiJson.load(response.body)).to have(2).video_tag
     end
   end
 
@@ -60,17 +60,17 @@ describe "VideoTags requests" do
 
     it 'finds video_tag per uid' do
       get url, {}, @env
-      MultiJson.load(response.body).should_not have_key('video_tag')
+      expect(MultiJson.load(response.body)).not_to have_key('video_tag')
     end
 
     it 'includes sources' do
       get url, {}, @env
-      MultiJson.load(response.body).should have_key('sources')
+      expect(MultiJson.load(response.body)).to have_key('sources')
     end
 
     it 'sources includes issues' do
       get url, {}, @env
-      MultiJson.load(response.body)['sources'][0].should have_key('issues')
+      expect(MultiJson.load(response.body)['sources'][0]).to have_key('issues')
     end
   end
 
@@ -85,7 +85,7 @@ describe "VideoTags requests" do
 
     it "supports last_30_days_active scope" do
       get url, { last_30_days_active: true }, @env
-      MultiJson.load(response.body).should eq({"count" => 1})
+      expect(MultiJson.load(response.body)).to eq({"count" => 1})
     end
   end
 end

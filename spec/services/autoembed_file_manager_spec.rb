@@ -23,7 +23,7 @@ describe AutoEmbedFileManager , :fog_mock do
         let(:acl) { S3Wrapper.fog_connection.get_object_acl(s3_bucket, path).body }
 
         it "is public" do
-          acl['AccessControlList'].should include({"Permission"=>"READ", "Grantee"=>{"URI"=>"http://acs.amazonaws.com/groups/global/AllUsers"}})
+          expect(acl['AccessControlList']).to include({"Permission"=>"READ", "Grantee"=>{"URI"=>"http://acs.amazonaws.com/groups/global/AllUsers"}})
         end
       end
 
@@ -31,11 +31,11 @@ describe AutoEmbedFileManager , :fog_mock do
         let(:headers) { S3Wrapper.fog_connection.head_object(s3_bucket, path).headers }
 
         it "has good content_type public" do
-          headers['Content-Type'].should eq 'text/html'
+          expect(headers['Content-Type']).to eq 'text/html'
         end
 
         it "has 2 min max-age cache control" do
-          headers['Cache-Control'].should eq 's-maxage=300, max-age=120, public'
+          expect(headers['Cache-Control']).to eq 's-maxage=300, max-age=120, public'
         end
       end
     end

@@ -25,40 +25,40 @@ describe VideoTagUpdaterWorker do
   end
 
   it "delays job in videos queue" do
-    VideoTagUpdaterWorker.sidekiq_options_hash['queue'].should eq 'videos'
+    expect(VideoTagUpdaterWorker.sidekiq_options_hash['queue']).to eq 'videos'
   end
 
   it "skips update if site_token is mysv token" do
     params[0] = SiteToken[:my]
-    VideoTagDataUnaliaser.should_not_receive(:unalias)
+    expect(VideoTagDataUnaliaser).to_not receive(:unalias)
     VideoTagUpdaterWorker.new.perform(*params)
   end
 
   it "unaliases aliased data" do
-    VideoTagDataUnaliaser.should_receive(:unalias).with(data)
+    expect(VideoTagDataUnaliaser).to receive(:unalias).with(data)
     VideoTagUpdaterWorker.new.perform(*params)
   end
 
   it "finds or initializes video_tag" do
-    VideoTag.should_receive(:find_or_initialize).with(site_token: 'site_token', uid: 'uid')
+    expect(VideoTag).to receive(:find_or_initialize).with(site_token: 'site_token', uid: 'uid')
     VideoTagUpdaterWorker.new.perform(*params)
   end
 
   it "updates video_tag" do
-    VideoTagUpdater.should_receive(:new).with(video_tag) { |mock|
-      mock.should_receive(:update).with(unaliases_data)
+    expect(VideoTagUpdater).to receive(:new).with(video_tag) { |mock|
+      expect(mock).to receive(:update).with(unaliases_data)
       mock
     }
     VideoTagUpdaterWorker.new.perform(*params)
   end
 
   it "uploads video_tag autoembed if needed" do
-    AutoEmbedFileUploaderWorker.should_receive(:perform_async_if_needed).with(video_tag)
+    expect(AutoEmbedFileUploaderWorker).to receive(:perform_async_if_needed).with(video_tag)
     VideoTagUpdaterWorker.new.perform(*params)
   end
 
   it "increments Librato 'video_tag.update' metric" do
-    Librato.should_receive(:increment).once.with('video_tag.update')
+    expect(Librato).to receive(:increment).once.with('video_tag.update')
     VideoTagUpdaterWorker.new.perform(*params)
   end
 end

@@ -20,13 +20,13 @@ describe VideoTag do
         VideoTagUpdaterWorker.perform_async(site_token, uid, data)
         VideoTagUpdaterWorker.drain
 
-        video_tag.site_token.should eq site_token
-        video_tag.uid.should eq uid
-        video_tag.title.should eq 'Will We Ever Run Out of New Music?'
-        video_tag.title_origin.should eq 'youtube'
-        video_tag.sources_id.should eq 'DAcjV60RnRw'
-        video_tag.sources_origin.should eq 'youtube'
-        video_tag.player_stage.should eq 'beta'
+        expect(video_tag.site_token).to eq site_token
+        expect(video_tag.uid).to eq uid
+        expect(video_tag.title).to eq 'Will We Ever Run Out of New Music?'
+        expect(video_tag.title_origin).to eq 'youtube'
+        expect(video_tag.sources_id).to eq 'DAcjV60RnRw'
+        expect(video_tag.sources_origin).to eq 'youtube'
+        expect(video_tag.player_stage).to eq 'beta'
       end
     end
 
@@ -45,15 +45,15 @@ describe VideoTag do
         VideoTagUpdaterWorker.perform_async(site_token, uid, data)
         VideoTagUpdaterWorker.drain
 
-        video_tag.site_token.should eq site_token
-        video_tag.uid.should eq uid
-        video_tag.title.should eq 'custom video title'
-        video_tag.title_origin.should eq 'attribute'
-        video_tag.sources_id.should eq '35386044'
-        video_tag.sources_origin.should eq 'vimeo'
-        video_tag.created_at.should be <= 1.year.ago
-        video_tag.updated_at.should be <= 1.month.ago
-        video_tag.should have(2).sources
+        expect(video_tag.site_token).to eq site_token
+        expect(video_tag.uid).to eq uid
+        expect(video_tag.title).to eq 'custom video title'
+        expect(video_tag.title_origin).to eq 'attribute'
+        expect(video_tag.sources_id).to eq '35386044'
+        expect(video_tag.sources_origin).to eq 'vimeo'
+        expect(video_tag.created_at).to be <= 1.year.ago
+        expect(video_tag.updated_at).to be <= 1.month.ago
+        expect(video_tag).to have(2).sources
       end
     end
 
@@ -74,9 +74,9 @@ describe VideoTag do
         AutoEmbedFileUploaderWorker.drain
 
         body = S3Wrapper.get_object(path).body
-        body.should include "<!DOCTYPE html>"
-        body.should include "/js/#{site_token}.js"
-        body.should include "_gaq.push(['_setAccount', 'UA-12345-6']);"
+        expect(body).to include "<!DOCTYPE html>"
+        expect(body).to include "/js/#{site_token}.js"
+        expect(body).to include "_gaq.push(['_setAccount', 'UA-12345-6']);"
       end
     end
   end

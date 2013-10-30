@@ -10,20 +10,20 @@ describe VideoSourceContentTypeCheckerWorker do
   let(:content_type_checker) { double }
   let(:worker) { described_class.new }
   before do
-    VideoSource.should_receive(:where).with(id: 42) { double(first: video_source) }
+    expect(VideoSource).to receive(:where).with(id: 42) { double(first: video_source) }
     Librato.stub(:increment)
   end
 
   describe '#perform' do
-    before { HttpContentType::Checker.should_receive(:new).with(video_source.url) { content_type_checker } }
+    before { expect(HttpContentType::Checker).to receive(:new).with(video_source.url) { content_type_checker } }
 
     context 'source has no issues' do
       it 'leaves the issues array empty' do
-        content_type_checker.should_receive(:error?) { false }
-        content_type_checker.should_receive(:found?) { true }
-        content_type_checker.should_receive(:valid_content_type?) { true }
-        video_source.should_receive(:issues=).with([])
-        video_source.should_receive(:save)
+        expect(content_type_checker).to receive(:error?) { false }
+        expect(content_type_checker).to receive(:found?) { true }
+        expect(content_type_checker).to receive(:valid_content_type?) { true }
+        expect(video_source).to receive(:issues=).with([])
+        expect(video_source).to receive(:save)
 
         worker.perform(video_source.id)
       end
@@ -31,9 +31,9 @@ describe VideoSourceContentTypeCheckerWorker do
 
     context 'source has an error' do
       it 'leaves the issues array empty' do
-        content_type_checker.should_receive(:error?) { true }
-        video_source.should_receive(:issues=).with([])
-        video_source.should_receive(:save)
+        expect(content_type_checker).to receive(:error?) { true }
+        expect(video_source).to receive(:issues=).with([])
+        expect(video_source).to receive(:save)
 
         worker.perform(video_source.id)
       end
@@ -41,10 +41,10 @@ describe VideoSourceContentTypeCheckerWorker do
 
     context 'source cannot be found' do
       it 'adds "not-found" to the array' do
-        content_type_checker.should_receive(:error?) { false }
-        content_type_checker.should_receive(:found?) { false }
-        video_source.should_receive(:issues=).with(['not-found'])
-        video_source.should_receive(:save)
+        expect(content_type_checker).to receive(:error?) { false }
+        expect(content_type_checker).to receive(:found?) { false }
+        expect(video_source).to receive(:issues=).with(['not-found'])
+        expect(video_source).to receive(:save)
 
         worker.perform(video_source.id)
       end
@@ -52,11 +52,11 @@ describe VideoSourceContentTypeCheckerWorker do
 
     context 'source has a wrong mime type' do
       it 'adds "content-type-error" to the array' do
-        content_type_checker.should_receive(:error?) { false }
-        content_type_checker.should_receive(:found?) { true }
-        content_type_checker.should_receive(:valid_content_type?) { false }
-        video_source.should_receive(:issues=).with(['content-type-error'])
-        video_source.should_receive(:save)
+        expect(content_type_checker).to receive(:error?) { false }
+        expect(content_type_checker).to receive(:found?) { true }
+        expect(content_type_checker).to receive(:valid_content_type?) { false }
+        expect(video_source).to receive(:issues=).with(['content-type-error'])
+        expect(video_source).to receive(:save)
 
         worker.perform(video_source.id)
       end

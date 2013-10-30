@@ -9,7 +9,7 @@ describe S3Wrapper do
     before { S3Wrapper.stub(:fog_connection) { fog_connection_mock } }
 
     it "delegates to fog_connection" do
-      fog_connection_mock.should_receive(:put_object)
+      expect(fog_connection_mock).to receive(:put_object)
       S3Wrapper.put_object
     end
   end

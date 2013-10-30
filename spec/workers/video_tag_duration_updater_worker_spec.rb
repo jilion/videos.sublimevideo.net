@@ -21,7 +21,7 @@ describe VideoTagDurationUpdaterWorker do
   end
 
   it "delays job in videos queue" do
-    VideoTagDurationUpdaterWorker.sidekiq_options_hash['queue'].should eq 'videos'
+    expect(VideoTagDurationUpdaterWorker.sidekiq_options_hash['queue']).to eq 'videos'
   end
 
   it "skips update if site_token is mysv token" do

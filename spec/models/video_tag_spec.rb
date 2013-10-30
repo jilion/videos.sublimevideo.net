@@ -30,7 +30,7 @@ describe VideoTag do
       let!(:video_tag) { create(:video_tag, last_30_days_starts: 1) }
 
       it "returns only recently updated video_tags" do
-        VideoTag.last_30_days_active.should eq [video_tag]
+        expect(VideoTag.last_30_days_active).to eq [video_tag]
       end
     end
     describe ".last_90_days_active" do
@@ -38,7 +38,7 @@ describe VideoTag do
       let!(:video_tag) { create(:video_tag, last_90_days_starts: 1) }
 
       it "returns only recently updated video_tags" do
-        VideoTag.last_90_days_active.should eq [video_tag]
+        expect(VideoTag.last_90_days_active).to eq [video_tag]
       end
     end
     describe ".last_365_days_active" do
@@ -46,7 +46,7 @@ describe VideoTag do
       let!(:video_tag) { create(:video_tag, last_365_days_starts: 1) }
 
       it "returns only recently updated video_tags" do
-        VideoTag.last_365_days_active.should eq [video_tag]
+        expect(VideoTag.last_365_days_active).to eq [video_tag]
       end
     end
     describe ".inactive" do
@@ -54,7 +54,7 @@ describe VideoTag do
       let!(:video_tag) { create(:video_tag, last_365_days_starts: 1) }
 
       it "returns only recently updated video_tags" do
-        VideoTag.inactive.should eq [old_video_tag]
+        expect(VideoTag.inactive).to eq [old_video_tag]
       end
     end
 
@@ -63,11 +63,11 @@ describe VideoTag do
       let!(:video_tag_b) { create(:video_tag, title: 'b') }
 
       it "sorts by name ASC by default" do
-        VideoTag.by_title.first.should eq video_tag_a
+        expect(VideoTag.by_title.first).to eq video_tag_a
       end
 
       it "sorts by name order given (DESC)" do
-        VideoTag.by_title(:desc).first.should eq video_tag_b
+        expect(VideoTag.by_title(:desc).first).to eq video_tag_b
       end
     end
 
@@ -76,11 +76,11 @@ describe VideoTag do
       let!(:video_tag) { create(:video_tag) }
 
       it "sorts by created_at DESC by default" do
-        VideoTag.by_date.first.should eq video_tag
+        expect(VideoTag.by_date.first).to eq video_tag
       end
 
       it "sorts by name order given (ASC)" do
-        VideoTag.by_date(:asc).first.should eq old_video_tag
+        expect(VideoTag.by_date(:asc).first).to eq old_video_tag
       end
     end
 
@@ -89,18 +89,18 @@ describe VideoTag do
       let!(:video_tag2) { create(:video_tag, starts: 365.times.map { |i| (i + 1) * 2 }) }
 
       it "sorts by starts sum" do
-        VideoTag.by_starts.map(&:id).should eq [video_tag2, video_tag1].map(&:id)
-        VideoTag.by_starts(30, 'asc').map(&:id).should eq [video_tag1, video_tag2].map(&:id)
+        expect(VideoTag.by_starts.map(&:id)).to eq [video_tag2, video_tag1].map(&:id)
+        expect(VideoTag.by_starts(30, 'asc').map(&:id)).to eq [video_tag1, video_tag2].map(&:id)
       end
 
       it "sets starts_sum for the last 30 days by default" do
-        VideoTag.by_starts.first['starts_sum'].should eq 21030
-        VideoTag.by_starts.last['starts_sum'].should eq 10515
+        expect(VideoTag.by_starts.first['starts_sum']).to eq 21030
+        expect(VideoTag.by_starts.last['starts_sum']).to eq 10515
       end
 
       it "sets starts_sum for last 1 day" do
-        VideoTag.by_starts(1).first['starts_sum'].should eq 730
-        VideoTag.by_starts(1).last['starts_sum'].should eq 365
+        expect(VideoTag.by_starts(1).first['starts_sum']).to eq 730
+        expect(VideoTag.by_starts(1).last['starts_sum']).to eq 365
       end
     end
 
@@ -141,18 +141,18 @@ describe VideoTag do
   end
 
   describe "#valid_uid?" do
-    specify { build(:video_tag, uid: '1').should be_valid_uid }
-    specify { build(:video_tag, uid: 'a').should be_valid_uid }
-    specify { build(:video_tag, uid: 'A').should be_valid_uid }
-    specify { build(:video_tag, uid: '_').should be_valid_uid }
-    specify { build(:video_tag, uid: '-').should be_valid_uid }
-    specify { build(:video_tag, uid: 'a0912-as_dA').should be_valid_uid }
+    specify { expect(build(:video_tag, uid: '1')).to be_valid_uid }
+    specify { expect(build(:video_tag, uid: 'a')).to be_valid_uid }
+    specify { expect(build(:video_tag, uid: 'A')).to be_valid_uid }
+    specify { expect(build(:video_tag, uid: '_')).to be_valid_uid }
+    specify { expect(build(:video_tag, uid: '-')).to be_valid_uid }
+    specify { expect(build(:video_tag, uid: 'a0912-as_dA')).to be_valid_uid }
 
-    specify { build(:video_tag, uid: '#').should_not be_valid_uid }
-    specify { build(:video_tag, uid: '.').should_not be_valid_uid }
-    specify { build(:video_tag, uid: '!').should_not be_valid_uid }
-    specify { build(:video_tag, uid: '?').should_not be_valid_uid }
-    specify { build(:video_tag, uid: 'a' * 65 ).should_not be_valid_uid }
+    specify { expect(build(:video_tag, uid: '#')).not_to be_valid_uid }
+    specify { expect(build(:video_tag, uid: '.')).not_to be_valid_uid }
+    specify { expect(build(:video_tag, uid: '!')).not_to be_valid_uid }
+    specify { expect(build(:video_tag, uid: '?')).not_to be_valid_uid }
+    specify { expect(build(:video_tag, uid: 'a' * 65 )).not_to be_valid_uid }
   end
 
   describe "#saved_once?" do
@@ -192,7 +192,7 @@ describe VideoTag do
       long_uid = ''
       256.times.each { long_uid += 'a' }
       video_tag.update(uid: long_uid)
-      video_tag.uid.size.should eq 255
+      expect(video_tag.uid.size).to eq 255
     end
   end
 
@@ -201,12 +201,12 @@ describe VideoTag do
       long_title = ''
       256.times.each { long_title += 'a' }
       video_tag.update(title: long_title)
-      video_tag.title.size.should eq 255
+      expect(video_tag.title.size).to eq 255
     end
 
     it "sets to nil" do
       video_tag.update(title: nil)
-      video_tag.title.should be_nil
+      expect(video_tag.title).to be_nil
     end
   end
 
@@ -214,12 +214,12 @@ describe VideoTag do
     it "underscorizes keys" do
       camelcase_settings = { 'logoPosition' => 'bottom-right' }
       video_tag.update(settings: camelcase_settings)
-      video_tag.settings.should eq({'logo_position' => 'bottom-right'})
+      expect(video_tag.settings).to eq({'logo_position' => 'bottom-right'})
     end
 
     it "accepts nil settings" do
       video_tag.update(settings: nil)
-      video_tag.settings.should eq({})
+      expect(video_tag.settings).to eq({})
     end
   end
 
@@ -231,14 +231,14 @@ describe VideoTag do
 
     it "creates sources with position" do
       video_tag.update(sources: sources)
-      video_tag.should have(2).sources
-      video_tag.sources.first.url.should match /1/
-      video_tag.sources.second.url.should match /2/
+      expect(video_tag).to have(2).sources
+      expect(video_tag.sources.first.url).to match /1/
+      expect(video_tag.sources.second.url).to match /2/
     end
 
     it "accepts nil sources" do
       video_tag.update(sources: nil)
-      video_tag.should have(0).sources
+      expect(video_tag).to have(0).sources
     end
   end
 
@@ -251,23 +251,23 @@ describe VideoTag do
 
     it "casts true values" do
       video_tag.update(options: options)
-      video_tag.options["autoembed"].should be_true
-      video_tag.options["foo"].should be_true
+      expect(video_tag.options["autoembed"]).to be_true
+      expect(video_tag.options["foo"]).to be_true
     end
 
     it "underscorizes keys" do
       video_tag.update(options: options)
-      video_tag.options.keys.should include "ga_account"
+      expect(video_tag.options.keys).to include "ga_account"
     end
 
     it "doesn't change non-true values" do
       video_tag.update(options: options)
-      video_tag.options['ga_account'].should eq 'UA-XXXXX-X'
+      expect(video_tag.options['ga_account']).to eq 'UA-XXXXX-X'
     end
 
     it "accepts nil options" do
       video_tag.update(options: nil)
-      video_tag.should have(0).options
+      expect(video_tag).to have(0).options
     end
   end
 end

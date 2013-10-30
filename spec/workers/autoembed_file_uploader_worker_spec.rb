@@ -21,27 +21,27 @@ describe AutoEmbedFileUploaderWorker do
   end
 
   it "delays job in videos queue" do
-    AutoEmbedFileUploaderWorker.sidekiq_options_hash['queue'].should eq 'videos'
+    expect(AutoEmbedFileUploaderWorker.sidekiq_options_hash['queue']).to eq 'videos'
   end
 
   it "finds video_tag" do
-    VideoTag.should_receive(:where) { |mock|
-      mock.should_receive(:first) { video_tag }
+    expect(VideoTag).to receive(:where) { |mock|
+      expect(mock).to receive(:first) { video_tag }
       mock
     }
     AutoEmbedFileUploaderWorker.new.perform(*params)
   end
 
   it "uplaods video_tag autoembed file" do
-    AutoEmbedFileManager.should_receive(:new).with(video_tag) { |mock|
-      mock.should_receive(:upload)
+    expect(AutoEmbedFileManager).to receive(:new).with(video_tag) { |mock|
+      expect(mock).to receive(:upload)
       mock
     }
     AutoEmbedFileUploaderWorker.new.perform(*params)
   end
 
   it "increments Librato 'video_tag.remove_duplicate' metric" do
-    Librato.should_receive(:increment).once.with('video_tag.autoembed.uploads')
+    expect(Librato).to receive(:increment).once.with('video_tag.autoembed.uploads')
     AutoEmbedFileUploaderWorker.new.perform(*params)
   end
 
@@ -53,19 +53,19 @@ describe AutoEmbedFileUploaderWorker do
     ) }
 
     it "performs async only if video_tag autoembed option is true" do
-      AutoEmbedFileUploaderWorker.should_receive(:perform_async)
+      expect(AutoEmbedFileUploaderWorker).to receive(:perform_async)
       AutoEmbedFileUploaderWorker.perform_async_if_needed(video_tag)
     end
 
     it "doesn't performs async if video_tag autoembed option is false" do
       video_tag.stub(:options) { { "autoembed" => false } }
-      AutoEmbedFileUploaderWorker.should_not_receive(:perform_async)
+      expect(AutoEmbedFileUploaderWorker).to_not receive(:perform_async)
       AutoEmbedFileUploaderWorker.perform_async_if_needed(video_tag)
     end
 
     it "doesn't performs async if video_tag options are nil" do
       video_tag.stub(:options) { nil }
-      AutoEmbedFileUploaderWorker.should_not_receive(:perform_async)
+      expect(AutoEmbedFileUploaderWorker).to_not receive(:perform_async)
       AutoEmbedFileUploaderWorker.perform_async_if_needed(video_tag)
     end
   end

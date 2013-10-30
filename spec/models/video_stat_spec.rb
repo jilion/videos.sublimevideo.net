@@ -16,7 +16,7 @@ describe VideoStat do
     }
 
     it "returns starts array" do
-      VideoStat.last_days_starts(video_tag, 2).should eq [42, 2]
+      expect(VideoStat.last_days_starts(video_tag, 2)).to eq [42, 2]
     end
   end
 end

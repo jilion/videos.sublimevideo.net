@@ -24,7 +24,7 @@ describe VideoTagDataUnaliaser do
       } }
 
       it "unaliases data" do
-        VideoTagDataUnaliaser.unalias(data).should eq({
+        expect(VideoTagDataUnaliaser.unalias(data)).to eq({
           title: 'My Video',
           sources_id: nil,
           sources_origin: nil,
@@ -56,7 +56,7 @@ describe VideoTagDataUnaliaser do
       } }
 
       it "unaliases data" do
-        VideoTagDataUnaliaser.unalias(data).should eq({
+        expect(VideoTagDataUnaliaser.unalias(data)).to eq({
           title: 'My Video',
           sources_id: 'youtube_id',
           sources_origin: 'youtube',
@@ -76,7 +76,7 @@ describe VideoTagDataUnaliaser do
       } }
 
       it "unaliases data" do
-        VideoTagDataUnaliaser.unalias(data).should eq({
+        expect(VideoTagDataUnaliaser.unalias(data)).to eq({
           title: 'My Video',
           poster_url: 'http://posters.sublimevideo.net/video123.png',
           size:      '640x360',
