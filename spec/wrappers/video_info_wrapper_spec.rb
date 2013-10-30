@@ -39,12 +39,10 @@ describe VideoInfoWrapper do
       end
     end
 
-    it "increments Librato 'video_info.call' metrics once" do
+    it "increments Librato 'video_info.call' metrics" do
       VideoInfo.stub(:new) { video_info }
-      wrapper = VideoInfoWrapper.new(provider: 'provider')
-      expect(Librato).to receive(:increment).once.with('video_info.call', source: 'provider')
-      wrapper.title
-      wrapper.title
+      expect(Librato).to receive(:increment).with('video_info.call', source: 'provider')
+      VideoInfoWrapper.new(provider: 'provider')
     end
   end
 end
