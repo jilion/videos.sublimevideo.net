@@ -15,6 +15,7 @@ gem 'video_info'
 gem 'addressable'
 gem 'http_content_type'
 gem 'fog'
+gem 'unf'
 gem 'oj'
 
 gem 'honeybadger'
