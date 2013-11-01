@@ -9,8 +9,8 @@ namespace :video_tags do
       .where('starts_updated_at <= ? OR starts_updated_at IS NULL', 1.days.ago)
       .order(loaded_at: :desc)
       .limit(limit)
-    video_tags.select(:id).find_each do |video_tag|
-      VideoTagStartsUpdaterWorker.perform_async(video_tag.id)
+    video_tags.select(:id).find_in_batches do |group|
+      group.each { |video_tag| VideoTagStartsUpdaterWorker.perform_async(video_tag.id) }
     end
   end
 end
