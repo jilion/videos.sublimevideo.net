@@ -40,7 +40,7 @@ describe AutoEmbedFileUploaderWorker do
     AutoEmbedFileUploaderWorker.new.perform(*params)
   end
 
-  it "increments Librato 'video_tag.remove_duplicate' metric" do
+  it "increments Librato 'video_tag.autoembed.uploads' metric" do
     expect(Librato).to receive(:increment).once.with('video_tag.autoembed.uploads')
     AutoEmbedFileUploaderWorker.new.perform(*params)
   end
