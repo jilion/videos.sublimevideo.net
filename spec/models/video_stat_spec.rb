@@ -11,7 +11,7 @@ describe VideoStat do
   describe ".last_days_starts" do
     before {
       stub_api_for(VideoStat) do |stub|
-        stub.get("/private_api/sites/#{site_token}/videos/#{video_uid}/video_stats/last_days_starts?days=2") { |env| [200, {}, { starts: [42, 2] }.to_json] }
+        stub.get('/private_api/video_stats/last_days_starts?days=2&site_token=abcd1234&video_uid=video_uid') { |env| [200, {}, [42, 2].to_json] }
       end
     }
 
