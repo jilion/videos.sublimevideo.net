@@ -8,6 +8,7 @@ class VideoInfoWrapper
     @provider = args[:provider]
     @video_info = VideoInfo.new(_url)
     Librato.increment('video_info.call', source: provider)
+  rescue
   end
 
   def title
