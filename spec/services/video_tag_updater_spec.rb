@@ -46,11 +46,6 @@ describe VideoTagUpdater do
         updater.update(attributes)
       end
 
-      it "sets loaded_at" do
-        expect(video_tag).to receive(:loaded_at=).with(kind_of(Time))
-        updater.update(attributes)
-      end
-
       it "saves video_tag" do
         expect(video_tag).to receive(:save)
         updater.update(attributes)

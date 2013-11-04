@@ -14,7 +14,6 @@ class VideoTagUpdater
     video_tag.attributes = default_attributes.merge(attributes)
     set_sources_id_and_sources_origin
     set_title_and_title_origin
-    video_tag.loaded_at = Time.now
     video_tag.save
   end
 

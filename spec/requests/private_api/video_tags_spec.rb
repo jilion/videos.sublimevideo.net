@@ -77,8 +77,8 @@ describe "VideoTags requests" do
   describe "count" do
     let(:url) { "private_api/sites/#{site_token}/video_tags/count.json" }
     before {
-      create(:video_tag, site_token: site_token, last_30_days_starts: 0)
-      create(:video_tag, site_token: site_token, last_30_days_starts: 1)
+      create(:video_tag, site_token: site_token, started_at: 31.days.ago)
+      create(:video_tag, site_token: site_token, started_at: 30.days.ago)
     }
 
     it_behaves_like 'valid caching headers', cache_validation: false

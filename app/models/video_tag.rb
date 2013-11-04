@@ -3,10 +3,9 @@ class VideoTag < ActiveRecord::Base
 
   has_many :sources, -> { order(:position) }, class_name: 'VideoSource', dependent: :delete_all
 
-  scope :last_30_days_active, -> { where('last_30_days_starts > 0') }
-  scope :last_90_days_active, -> { where('last_90_days_starts > 0') }
-  scope :last_365_days_active, -> { where('last_365_days_starts > 0') }
-  scope :inactive, -> { where(last_365_days_starts: 0) }
+  scope :last_30_days_active, -> { where('started_at >= ?', 30.days.ago.beginning_of_day) }
+  scope :last_90_days_active, -> { where('started_at >= ?', 90.days.ago.beginning_of_day) }
+  scope :last_365_days_active, -> { where('started_at >= ?', 365.days.ago.beginning_of_day) }
   scope :by_title, ->(way = 'asc') { order(title: way.to_sym) }
   scope :by_date, ->(way = 'desc') { order(created_at: way.to_sym) }
   scope :by_last_30_days_starts, ->(way = 'desc') { order(last_30_days_starts: way.to_sym) }
@@ -96,7 +95,6 @@ end
 #  last_30_days_starts  :integer
 #  last_365_days_starts :integer
 #  last_90_days_starts  :integer
-#  loaded_at            :datetime
 #  options              :hstore
 #  player_stage         :string(255)      default("stable")
 #  poster_url           :text
@@ -105,6 +103,7 @@ end
 #  size                 :string(255)
 #  sources_id           :string(255)
 #  sources_origin       :string(255)
+#  started_at           :datetime
 #  starts               :integer          default([])
 #  starts_updated_at    :datetime
 #  title                :string(255)
@@ -115,12 +114,14 @@ end
 #
 # Indexes
 #
-#  index_video_tags_on_loaded_at                            (loaded_at)
+#  index_video_tags_on_site_token_and_created_at            (site_token,created_at)
 #  index_video_tags_on_site_token_and_last_30_days_starts   (site_token,last_30_days_starts)
 #  index_video_tags_on_site_token_and_last_365_days_starts  (site_token,last_365_days_starts)
 #  index_video_tags_on_site_token_and_last_90_days_starts   (site_token,last_90_days_starts)
-#  index_video_tags_on_site_token_and_loaded_at             (site_token,loaded_at)
+#  index_video_tags_on_site_token_and_started_at            (site_token,started_at)
+#  index_video_tags_on_site_token_and_title                 (site_token,title)
 #  index_video_tags_on_site_token_and_uid                   (site_token,uid) UNIQUE
+#  index_video_tags_on_started_at                           (started_at)
 #  index_video_tags_on_starts_updated_at                    (starts_updated_at)
 #
 
