@@ -7,7 +7,7 @@ VideoTag = Class.new unless defined?(VideoTag)
 
 describe VideoTagStartHandlerWorker do
   let(:time) { Time.now.utc }
-  let(:params) { ['site_token', 'uid', { 'vd' => '123456', 't' => time }] }
+  let(:params) { ['site_token', 'uid', { 'vd' => '123456', 't' => time.to_s }] }
   let(:video_tags) { double(VideoTag, update_columns: true) }
   let(:worker) { VideoTagStartHandlerWorker.new }
   before {
@@ -25,13 +25,13 @@ describe VideoTagStartHandlerWorker do
   end
 
   it "updates video_tag duration" do
-    expect(video_tags).to receive(:update_columns).with(started_at: time, duration: 123456)
+    expect(video_tags).to receive(:update_columns).with(started_at: Time.parse(time.to_s), duration: 123456)
     worker.perform(*params)
   end
 
   it "limits max duration integer" do
-    params[2] = { 'vd' => '5461782000', 't' => time }
-    expect(video_tags).to receive(:update_columns).with(started_at: time, duration: nil)
+    params[2] = { 'vd' => '5461782000', 't' => time.to_s }
+    expect(video_tags).to receive(:update_columns).with(started_at: Time.parse(time.to_s), duration: nil)
     worker.perform(*params)
   end
 end
