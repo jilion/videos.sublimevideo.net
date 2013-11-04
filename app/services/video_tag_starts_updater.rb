@@ -15,7 +15,7 @@ class VideoTagStartsUpdater
   private
 
   def _update_video_tag_starts
-    video_tag.starts += _new_starts
+    video_tag.starts = (video_tag.starts || []) + _new_starts
     video_tag.starts.shift(video_tag.starts.length - 365)
   end
 
