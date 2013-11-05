@@ -12,6 +12,6 @@ namespace :video_tags do
       .order(:starts_updated_at)
       .limit(limit)
       .select(:id)
-      .each { |video_tag| VideoTagStartsUpdaterWorker.perform_async(video_tag.id, at: rand(600).seconds.from_now.to_i) }
+      .each { |video_tag| VideoTagStartsUpdaterWorker.perform_in(rand(600).seconds, video_tag.id) }
   end
 end
