@@ -10,7 +10,7 @@ namespace :video_tags do
     video_tags
       .where('starts_updated_at < ? OR starts_updated_at IS NULL', Time.now.beginning_of_day)
       .order(starts_updated_at: :desc)
-      .limit(limit)
+      .limit(limit * 5)
       .select(:id)
       .each { |video_tag| VideoTagStartsUpdaterWorker.perform_in(rand(600).seconds, video_tag.id) }
   end
