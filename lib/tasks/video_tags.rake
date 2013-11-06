@@ -9,7 +9,7 @@ namespace :video_tags do
     limit = video_tags.count / 150 # 150 is a little more that the number of 10 min during 24h
     video_tags
       .where('starts_updated_at < ? OR starts_updated_at IS NULL', Time.now.beginning_of_day)
-      .order(:starts_updated_at)
+      .order(starts_updated_at: :desc)
       .limit(limit)
       .select(:id)
       .each { |video_tag| VideoTagStartsUpdaterWorker.perform_in(rand(600).seconds, video_tag.id) }
