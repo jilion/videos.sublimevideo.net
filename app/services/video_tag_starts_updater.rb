@@ -33,7 +33,7 @@ class VideoTagStartsUpdater
   end
 
   def _video_tag_without_activiy?
-    video_tag.starts_updated_at? && video_tag.started_at < video_tag.starts_updated_at
+    video_tag.started_at.nil? || (video_tag.starts_updated_at? && video_tag.started_at < video_tag.starts_updated_at)
   end
 
   def _update_video_tag_last_days_starts_sums
