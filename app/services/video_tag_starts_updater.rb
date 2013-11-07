@@ -6,6 +6,7 @@ class VideoTagStartsUpdater
   end
 
   def update
+    return if _days_to_update < 1
     _update_video_tag_starts
     _update_video_tag_last_days_starts_sums
     video_tag.starts_updated_at = Time.now
@@ -28,8 +29,8 @@ class VideoTagStartsUpdater
   end
 
   def _days_to_update
-    updated_at = video_tag.starts_updated_at || 366.days.ago
-    ((updated_at - Time.now) / 1.day + 1).abs.round
+    updated_at = video_tag.starts_updated_at || 365.days.ago
+    (Time.now.utc - updated_at).round / 1.day
   end
 
   def _video_tag_without_activiy?

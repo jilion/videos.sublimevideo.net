@@ -31,19 +31,19 @@ describe VideoTagStartsUpdater do
       end
     end
 
-    context "video_tag with starts updated 1 days ago" do
-      let(:video_tag) { build(:video_tag, starts_updated_at: 1.days.ago, started_at: 23.hours.ago, starts: starts_365) }
+    context "video_tag with starts updated 23 hours ago" do
+      let(:video_tag) { build(:video_tag, starts_updated_at: 23.hours.ago, started_at: 22.hours.ago, starts: starts_365) }
 
-      it "updates starts for last 1 day" do
-        expect(VideoStat).to receive(:last_days_starts).with(video_tag, 0) { [] }
+      it "doesn't update starts" do
+        expect(VideoStat).to_not receive(:last_days_starts)
         updater.update
         expect(updater.video_tag.starts.first).to eq 1
         expect(updater.video_tag.starts.last).to eq 365
       end
     end
 
-    context "video_tag with starts updated 2 days ago" do
-      let(:video_tag) { build(:video_tag, starts_updated_at: 2.days.ago, started_at: 23.hours.ago, starts: starts_365) }
+    context "video_tag with starts updated 1 days ago" do
+      let(:video_tag) { build(:video_tag, starts_updated_at: 1.days.ago, started_at: 23.hours.ago, starts: starts_365) }
 
       it "updates starts for last 1 day" do
         expect(VideoStat).to receive(:last_days_starts).with(video_tag, 1) { [366] }
@@ -53,13 +53,35 @@ describe VideoTagStartsUpdater do
       end
     end
 
-    context "video_tag has not been loaded since last update" do
-      let(:video_tag) { build(:video_tag, starts_updated_at: 3.days.ago, started_at: 4.days.ago, starts: starts_365) }
+    context "video_tag with starts updated 2 days ago" do
+      let(:video_tag) { build(:video_tag, starts_updated_at: 2.days.ago, started_at: 36.hours.ago, starts: starts_365) }
+
+      it "updates starts for last 2 day" do
+        expect(VideoStat).to receive(:last_days_starts).with(video_tag, 2) { [366, 367] }
+        updater.update
+        expect(updater.video_tag.starts.first).to eq 3
+        expect(updater.video_tag.starts.last).to eq 367
+      end
+    end
+
+    context "video_tag with starts updated 2 days ago with no starts" do
+      let(:video_tag) { build(:video_tag, starts_updated_at: 2.days.ago, started_at: nil, starts: starts_365) }
 
       it "updates starts for last 2 day" do
         expect(VideoStat).to_not receive(:last_days_starts)
         updater.update
         expect(updater.video_tag.starts.first).to eq 3
+        expect(updater.video_tag.starts.last).to eq 0
+      end
+    end
+
+    context "video_tag has not been loaded since last update" do
+      let(:video_tag) { build(:video_tag, starts_updated_at: 3.days.ago, started_at: 4.days.ago, starts: starts_365) }
+
+      it "updates starts for last 3 day" do
+        expect(VideoStat).to_not receive(:last_days_starts)
+        updater.update
+        expect(updater.video_tag.starts.first).to eq 4
         expect(updater.video_tag.starts.last).to eq 0
       end
     end
