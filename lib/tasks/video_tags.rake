@@ -13,12 +13,12 @@ namespace :video_tags do
   task update_starts: :environment do
     tokens = Site.tokens(with_addon_plan: 'stats-realtime')
     video_tags = VideoTag.where(site_token: tokens)
-      # .where('started_at > ?', 366.days.ago) # avoid to update no more started video_tags
-    limit = video_tags.count / 150 # 150 is a little more that the number of 10 min during 24h
+    # 150 is a little more that the number of 10 min during 24h
+    limit = Rails.cache.fetch('update_starts_limit', expires_in: 1.day) { VideoTag.count / 150 }
     video_tags
       .where('starts_updated_at < ? OR starts_updated_at IS NULL', Time.now.beginning_of_day)
-      .order('starts_updated_at NULLS FIRST')
-      .limit(limit)
+      .order(started_at: :desc) # update last started_at first
+      .limit(limit * 3)
       .select(:id)
       .each { |video_tag| VideoTagStartsUpdaterWorker.perform_in(rand(600).seconds, video_tag.id) }
   end
