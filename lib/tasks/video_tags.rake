@@ -14,7 +14,7 @@ namespace :video_tags do
     tokens = Site.tokens(with_addon_plan: 'stats-realtime')
     video_tags = VideoTag.where(site_token: tokens)
     # 150 is a little more that the number of 10 min during 24h
-    limit = Rails.cache.fetch('update_starts_limit', expires_in: 1.day) { VideoTag.count / 150 }
+    limit = Rails.cache.fetch('update_starts_limit', expires_in: 1.day) { video_tags.count / 150 }
     video_tags
       .where('starts_updated_at < ? OR starts_updated_at IS NULL', Time.now.beginning_of_day)
       .order(started_at: :desc) # update last started_at first
