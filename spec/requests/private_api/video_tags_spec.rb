@@ -25,7 +25,7 @@ describe "VideoTags requests" do
 
     it "always sorts by_title in last position" do
       get url, { by_date: 'desc' }, @env
-      expect(MultiJson.load(response.body).map { |v| v['id'] }).to eq(
+      expect(MultiJson.load(response.body).map { |v| v['id'] }).to match_array(
         [video_tag3.id, video_tag2.id, video_tag1.id])
     end
 
