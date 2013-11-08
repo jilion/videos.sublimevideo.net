@@ -1,3 +1,5 @@
+# TODO: Remove uid_origin after June 2014
+
 class VideoTag < ActiveRecord::Base
   UID_REGEX = '^[a-z0-9_\-]{1,64}$'
 
