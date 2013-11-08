@@ -6,9 +6,6 @@ class VideoTagStartsUpdater
   end
 
   def update
-    if video_tag.starts_updated_at? && video_tag.starts_updated_at < Time.utc(2013,11,07,16)
-      video_tag.starts_updated_at = nil
-    end
     return if _days_to_update < 1
     _update_video_tag_starts
     _update_video_tag_last_days_starts_sums

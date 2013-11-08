@@ -15,7 +15,7 @@ describe VideoTagStartsUpdaterWorker do
 
   describe ".perform" do
     let(:updater) { double(VideoTagStartsUpdater) }
-    let(:video_tag) { double(VideoTag, id: 1) }
+    let(:video_tag) { double(VideoTag, id: 1, starts_updated_at?: nil) }
 
     it "updates video_tag starts" do
       expect(VideoTag).to receive(:find).with(video_tag.id) { video_tag }
