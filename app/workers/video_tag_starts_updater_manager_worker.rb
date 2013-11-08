@@ -8,7 +8,7 @@ class VideoTagStartsUpdaterManagerWorker
     _video_tags
       .where('starts_updated_at < ? OR starts_updated_at IS NULL', Time.now.beginning_of_day)
       .order(started_at: :desc) # update last started_at first
-      .limit(_limit * 5)
+      .limit(_limit)
       .select(:id)
       .each { |video_tag| VideoTagStartsUpdaterWorker.perform_in(rand(600).seconds, video_tag.id) }
   end
