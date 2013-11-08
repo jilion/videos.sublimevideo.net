@@ -293,6 +293,7 @@ end
 #
 # Indexes
 #
+#  index_update_starts                                      (site_token,starts_updated_at,started_at)
 #  index_video_tags_on_site_token_and_created_at            (site_token,created_at)
 #  index_video_tags_on_site_token_and_last_30_days_starts   (site_token,last_30_days_starts)
 #  index_video_tags_on_site_token_and_last_365_days_starts  (site_token,last_365_days_starts)
@@ -301,6 +302,5 @@ end
 #  index_video_tags_on_site_token_and_title                 (site_token,title)
 #  index_video_tags_on_site_token_and_uid                   (site_token,uid) UNIQUE
 #  index_video_tags_on_started_at                           (started_at)
-#  index_video_tags_on_starts_updated_at                    (starts_updated_at)
 #
 

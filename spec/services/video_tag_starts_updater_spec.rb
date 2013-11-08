@@ -31,8 +31,8 @@ describe VideoTagStartsUpdater do
       end
     end
 
-    context "video_tag with starts updated 23 hours ago" do
-      let(:video_tag) { build(:video_tag, starts_updated_at: 23.hours.ago, started_at: 22.hours.ago, starts: starts_365) }
+    context "video_tag with starts updated today" do
+      let(:video_tag) { build(:video_tag, starts_updated_at: Time.now.utc, started_at: 22.hours.ago, starts: starts_365) }
 
       it "doesn't update starts" do
         expect(VideoStat).to_not receive(:last_days_starts)

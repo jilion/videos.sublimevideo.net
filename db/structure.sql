@@ -196,6 +196,13 @@ ALTER TABLE ONLY video_tags
 
 
 --
+-- Name: index_update_starts; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_update_starts ON video_tags USING btree (site_token, starts_updated_at, started_at DESC);
+
+
+--
 -- Name: index_video_sources_on_video_tag_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -259,13 +266,6 @@ CREATE INDEX index_video_tags_on_started_at ON video_tags USING btree (started_a
 
 
 --
--- Name: index_video_tags_on_starts_updated_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_video_tags_on_starts_updated_at ON video_tags USING btree (starts_updated_at);
-
-
---
 -- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -298,3 +298,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130617092307');
 INSERT INTO schema_migrations (version) VALUES ('20130903143855');
 
 INSERT INTO schema_migrations (version) VALUES ('20131104133334');
+
+INSERT INTO schema_migrations (version) VALUES ('20131107202311');

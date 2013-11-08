@@ -33,7 +33,7 @@ class VideoTagStartsUpdater
 
   def _days_to_update
     updated_at = video_tag.starts_updated_at || 365.days.ago
-    (Time.now.utc - updated_at).round / 1.day
+    (Time.now.utc - updated_at.beginning_of_day).round / 1.day
   end
 
   def _video_tag_without_activiy?
