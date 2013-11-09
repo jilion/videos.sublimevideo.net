@@ -26,7 +26,7 @@ class VideoTagStartsUpdaterManagerWorker
   # A little more that the number of 10 min during 24h
   def _limit
     Rails.cache.fetch('update_starts_limit', expires_in: 1.day) do
-      _video_tags.count / 150
+      _video_tags.count / 100
     end
   end
 

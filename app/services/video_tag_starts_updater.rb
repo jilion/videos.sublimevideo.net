@@ -9,7 +9,7 @@ class VideoTagStartsUpdater
     return if _days_to_update < 1
     _update_video_tag_starts
     _update_video_tag_last_days_starts_sums
-    video_tag.starts_updated_at = Time.now
+    video_tag.starts_updated_at = Time.now.utc
     video_tag.save
   end
 
