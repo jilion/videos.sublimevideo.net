@@ -54,6 +54,11 @@ class VideoTag < ActiveRecord::Base
     SourceHostDetector.new(self).hosted_by
   end
 
+  def starts
+    starts = read_attribute(:starts)
+    starts.present? ? starts : 365.times.map { 0 }
+  end
+
   def uid=(uid)
     write_attribute :uid, uid.try(:to, 254)
   end

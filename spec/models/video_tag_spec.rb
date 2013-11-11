@@ -179,6 +179,14 @@ describe VideoTag do
     end
   end
 
+  describe "#starts" do
+    let(:video_tag) { VideoTag.new }
+
+    it "returns an 365 0 array by default" do
+      expect(video_tag.starts).to eq 365.times.map { 0 }
+    end
+  end
+
   describe "#uid=" do
     it "truncates long uid" do
       long_uid = ''
