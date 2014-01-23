@@ -14,6 +14,7 @@ describe VideoTagUpdaterWorker do
     VideoTagDataUnaliaser.stub(:unalias) { unaliases_data }
     VideoTag.stub(:find_or_initialize) { video_tag }
     VideoTagUpdater.stub_chain(:new, :update)
+    StatsSponsorerWorker.stub(:perform_async_if_needed)
     AutoEmbedFileUploaderWorker.stub(:perform_async_if_needed)
     Librato.stub(:increment)
   }
@@ -49,6 +50,11 @@ describe VideoTagUpdaterWorker do
       expect(mock).to receive(:update).with(unaliases_data)
       mock
     }
+    VideoTagUpdaterWorker.new.perform(*params)
+  end
+
+  it "sponsors stats if needed" do
+    expect(StatsSponsorerWorker).to receive(:perform_async_if_needed).with(video_tag)
     VideoTagUpdaterWorker.new.perform(*params)
   end
 
