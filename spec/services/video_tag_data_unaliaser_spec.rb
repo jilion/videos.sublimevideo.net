@@ -72,15 +72,35 @@ describe VideoTagDataUnaliaser do
         't' => 'My Video',
         'p' => 'http://posters.sublimevideo.net/video123.png',
         'z' => '640x360',
-        'd' => '10000'
+        'd' => '10000',
       } }
 
       it "unaliases data" do
         expect(VideoTagDataUnaliaser.unalias(data)).to eq({
-          title: 'My Video',
+          title:      'My Video',
           poster_url: 'http://posters.sublimevideo.net/video123.png',
-          size:      '640x360',
-          duration:   '10000'
+          size:       '640x360',
+          duration:   '10000',
+        })
+      end
+    end
+
+    context "with no sources video data" do
+      let(:data) { {
+        't' => 'My Video',
+        'p' => 'http://posters.sublimevideo.net/video123.png',
+        'z' => '640x360',
+        'd' => '10000',
+        's' => nil
+      } }
+
+      it "unaliases data" do
+        expect(VideoTagDataUnaliaser.unalias(data)).to eq({
+          title:      'My Video',
+          poster_url: 'http://posters.sublimevideo.net/video123.png',
+          size:       '640x360',
+          duration:   '10000',
+          sources:     nil
         })
       end
     end

@@ -57,6 +57,8 @@ module VideoTagDataUnaliaser
     end
 
     def unalias_sources(data)
+      return nil unless data.present?
+
       data.map { |source|
         Hash[source.map { |key, value|
           [unalias_string(key, :source), value]
